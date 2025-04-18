@@ -1,70 +1,57 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import React from "react";
-import { Container } from "../index";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../../store/authSlice";
+import { Container, LogoutBtn } from "../index"
+ function Header(){
+    const authStatus = useSelector((state) => state.auth.success);
+    console.log(authStatus);
+    
 
-function Header() {
-const user = useSelector((state) => state.auth.user);
-const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-const dispatch = useDispatch();
-const navigate = useNavigate();
+    const navItems = [
+ {
+    name: "Login",
+    slug: "/login",
+    active: !authStatus,
+ },
+ {
+    name: "SignUp",
+    slug: "/signUp",
+    active: !authStatus,
+ }
 
-const handleLogout = () => {
-dispatch(logout());
-navigate("/login");
-};
+    ]
+
 
 return (
-<header className="bg-white shadow-md sticky top-0 z-50">
-<Container>
-<nav className="flex items-center justify-between py-4">
-    {/* Logo */}
-    <Link to="/" className="text-xl font-bold text-gray-800">
+    <header className="bg-white shadow-md sticky top-0 z-50">
+        <Container>
+    <nav className="flex items-center justify-between py-4">
+        <Link to="/" className="text-xl font-bold text-gray-800">
         MyApp
-    </Link>
+        </Link>
 
-    {/* Navigation Buttons */}
     <ul className="flex items-center gap-4">
-        {isAuthenticated ? (
-            <>
-        <li>
-            <span className="text-gray-600 text-sm">Welcome, {user?.fullname}</span>
-        </li>
-        <li>
-        <button
-            onClick={handleLogout}
-            className="px-4 py-2 text-sm text-white bg-red-500 rounded-full hover:bg-red-600 transition-all"
+    {navItems.map(
+        (item) =>
+        item.active && (
+        <li key={item.name}>
+        <Link
+            to={item.slug}
+            className="px-4 py-2 text-sm text-gray-700 hover:bg-yellow-500 hover:text-white rounded-full transition-all"
         >
-            Logout
-                </button>
-            </li>
-        </>
-        ) : (
-    <>
-        <li>
-    <Link
-        to="/login"
-        className="px-4 py-2 text-sm text-gray-700 hover:bg-yellow-500 hover:text-white rounded-full transition-all"
-    >
-        Login
+            {item.name}
         </Link>
         </li>
-        <li>
-    <Link
-        to="/signup"
-        className="px-4 py-2 text-sm text-gray-700 hover:bg-yellow-500 hover:text-white rounded-full transition-all"
-    >
-        Signup
-    </Link>
-                </li>
-            </>
-        )}
-    </ul>
-</nav>
-</Container>
-</header>
-);
-}
+        )
+    )}
 
-export default Header;
+{authStatus == true && <li><LogoutBtn /></li>}
+
+    </ul>
+    </nav>
+        </Container>
+    </header>
+    );
+ }
+
+ export default Header

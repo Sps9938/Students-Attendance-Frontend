@@ -4,11 +4,15 @@ import Login from "./Login";
 import Container from "./Container/Container";
 import Header from "./Header/Header";
 import Protected from "./AuthLayout";
+import SignUp from "./SignUp";
+import LogoutBtn from "./Header/LogoutBtn";
 export {
     Input,
     Button,
     Login,
     Container,
     Header,
-    Protected
+    Protected,
+    SignUp,
+    LogoutBtn
 }

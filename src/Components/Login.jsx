@@ -18,16 +18,31 @@ function Login() {
     const login = async (data) => {
         console.log("welcome to login form->after submit");
         console.log("client sent data: ", data);
-        console.log("Backend port listen At: ",  conf.API_URL);
         const API = conf.API_URL;
+        console.log("Backend port listen At: ",  API);
+
         setError("");
         try {
+            console.log(`Backend URL is: ${API}/user/login`);
             
             const response = await axios.patch(`${API}/user/login`, {
                 email: data.email,
                 password: data.password
+            }, {
+                withCredentials: true
             })
 
+            if(response){
+                const userData = await axios.get(`${conf.API_URL}/user/get-user`,{
+                    withCredentials: true
+                })
+                console.log("cureent user: ", userData);
+                
+            }
+            else{
+                console.log("Failed Fetched userData");
+                
+            }
             console.log("Response by client side: ", response);
             
             const result = response.data;

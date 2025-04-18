@@ -6,34 +6,41 @@ import store from './Store/store.js'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import {Login} from "./Pages"
+import { Login, SignUp } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
 
-import { Navigate } from 'react-router-dom'
-const router = createBrowserRouter( [
-   {
-     path: "/",
-    element: <App />,
-    children: [
-       
-        {
 
-        path: "/login",
-        element: (
-            <Protected authentication={false}>
-                <Login />
-            </Protected>
-        )
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+        children: [
+        
+            {
+
+                path: "/login",
+                element: (
+                    <Protected authentication={false}>
+                        <Login />
+                    </Protected>
+                ),
+            },
+            {
+                path: "/signup",
+                element: (
+                    <Protected authentication={false}>
+                        <SignUp />
+                    </Protected>
+                )
+            }
              
           
         
-    }
-    ]
-}
+]}
 ])
 
 createRoot(document.getElementById('root')).render(
-<Provider store = {store}>
-    <RouterProvider router={router} />
-</Provider>
+    <Provider store={store}>
+        <RouterProvider router={router} />
+    </Provider>
 )
