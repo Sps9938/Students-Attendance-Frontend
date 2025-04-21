@@ -11,7 +11,19 @@ import { Header } from './Components'
 import axios from 'axios'
 function App() {
   const fetchUser = async () => {
-    return await axios.get(`${conf.API_URL}/user/get-user`);
+   
+    const response =  await axios.get(`${conf.API_URL}/user/get-user`, {
+      withCredentials: true,
+    });
+  
+    return response.data;
+    // if(response?.data?.success) {
+    //   return response.data.user;
+    // }
+    // else{
+    //   throw new error("User Not authenticated");
+    // }
+    
   }
 
     const [loading, setLoading ] = useState(true)
