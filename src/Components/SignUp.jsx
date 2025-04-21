@@ -11,7 +11,7 @@ function SignUp() {
     console.log("welcome to the signUp function");
     
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [error, setError] = useState("")
     const {register, handleSubmit} = useForm()
 
@@ -36,21 +36,27 @@ function SignUp() {
                 withCredentials: true,
             }    
         )
-
-        // if(response){
-        //     const userData = await axios.get(`${conf.API_URL}/user/get-user`,{
-        //         withCredentials: true
-        //     })
-        //     console.log("cureent user: ", userData);
-            
-        // }
-        // else{
-        //     console.log("Failed Fetched userData");
-            
-        // }
-            //probel for not getting userData after signUp
+        console.log("response: ", response);
         
-            const result = response.data;
+        if(response?.data?.success){
+
+            const loginResponse = await axios.patch(`${conf.API_URL}/user/login`, {
+                email: data.email,
+                password: data.password
+            }, {
+                withCredentials: true
+            })
+
+
+            if(loginResponse?.data?.success){
+                const userData = await axios.get(`${conf.API_URL}/user/get-user`,{
+                    withCredentials: true
+                })
+                console.log("cureent user: ", userData);
+                
+            }
+
+            const result = loginResponse.data;
             if(result.success){
                 const {accessToken, refreshToken, user} = result.data;
 
@@ -62,10 +68,19 @@ function SignUp() {
                 // dispatch(authLogin(user)); // result.user must contain your user info
 
                 // Navigate to homepage
+                dispatch(authLogin(user))
                 navigate("/");
             } else {
                 setError(result.message || "Login failed");
             }
+        }
+        else{
+            console.log("Failed Fetched userData");
+            
+        }
+            //probel for not getting userData after signUp
+        
+          
 
         } catch (err) {
             console.error("Signin error", err);
