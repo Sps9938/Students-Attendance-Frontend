@@ -8,6 +8,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { Login, SignUp } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
+import { UserButton } from './Components/index.js'
+
 
 
 const router = createBrowserRouter([
@@ -25,6 +27,7 @@ const router = createBrowserRouter([
                     </Protected>
                 ),
             },
+
             {
                 path: "/signup",
                 element: (
@@ -32,7 +35,17 @@ const router = createBrowserRouter([
                         <SignUp />
                     </Protected>
                 )
+            },
+            {
+                path: "/user",
+                element: (
+                    <Protected authentication>
+                        <UserButton />
+                    </Protected>
+                )
             }
+
+            
              
           
         

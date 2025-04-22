@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import React from "react";
-import { Container, LogoutBtn } from "../index"
+import { Container, LogoutBtn, UserButton } from "../index"
+
  function Header(){
     const authStatus = useSelector((state) => state.auth.success);
     console.log(authStatus);
@@ -17,15 +18,21 @@ import { Container, LogoutBtn } from "../index"
     name: "SignUp",
     slug: "/signUp",
     active: !authStatus,
+ },
+ {
+    name: "User Profile",
+    slug: "/user",
+    active: authStatus,
  }
+
 
     ]
 
 
 return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-white shadow-md sticky top-0 z-50 ">
         <Container>
-    <nav className="flex items-center justify-between py-4">
+    <nav className="flex items-center justify-between py-4 font-bold text-black">
         <Link to="/" className="text-xl font-bold text-gray-800">
         MyApp
         </Link>
@@ -45,7 +52,15 @@ return (
         )
     )}
 
-{authStatus == true && <li><LogoutBtn /></li>}
+{authStatus == true && 
+
+<li>
+    <LogoutBtn />
+    
+</li>
+}
+
+
 
     </ul>
     </nav>

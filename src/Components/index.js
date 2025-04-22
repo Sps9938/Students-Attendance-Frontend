@@ -6,6 +6,7 @@ import Header from "./Header/Header";
 import Protected from "./AuthLayout";
 import SignUp from "./SignUp";
 import LogoutBtn from "./Header/LogoutBtn";
+import {UserButton} from "./Header/UserButton";
 export {
     Input,
     Button,
@@ -14,5 +15,6 @@ export {
     Header,
     Protected,
     SignUp,
-    LogoutBtn
+    LogoutBtn,
+    UserButton
 }
