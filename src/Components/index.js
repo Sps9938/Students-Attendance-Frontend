@@ -7,6 +7,9 @@ import Protected from "./AuthLayout";
 import SignUp from "./SignUp";
 import LogoutBtn from "./Header/LogoutBtn";
 import {UserButton} from "./Header/UserButton";
+import ForgetPassword from "./User/ForgetPassword";
+import ChangeUserPassword from "./User/ChangePassword";
+import UpdateUserDetails from "./User/EditUserDetail";
 export {
     Input,
     Button,
@@ -16,5 +19,8 @@ export {
     Protected,
     SignUp,
     LogoutBtn,
-    UserButton
+    UserButton,
+    ForgetPassword,
+    ChangeUserPassword,
+    UpdateUserDetails
 }

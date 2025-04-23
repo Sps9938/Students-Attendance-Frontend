@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { Login, SignUp } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
-import { UserButton } from './Components/index.js'
+import { ChangeUserPassword, ForgetPassword, UpdateUserDetails, UserButton } from './Components/index.js'
 
 
 
@@ -43,7 +43,34 @@ const router = createBrowserRouter([
                         <UserButton />
                     </Protected>
                 )
-            }
+            },
+            {
+                path: "/forget-password",
+                element: (
+                  
+                        <ForgetPassword />
+ 
+                )
+            },
+            {
+                path: "/change-password",
+                element: (
+                    <Protected authentication>
+                    <ChangeUserPassword />
+                </Protected>
+ 
+                )
+            },
+            {
+                path: "/update-user-details",
+                element: (
+                    <Protected authentication>
+                    <UpdateUserDetails />
+                </Protected>
+ 
+                )
+            },
+
 
             
              
