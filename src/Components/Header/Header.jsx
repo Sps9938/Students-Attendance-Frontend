@@ -13,7 +13,7 @@ import { Container, LogoutBtn, UserButton } from "../index"
 {
     name: "Home",
     slug: "/",
-    active: !authStatus,
+    active: authStatus,
 },
 
  {

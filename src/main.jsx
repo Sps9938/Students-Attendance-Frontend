@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { Login, SignUp } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
-import { ChangeUserPassword, ForgetPassword, Home, UpdateUserDetails, UserButton } from './Components/index.js'
+import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton } from './Components/index.js'
 
 
 
@@ -72,6 +72,15 @@ const router = createBrowserRouter([
                 element: (
                     <Protected authentication>
                     <UpdateUserDetails />
+                </Protected>
+ 
+                )
+            },
+            {
+                path: "/createclass",
+                element: (
+                    <Protected authentication>
+                    <CreateClass />
                 </Protected>
  
                 )

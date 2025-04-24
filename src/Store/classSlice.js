@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const intialState = {
-    classes: []
+    classes: [],
 };
 
 const classSlice = createSlice({

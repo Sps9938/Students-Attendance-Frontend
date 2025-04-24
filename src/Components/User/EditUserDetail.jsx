@@ -66,23 +66,22 @@ function UpdateUserDetails() {
         }
     }
     return (
-    <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-lg mt-10 space-y-6">
+        <div className="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
+        <h2 className="text-2xl font-semibold mb-4">Edit User Details</h2>
+  
     <form onSubmit={handleSubmit(onUpdate)} className="space-y-4">
         <Input
             label="Full Name"
-            className="bg-zinc-400"
+        
             {...register("fullname")}
         />
         <Input
             label="Email"
-            className="bg-zinc-400"
+        
             {...register("email")}
         />
         <Button type="submit">Update</Button>
     </form>
-
-
-
 
         </div>
     );

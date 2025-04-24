@@ -33,36 +33,34 @@ function ChangeUserPassword() {
     };
 
     return (
-        <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-lg mt-10 space-y-6">
+        <div className="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
+        <h2 className="text-2xl font-semibold mb-4">Change Password</h2>
   
-
-
-     <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-lg mt-10 space-y-6">
       
             <form onSubmit={handleSubmit(onChangePassword)} className="space-y-4">
                 <Input
                     label="Old Password"
                     type="password"
-                    className="bg-zinc-400"
+                
                     {...register("oldPassword", { required: true })}
                 />
                 <Input
                     label="New Password"
                     type="password"
-                     className="bg-zinc-400"
+             
                     {...register("newPassword", { required: true })}
                 />
                 <Input
                     label="ReNew Password"
                     type="password"
-                     className="bg-zinc-400"
+                    
                     {...register("renewPassword", { required: true })}
                 />
                 <Button type="submit">Update Password</Button>
             </form>
 
             </div>
-        </div>
+    
     );
 
 }

@@ -5,7 +5,7 @@ import classSlice from './classSlice';
 const store = configureStore( {
     reducer: {
         auth: authSlice,
-        class: classSlice,
+        classes: classSlice,
    
     }
 })

@@ -1,10 +1,90 @@
-import React from "react";
+import React,{useState} from "react";
+import axios from 'axios';
+// import { addClass } from "../../Store/classSlice";
+import { useDispatch } from "react-redux";
+import conf from "../../Conf/Conf";
+import { Input, Button } from "../index";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function CreateClass(){
 
+const dispatch = useDispatch();
+const [ classLink, setClassLink ] = useState("");
+const { register, handleSubmit, reset } = useForm();
+const navigate = useNavigate();
 
+const createNewClass = async(data) => {
+    const {className, courseName, yearBatch} = data;
 
+    try {
+        
+       const res = await axios.post(`${conf.API_URL}/class/create-class`, data, {
+        withCredentials: true,
+       });
 
+       if(res){
+        const createdClass = res?.data?.data;
+        // dispatch(addClass(createdClass));
+        setClassLink(createdClass.link);
+        reset();
+        alert("class created sucessfully");
+        // navigate("/createclass");
+       }
+    } catch (error) {
+        console.error("class creation failed", err);
+        alert("class to create class, please try again.");
+
+    }
+}
     
+
+return (
+    <div className="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
+      <h2 className="text-2xl font-semibold mb-4">Create a New Class</h2>
+
+      <form onSubmit={handleSubmit(createNewClass)} className="space-y-4">
+        <Input
+          label="Class Name"
+          placeholder="Enter class name"
+          {...register("className", { required: true})}
+        />
+        <Input
+          label="Course Name"
+          placeholder="Enter course name"
+          {...register("courseName", { required: true})}
+        />
+        <Input
+          label="Batch Year"
+          placeholder="YYYY-YYYY"
+          {...register("yearBatch", {
+            required: true,
+            pattern: {
+              value: /^\d{4}-\d{4}$/,
+              message: "Format should be YYYY-YYYY",
+            },
+          })}
+        />
+        <Button type="submit" className="w-full">
+          Create Class
+        </Button>
+      </form>
+
+      {classLink && (
+        <div className="mt-4 p-2 bg-green-100 rounded border border-green-400">
+          <p>Class Created! Link:</p>
+          <a
+            href={classLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline break-all"
+          >
+            {classLink}
+          </a>
+        </div>
+      )}
+    </div>
+  );
+
 }
 export default CreateClass;
