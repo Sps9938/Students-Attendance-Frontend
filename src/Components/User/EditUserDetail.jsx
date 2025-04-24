@@ -23,7 +23,7 @@ function UpdateUserDetails() {
             const respose = await axios.get(`${conf.API_URL}/user/get-user`, {
                 withCredentials: true,
             });
-            // console.log("user is found on User Profile", respose);
+            console.log("user is found on User Profile", respose);
 
             setUser(respose.data.data);
             reset(respose.data.data);
@@ -41,7 +41,7 @@ function UpdateUserDetails() {
 
     const onUpdate = async (data) => {
 
-        // console.log("sent Data", data);
+        console.log("sent Data", data);
         if (!user) {
             console.log("user not exist");
 
@@ -52,7 +52,7 @@ function UpdateUserDetails() {
                 const res = await axios.patch(`${conf.API_URL}/user/update-user-details`, data, {
                     withCredentials: true,
                 });
-                // console.log("Updated Sucessfully", res);
+                console.log("Updated Sucessfully", res);
 
                 alert("Details Updated Sucessfully")
            

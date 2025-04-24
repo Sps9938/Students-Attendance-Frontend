@@ -44,7 +44,7 @@ function ForgetPassword() {
             // or wherever you want to redirect after success
         } catch (error) {
             console.error("Error resetting password", error);
-            alert("Failed to reset password. Please try again.");
+            alert(error.message);
         }
     };
 

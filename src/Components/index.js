@@ -10,6 +10,8 @@ import {UserButton} from "./Header/UserButton";
 import ForgetPassword from "./User/ForgetPassword";
 import ChangeUserPassword from "./User/ChangePassword";
 import UpdateUserDetails from "./User/EditUserDetail";
+import Home from "./Home/Home";
+import CreateClass from "./Classes/CreateANewClass";
 export {
     Input,
     Button,
@@ -22,5 +24,7 @@ export {
     UserButton,
     ForgetPassword,
     ChangeUserPassword,
-    UpdateUserDetails
+    UpdateUserDetails,
+    Home,
+    CreateClass
 }

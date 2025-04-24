@@ -9,22 +9,30 @@ import { Container, LogoutBtn, UserButton } from "../index"
     
 
     const navItems = [
+
+{
+    name: "Home",
+    slug: "/",
+    active: !authStatus,
+},
+
  {
     name: "Login",
     slug: "/login",
     active: !authStatus,
  },
+
  {
     name: "SignUp",
     slug: "/signUp",
     active: !authStatus,
  },
+
  {
     name: "User Profile",
     slug: "/user",
     active: authStatus,
- }
-
+ },
 
     ]
 

@@ -1,34 +1,34 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { login as authLogin } from '../store/authSlice';
-import { Button, ForgetPassword, Input } from './index';
+import { Button, Input } from './index';
 import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 import conf from "../Conf/Conf";
 
 function Login() {
-    const [showForgotPassword, setShowForgotPassword] = useState(false);
+    // const [showForgotPassword, setShowForgotPassword] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState("");
 
-    const onForgotPassword = async (data) => {
-        try {
-            const res = await axios.patch(`${conf.API_URL}/user/forget-password`, {
-                email: data.email,
-                newPassword: data.newPassword,
-                renewPassword: data.renewPassword
-            }, { withCredentials: true });
+    // const onForgotPassword = async (data) => {
+    //     try {
+    //         const res = await axios.patch(`${conf.API_URL}/user/forget-password`, {
+    //             email: data.email,
+    //             newPassword: data.newPassword,
+    //             renewPassword: data.renewPassword
+    //         }, { withCredentials: true });
 
-            console.log("Password forgot successfully", res);
-            alert("Reset link set!");
-            setShowForgotPassword(false);
-        } catch (error) {
-            alert("Error sending reset link.");
-        }
-    };
+    //         console.log("Password forgot successfully", res);
+    //         alert("Reset link set!");
+    //         setShowForgotPassword(false);
+    //     } catch (error) {
+    //         alert("Error sending reset link.");
+    //     }
+    // };
 
     const login = async (data) => {
         setError("");

@@ -22,7 +22,7 @@ function ChangeUserPassword() {
             const res = await axios.patch(`${conf.API_URL}/user/change-password`, data, {
                 withCredentials: true,
             });
-            // console.log("Password Has been changed", res);
+            console.log("Password Has been changed", res);
 
             alert("Password Changed!!!");
             navigate('/user')
@@ -34,7 +34,7 @@ function ChangeUserPassword() {
 
     return (
         <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-lg mt-10 space-y-6">
-            <h2 className="text-xl font-bold mb-2">User Profile</h2>
+  
 
 
      <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-lg mt-10 space-y-6">

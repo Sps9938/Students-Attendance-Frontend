@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { Login, SignUp } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
-import { ChangeUserPassword, ForgetPassword, UpdateUserDetails, UserButton } from './Components/index.js'
+import { ChangeUserPassword, ForgetPassword, Home, UpdateUserDetails, UserButton } from './Components/index.js'
 
 
 
@@ -17,6 +17,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
         children: [
+
+            {
+                path: "/",
+                element: <Home />
+       
+            },
         
             {
 
@@ -70,6 +76,7 @@ const router = createBrowserRouter([
  
                 )
             },
+      
 
 
             
