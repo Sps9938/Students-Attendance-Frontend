@@ -12,6 +12,7 @@ import ChangeUserPassword from "./User/ChangePassword";
 import UpdateUserDetails from "./User/EditUserDetail";
 import Home from "./Home/Home";
 import CreateClass from "./Classes/CreateANewClass";
+import FetchAllClass from "./Classes/GetAllClass";
 export {
     Input,
     Button,
@@ -26,5 +27,6 @@ export {
     ChangeUserPassword,
     UpdateUserDetails,
     Home,
-    CreateClass
+    CreateClass,
+    FetchAllClass
 }

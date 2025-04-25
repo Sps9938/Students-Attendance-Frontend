@@ -10,7 +10,7 @@ function Home() {
   };
 
   const handleGetClasses = () => {
-    navigate('/getclass');
+    navigate('/getclasses');
   };
 
   return (
