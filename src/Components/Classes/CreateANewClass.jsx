@@ -29,7 +29,7 @@ const createNewClass = async(data) => {
         setClassLink(createdClass.link);
         reset();
         alert("class created sucessfully");
-        // navigate("/createclass");
+        // navigate("/getclasses");
        }
     } catch (error) {
         console.error("class creation failed", err);
@@ -69,6 +69,7 @@ return (
           Create Class
         </Button>
       </form>
+      
 
       {classLink && (
         <div className="mt-4 p-2 bg-green-100 rounded border border-green-400">
@@ -81,8 +82,17 @@ return (
           >
             {classLink}
           </a>
+
+          <Button
+        type="button"
+        className="w-full bg-blue-600 hover:bg-blue-700 mt-2"
+        onClick={() => navigate("/getclasses")}
+      >
+        View All Classes
+      </Button>
         </div>
       )}
+
     </div>
   );
 
