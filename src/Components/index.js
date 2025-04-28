@@ -13,7 +13,7 @@ import UpdateUserDetails from "./User/EditUserDetail";
 import Home from "./Home/Home";
 import CreateClass from "./Classes/CreateANewClass";
 import FetchAllClass from "./Classes/GetAllClass";
-import UpdateClass from "./Classes/UpdateClass";
+import AddStudentsForm from "./Students/AddSudentForm";
 export {
     Input,
     Button,
@@ -30,5 +30,6 @@ export {
     Home,
     CreateClass,
     FetchAllClass,
-    UpdateClass
+    AddStudentsForm
+
 }

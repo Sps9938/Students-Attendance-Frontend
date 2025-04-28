@@ -6,10 +6,9 @@ import store from './Store/store.js'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { Login, SignUp } from "./Pages"
+import { AddStudentsPage, Login, SignUp } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
 import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass} from './Components/index.js'
-
 
 
 const router = createBrowserRouter([
@@ -92,6 +91,17 @@ const router = createBrowserRouter([
                 <Protected authentication>
                  <FetchAllClass />
                 </Protected>
+ 
+                )
+            },
+      
+      
+            {
+                path: "/addstudents/:classToken",
+                element: (
+        
+                 <AddStudentsPage />
+      
  
                 )
             },

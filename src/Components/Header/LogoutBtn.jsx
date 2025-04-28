@@ -17,6 +17,7 @@ function LogoutBtn() {
                 console.log("No resposne in LogoutBtn");
             }
             dispatch(logout());
+            navigate("/addstudents");
             navigate("/login");
         } catch (error) {
             console.log("Logout Failed", error);

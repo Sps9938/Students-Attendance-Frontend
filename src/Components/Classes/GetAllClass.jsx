@@ -179,7 +179,7 @@ return (
             <div className="flex justify-between mt-4">
               <button
                 onClick={() => handleEdit(cls)}
-                className="bg-yellow-500 text-white px-3 py-1 rounded"
+                className="bg-blue-500 text-white px-3 py-1 rounded"
               >
                 Edit
               </button>
@@ -190,6 +190,13 @@ return (
                 Delete
               </button>
             </div>
+            {/* New add students Button */}
+            <button
+            onClick={() => navigate(`/addstudents/${cls.classToken}`)}
+            className="bg-purple-600 text-white px-3 py-1 rounded mt-2"
+            >
+            ➕ Add Students
+            </button>
           </>
         )}
       </div>
