@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import conf from "../../Conf/Conf";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function AddStudentsForm({ classToken }) {
     const navigate = useNavigate();
@@ -62,20 +62,23 @@ function AddStudentsForm({ classToken }) {
             )
 
             setStudents([]);
-            console.log("success", response);
-            navigate("/");
-            alert("Students added successfully");
-            
-
+            console.log("success", response.payload);
+            navigate("/getclasses");
+            if(!response){
+                alert("Students added successfully");
+            } else{
+                alert("students are not added successfully ")
+            }
+           
         } catch (error) {
             console.error("Eroor adding students", error);
             
         }
     }
 
-const handleBack = () => {
-    navigate("/getclasses")
-}
+// const handleBack = () => {
+//     navigate("/getclasses")
+// }
 
     return (
     <div className="p-4 max-w-3xl mx-auto">
@@ -139,7 +142,7 @@ const handleBack = () => {
         </div>
         ))}
 
-        {/* Submit Button */}
+      {/* Submit Button */}
       <div className="flex justify-center gap-3"> 
       <button
             type="submit"
@@ -148,7 +151,7 @@ const handleBack = () => {
             Submit
         </button>
         <button
-            onClick={handleBack}
+            onClick={() => navigate("/getclasses")}
             className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
         >
             Back

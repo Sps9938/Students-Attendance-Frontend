@@ -10,12 +10,13 @@ import { useForm } from "react-hook-form";
 function CreateClass(){
 
 const dispatch = useDispatch();
-const [ classLink, setClassLink ] = useState("");
+// const [ classLink, setClassLink ] = useState("");
+const [createdClass, setCreatedClass] = useState(null);
 const { register, handleSubmit, reset } = useForm();
 const navigate = useNavigate();
 
 const createNewClass = async(data) => {
-    const {className, courseName, yearBatch} = data;
+    
 
     try {
         
@@ -24,9 +25,9 @@ const createNewClass = async(data) => {
        });
 
        if(res){
-        const createdClass = res?.data?.data;
+        const createClass = res?.data?.data;
         // dispatch(addClass(createdClass));
-        setClassLink(createdClass.link);
+       setCreatedClass(createClass)
         reset();
         alert("class created sucessfully");
         // navigate("/getclasses");
@@ -71,16 +72,16 @@ return (
       </form>
       
 
-      {classLink && (
+      {createdClass && (
         <div className="mt-4 p-2 bg-green-100 rounded border border-green-400">
           <p>Class Created! Link:</p>
           <a
-            href={classLink}
+            href={`http://localhost:5173/student/form/${createdClass.classToken}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 underline break-all"
           >
-            {classLink}
+            {`http://localhost:5173/student/form/${createdClass.classToken}`}
           </a>
 
           <Button

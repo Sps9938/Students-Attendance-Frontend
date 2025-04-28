@@ -102,111 +102,111 @@ const FetchAllClass = () => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {classes.map((cls) => (
-            <div
-              key={cls._id}
-              className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between"
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {classes.map((cls) => (
+      <div
+        key={cls._id}
+        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between"
+      >
+        {editingId === cls._id ? (
+          <div className="flex flex-col gap-2">
+            <input
+              type="text"
+              value={editData.className}
+              onChange={(e) =>
+                setEditData({ ...editData, className: e.target.value })
+              }
+              className="border px-3 py-2 rounded"
+              placeholder="Class Name"
+            />
+          <input
+            type="text"
+            value={editData.courseName}
+            onChange={(e) =>
+              setEditData({ ...editData, courseName: e.target.value })
+            }
+            className="border px-3 py-2 rounded"
+            placeholder="Course Name"
+          />
+          <input
+            type="text"
+            value={editData.yearBatch}
+            onChange={(e) =>
+              setEditData({ ...editData, yearBatch: e.target.value })
+            }
+            className="border px-3 py-2 rounded"
+            placeholder="Year Batch"
+          />
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={() => handleUpdate(cls._id)}
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full"
             >
-              {editingId === cls._id ? (
-                <div className="flex flex-col gap-2">
-                  <input
-                    type="text"
-                    value={editData.className}
-                    onChange={(e) =>
-                      setEditData({ ...editData, className: e.target.value })
-                    }
-                    className="border px-3 py-2 rounded"
-                    placeholder="Class Name"
-                  />
-                  <input
-                    type="text"
-                    value={editData.courseName}
-                    onChange={(e) =>
-                      setEditData({ ...editData, courseName: e.target.value })
-                    }
-                    className="border px-3 py-2 rounded"
-                    placeholder="Course Name"
-                  />
-                  <input
-                    type="text"
-                    value={editData.yearBatch}
-                    onChange={(e) =>
-                      setEditData({ ...editData, yearBatch: e.target.value })
-                    }
-                    className="border px-3 py-2 rounded"
-                    placeholder="Year Batch"
-                  />
-                  <div className="flex justify-between mt-4">
-                    <button
-                      onClick={() => handleUpdate(cls._id)}
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => setEditingId(null)}
-                      className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-full"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div>
-                    <h3 className="text-2xl font-semibold mb-1">
-                      {cls.className} - {cls.courseName}
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      🎓 <strong>Batch:</strong> {cls.yearBatch}
-                    </p>
-
-                    <a
-                      href={`http://localhost:5173/student/form/${cls.classToken}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline text-sm break-all"
-                    >
-                      🔗 Click to Open Class Link
-                    </a>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <button
-                      onClick={() => handleEdit(cls)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-                    >
-                      <FiEdit /> Edit
-                    </button>
-
-                    <button
-                      onClick={() => handleCopy(cls)}
-                      className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-                    >
-                      <FiCopy />
-                      {copiedId === cls._id ? "Copied!" : "Copy Link"}
-                    </button>
-
-                    <button
-                      onClick={() => handleDelete(cls._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-                    >
-                      <FiTrash2 /> Delete
-                    </button>
-
-                    <button
-                      onClick={() => navigate(`/student/form/${cls.classToken}`)}
-                      className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-                    >
-                      <FiPlus /> Add Students
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          ))}
+              Save
+            </button>
+            <button
+              onClick={() => setEditingId(null)}
+              className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-full"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
+        ) : (
+        <>
+          <div>
+            <h3 className="text-2xl font-semibold mb-1">
+              {cls.className} - {cls.courseName}
+            </h3>
+            <p className="text-gray-600 mb-4">
+              🎓 <strong>Batch:</strong> {cls.yearBatch}
+            </p>
+
+            <a
+              href={`http://localhost:5173/student/form/${cls.classToken}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline text-sm break-all"
+            >
+              🔗 Click to Open Student Form Link
+            </a>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button
+              onClick={() => handleEdit(cls)}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+            >
+              <FiEdit /> Edit
+            </button>
+
+            <button
+              onClick={() => handleCopy(cls)}
+              className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+            >
+              <FiCopy />
+              {copiedId === cls._id ? "Copied!" : "Copy Link"}
+            </button>
+
+            <button
+              onClick={() => handleDelete(cls._id)}
+              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+            >
+              <FiTrash2 /> Delete
+            </button>
+
+            <button
+              onClick={() => navigate(`/student/form/${cls.classToken}`)}
+              className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+            >
+              <FiPlus /> Add Students
+            </button>
+            </div>
+          </>
+        )}
+      </div>
+    ))}
+  </div>
       )}
     </div>
   );
