@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, {useState} from "react";
 import conf from "../../Conf/Conf";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function AddStudentsForm({ classToken }) {
-
+    const navigate = useNavigate();
     const [numberOfStudents, setNumberOfStudents] = useState(1);
     const [students, setStudents] = useState([{
         Name: "",
@@ -39,21 +40,30 @@ function AddStudentsForm({ classToken }) {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-
+        // console.log("Students: ", students);
+        
         const payload = {
             classToken: classToken,
             students: students,
         }
+        // console.log("Payload", payload);
+        
 
         try {
             
 
-            const response = await axios.post(`${conf.API_URL}/student/add/students`, payload,{
-                withCredentials: true,
-            })
+            const response = await axios.post(`${conf.API_URL}/student/add/students`, payload,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    withCredentials: true,
+                }    
+            )
 
             setStudents([]);
             console.log("success", response);
+            navigate("/");
             alert("Students added successfully");
             
 
@@ -63,6 +73,9 @@ function AddStudentsForm({ classToken }) {
         }
     }
 
+const handleBack = () => {
+    navigate("/getclasses")
+}
 
     return (
     <div className="p-4 max-w-3xl mx-auto">
@@ -127,12 +140,20 @@ function AddStudentsForm({ classToken }) {
         ))}
 
         {/* Submit Button */}
-        <button
+      <div className="flex justify-center gap-3"> 
+      <button
             type="submit"
             className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
         >
             Submit
         </button>
+        <button
+            onClick={handleBack}
+            className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+        >
+            Back
+        </button>
+      </div>
     </form>
         </div>
     );

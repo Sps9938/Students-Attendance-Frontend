@@ -1,212 +1,215 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import conf from "../../Conf/Conf";
 import { useNavigate } from "react-router-dom";
+import { FiEdit, FiTrash2, FiCopy, FiPlus } from "react-icons/fi"; // icons
+import { AiOutlineLoading3Quarters } from "react-icons/ai"; // loading spinner
 
 const FetchAllClass = () => {
-const navigate = useNavigate();
-const [classes, setClasses] = useState([]);
-const [loading, setLoading] = useState(true);
-const [EditData, setEditData] = useState(null);
-const [EditingId, setEditingId] = useState(null)
+  const navigate = useNavigate();
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editData, setEditData] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [copiedId, setCopiedId] = useState(null);
 
+  const getClasses = async () => {
+    try {
+      const res = await axios.get(`${conf.API_URL}/class/get/AllClass`, {
+        withCredentials: true,
+      });
+      if (res?.data?.data) {
+        setClasses(res.data.data);
+      } else {
+        navigate("/createclass");
+        setClasses([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch classes", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const getClasses = async () => {
-        try {
-           
-            const res = await axios.get(`${conf.API_URL}/class/get/AllClass`,{
-                withCredentials: true,
-            });
-            console.log(res);
-            
-            if(res?.data?.data){
-                setClasses(res.data.data);
-                console.log("Fetched classes sucessfully",  res.data.data);
-            
-                
-            } 
-            else{
-              navigate("/createclass")
-              setClasses([]);
-            }
-            console.log("classes is: ", classes);
-            
-           
-        } catch (error) {
-            console.error("Failed to fetch classes", error);   
-        } finally {
-            setLoading(false);
-        }
-    };
+  useEffect(() => {
+    getClasses();
+  }, []);
 
-useEffect(() => {
+  const handleEdit = (cls) => {
+    setEditingId(cls._id);
+    setEditData({
+      className: cls.className,
+      courseName: cls.courseName,
+      yearBatch: cls.yearBatch,
+    });
+  };
 
-  getClasses();
-},[])
+  const handleUpdate = async (id) => {
+    try {
+      await axios.post(`${conf.API_URL}/class/update/class/${id}`, editData, {
+        withCredentials: true,
+      });
+      setEditingId(null);
+      getClasses();
+      alert("Class Updated Successfully");
+    } catch (error) {
+      console.error("Failed to update class", error);
+    }
+  };
 
+  const handleDelete = async (id) => {
+    try {
+      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      if (!confirmDelete) return;
 
-const handleEdit = async(cls) => {
-setEditingId(cls._id);
-setEditData( {
-  className: cls.className,
-  courseName: cls.courseName,
-  yearBatch: cls.yearBatch,
-});
+      await axios.delete(`${conf.API_URL}/class/delete/class/${id}`, {
+        withCredentials: true,
+      });
+      getClasses();
+    } catch (error) {
+      console.error("Failed to delete class", error);
+    }
+  };
+
+  const handleCopy = (cls) => {
+    navigator.clipboard
+      .writeText(`http://localhost:5173/student/form/${cls.classToken}`)
+      .then(() => {
+        setCopiedId(cls._id);
+        setTimeout(() => setCopiedId(null), 2000); // Hide after 2 sec
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
+  return (
+    <div className="p-6 min-h-screen bg-gray-400">
+      <h2 className="text-3xl font-bold mb-8 text-center">🎓 Your Classes</h2>
+
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <AiOutlineLoading3Quarters className="animate-spin text-4xl text-blue-500" />
+        </div>
+      ) : classes.length === 0 ? (
+        <div className="text-center mt-12">
+          <p className="text-gray-500 mb-4">No classes found!</p>
+          <button
+            onClick={() => navigate("/createclass")}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full shadow"
+          >
+            ➕ Create Class
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {classes.map((cls) => (
+            <div
+              key={cls._id}
+              className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between"
+            >
+              {editingId === cls._id ? (
+                <div className="flex flex-col gap-2">
+                  <input
+                    type="text"
+                    value={editData.className}
+                    onChange={(e) =>
+                      setEditData({ ...editData, className: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded"
+                    placeholder="Class Name"
+                  />
+                  <input
+                    type="text"
+                    value={editData.courseName}
+                    onChange={(e) =>
+                      setEditData({ ...editData, courseName: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded"
+                    placeholder="Course Name"
+                  />
+                  <input
+                    type="text"
+                    value={editData.yearBatch}
+                    onChange={(e) =>
+                      setEditData({ ...editData, yearBatch: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded"
+                    placeholder="Year Batch"
+                  />
+                  <div className="flex justify-between mt-4">
+                    <button
+                      onClick={() => handleUpdate(cls._id)}
+                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingId(null)}
+                      className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-full"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-2xl font-semibold mb-1">
+                      {cls.className} - {cls.courseName}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      🎓 <strong>Batch:</strong> {cls.yearBatch}
+                    </p>
+
+                    <a
+                      href={`http://localhost:5173/student/form/${cls.classToken}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline text-sm break-all"
+                    >
+                      🔗 Click to Open Class Link
+                    </a>
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <button
+                      onClick={() => handleEdit(cls)}
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+                    >
+                      <FiEdit /> Edit
+                    </button>
+
+                    <button
+                      onClick={() => handleCopy(cls)}
+                      className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+                    >
+                      <FiCopy />
+                      {copiedId === cls._id ? "Copied!" : "Copy Link"}
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(cls._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+                    >
+                      <FiTrash2 /> Delete
+                    </button>
+
+                    <button
+                      onClick={() => navigate(`/student/form/${cls.classToken}`)}
+                      className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+                    >
+                      <FiPlus /> Add Students
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
-
-const handleUpdate = async(id) => {
-  try {
-    
-    const res = await axios.post(`${conf.API_URL}/class/update/class/${id}`, EditData,{
-      withCredentials: true,
-    });
-
-    const updateClass = res.data.data;
-    console.log("Class Updated successfully", updateClass);
-    setEditingId(null)
-    getClasses();
-    alert("Class Updated Sucessfully");
-   
-    
-  } catch (error) {
-    console.error("Failed to update class", error);
-    
-  }
-}
-
-const handleDelete = async(id) => {
-  try {
-    
-   const confirmDelte = window.confirm("Are you Sure to Delete this Class");
-   if(!confirmDelte) return;
-
-    await axios.delete(`${conf.API_URL}/class/delete/class/${id}`, {
-      withCredentials: true,
-    });
-
-    getClasses();
-
-
-
-
-  } catch (error) {
-    console.error("Failed to delete class", error);
-    
-  }
-}
-
-
-return (
-  <div className="p-6">
-    <h2 className="text-2xl font-bold mb-6 text-center">Your Classes</h2>
-  {loading ? (
-    <p className="text-center text-gray-300">Loading classes...</p>
-  ) : classes.length === 0 ? (
-   navigate("/createclass")
-  ) : (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {classes.map((cls) => (
-      <div
-        key={cls._id}
-        className="border border-gray-700 rounded-xl p-4 shadow hover:shadow-md transition duration-300"
-      >
-        {EditingId === cls._id ? (
-          <div className="flex flex-col gap-2">
-            <input
-              type="text"
-              value={EditData.className}
-              onChange={(e) =>
-                setEditData({ ...EditData, className: e.target.value })
-              }
-              className="border px-2 py-1 rounded"
-              placeholder="Class Name"
-            />
-            <input
-              type="text"
-              value={EditData.courseName}
-              onChange={(e) =>
-                setEditData({ ...EditData, courseName: e.target.value })
-              }
-              className="border px-2 py-1 rounded"
-              placeholder="Course Name"
-            />
-            <input
-              type="text"
-              value={EditData.yearBatch}
-              onChange={(e) =>
-                setEditData({ ...EditData, yearBatch: e.target.value })
-              }
-              className="border px-2 py-1 rounded"
-              placeholder="Year Batch"
-            />
-            <div className="flex justify-between mt-2">
-              <button
-                onClick={() => handleUpdate(cls._id)}
-                className="bg-green-600 text-white px-3 py-1 rounded"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setEditingId(null)}
-                className="bg-gray-400 text-white px-3 py-1 rounded"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <h3 className="text-xl font-semibold mb-2">
-              {cls.className} - {cls.courseName}
-            </h3>
-            <p className="text-sm text-black">
-              <strong>Batch:</strong> {cls.yearBatch}
-            </p>
-            <p className="text-sm text-black">
-              <strong>Class Token:</strong> {cls.classToken}
-            </p>
-            <p className="text-sm text-black">
-              <strong>Copy Class Link:</strong> {cls.link}
-            </p>
-            <a
-              href={cls.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block mt-3 text-blue-900 hover:underline truncate"
-            >
-              🔗 Click Class Link
-            </a>
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={() => handleEdit(cls)}
-                className="bg-blue-500 text-white px-3 py-1 rounded"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(cls._id)}
-                className="bg-red-600 text-white px-3 py-1 rounded"
-              >
-                Delete
-              </button>
-            </div>
-            {/* New add students Button */}
-            <button
-            onClick={() => navigate(`/addstudents/${cls.classToken}`)}
-            className="bg-purple-600 text-white px-3 py-1 rounded mt-2"
-            >
-            ➕ Add Students
-            </button>
-          </>
-        )}
-      </div>
-    ))}
-  </div>
-    )}
-    
-  </div>
-);
-}
-
 
 export default FetchAllClass;

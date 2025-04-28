@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import axios from "axios";
 import conf from "../Conf/Conf";
+import { FiLogIn, FiUserPlus } from "react-icons/fi";
 
 function Login() {
     // const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -78,7 +79,7 @@ return (
         <p className="mt-2 text-center text-base text-black/60">
             Don&apos;t have an account?&nbsp;
             <Link to="/signup" className="font-medium text-primary transition-all duration-200 hover:underline">
-                Sign Up
+            <FiUserPlus size={18} /> Sign up
             </Link>
         </p>
 
@@ -108,7 +109,7 @@ return (
 
         <div className="flex justify-between items-center gap-4 mt-4">
             <Button type="submit" className="flex-1">
-                Sign in
+                <FiLogIn size={18}/> Sign in
             </Button>
             
             <button
