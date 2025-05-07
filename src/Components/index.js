@@ -14,6 +14,7 @@ import Home from "./Home/Home";
 import CreateClass from "./Classes/CreateANewClass";
 import FetchAllClass from "./Classes/GetAllClass";
 import AddStudentsForm from "./Students/AddSudentForm";
+import GetStudentDetails from "./Students/GetStudentDetails";
 export {
     Input,
     Button,
@@ -30,6 +31,7 @@ export {
     Home,
     CreateClass,
     FetchAllClass,
-    AddStudentsForm
+    AddStudentsForm,
+    GetStudentDetails
 
 }

@@ -6,7 +6,7 @@ import store from './Store/store.js'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { AddStudentsPage, Login, SignUp } from "./Pages"
+import { AddStudentsPage, Login, SignUp, StudentPage } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
 import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass} from './Components/index.js'
 
@@ -102,6 +102,18 @@ const router = createBrowserRouter([
         
                  <AddStudentsPage />
       
+ 
+                )
+            },
+      
+      
+            {
+                path: "/student/details/:classId",
+                element: (
+        
+                    <Protected authentication>
+                   <StudentPage />
+                   </Protected>
  
                 )
             },

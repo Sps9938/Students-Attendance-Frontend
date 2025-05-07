@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import conf from "../../Conf/Conf";
 import { useNavigate } from "react-router-dom";
-import { FiEdit, FiTrash2, FiCopy, FiPlus, FiArrowLeft } from "react-icons/fi"; // icons
+import { FiEdit, FiTrash2, FiCopy, FiPlus, FiArrowLeft, FiUsers } from "react-icons/fi"; // icons
 import { AiOutlineLoading3Quarters } from "react-icons/ai"; // loading spinner
 
 const FetchAllClass = () => {
@@ -201,11 +201,18 @@ const FetchAllClass = () => {
             >
               <FiPlus /> Add Students
             </button>
+
+          <button
+        onClick={() => navigate(`/student/details/${cls._id}`)}
+        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+      >
+        <FiUsers /> Get Students
+      </button>
            
           <FiArrowLeft 
           onClick={()=> navigate("/")}
           className="w-6 h-6 cursor-pointer">;
-          Back
+         
      </FiArrowLeft>
      
             </div>
