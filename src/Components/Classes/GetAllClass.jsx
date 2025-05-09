@@ -203,7 +203,7 @@ const FetchAllClass = () => {
             </button>
 
           <button
-        onClick={() => navigate(`/student/details/${cls._id}`)}
+        onClick={() => navigate(`/student/get/student/details/${cls._id}`)}
         className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
       >
         <FiUsers /> Get Students

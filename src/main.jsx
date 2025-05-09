@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { AddStudentsPage, Login, SignUp, StudentPage } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
-import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass} from './Components/index.js'
+import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance} from './Components/index.js'
 
 
 const router = createBrowserRouter([
@@ -108,11 +108,21 @@ const router = createBrowserRouter([
       
       
             {
-                path: "/student/details/:classId",
+                path: "/student/get/student/details/:classId",
                 element: (
         
                     <Protected authentication>
                    <StudentPage />
+                   </Protected>
+ 
+                )
+            },
+            {
+                path: "/student/mark/attendance/:classId",
+                element: (
+        
+                    <Protected authentication>
+                  <MarkAttendance />
                    </Protected>
  
                 )

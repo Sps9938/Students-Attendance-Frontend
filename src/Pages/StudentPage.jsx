@@ -5,11 +5,11 @@ import conf from "../Conf/Conf";
 import { useNavigate, useParams } from "react-router-dom";
 const StudentPage = () => {
   const [students, setStudents] = useState([]);
-  const classId = useParams();
+  const {classId} = useParams();
 // console.log("classid is:", classId);
 const navigate = useNavigate();
   const fetchStudents = async () => {
-    const res = await axios.post(`${conf.API_URL}/student/get/student/details/${classId.classId}`)
+    const res = await axios.post(`${conf.API_URL}/student/get/student/details/${classId}`)
     console.log("students data:", res);
     
     setStudents(res.data.data.students);
@@ -18,7 +18,7 @@ const navigate = useNavigate();
   const handleMarkAttendance = () => {
     // Navigate to or show attendance marking UI
     console.log("Navigate to mark attendance page");
-    navigate("/mark/attendance")
+    navigate(`/student/mark/attendance/${classId}`)
     
   };
 
