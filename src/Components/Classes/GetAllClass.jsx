@@ -59,7 +59,7 @@ const FetchAllClass = () => {
 
   const handleDelete = async (id) => {
     try {
-      const confirmDelete = window.confirm("Are you sure you want to delete?");
+      const confirmDelete = window.confirm("Are you surre to delete this class ???");
       if (!confirmDelete) return;
 
       await axios.delete(`${conf.API_URL}/class/delete/class/${id}`, {
