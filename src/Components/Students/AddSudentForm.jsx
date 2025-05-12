@@ -76,7 +76,7 @@ function AddStudentsForm({ classToken }) {
     setStudents([]);
     navigate("/getclasses");
 
-    alert(!response ? "Students added successfully" : "Students are not added successfully");
+    alert(response ? "Students added successfully" : "Students are not added successfully");
 } catch (error) {
     console.error("Error adding students", error);
 }

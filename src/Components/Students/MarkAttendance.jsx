@@ -40,6 +40,8 @@ function MarkAttendance() {
     }
 
     const handleSubmit = () => {
+
+      
         navigate(`/student/get/student/details/${classId}`)
     }
     return (

@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { AddStudentsPage, Login, SignUp, StudentPage } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
-import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance} from './Components/index.js'
+import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance } from './Components/index.js'
 
 
 const router = createBrowserRouter([
@@ -19,10 +19,14 @@ const router = createBrowserRouter([
 
             {
                 path: "/",
-                element: <Home />
-       
+                element: (
+                    <Protected authentication>
+                        <Home />
+                    </Protected>
+                ),
+
             },
-        
+
             {
 
                 path: "/login",
@@ -52,89 +56,90 @@ const router = createBrowserRouter([
             {
                 path: "/forget-password",
                 element: (
-                  
-                        <ForgetPassword />
- 
+
+                    <ForgetPassword />
+
                 )
             },
             {
                 path: "/change-password",
                 element: (
                     <Protected authentication>
-                    <ChangeUserPassword />
-                </Protected>
- 
+                        <ChangeUserPassword />
+                    </Protected>
+
                 )
             },
             {
                 path: "/update-user-details",
                 element: (
                     <Protected authentication>
-                    <UpdateUserDetails />
-                </Protected>
- 
+                        <UpdateUserDetails />
+                    </Protected>
+
                 )
             },
             {
                 path: "/createclass",
                 element: (
                     <Protected authentication>
-                    <CreateClass />
-                </Protected>
- 
+                        <CreateClass />
+                    </Protected>
+
                 )
             },
-      
+
             {
                 path: "/getclasses",
                 element: (
-                <Protected authentication>
-                 <FetchAllClass />
-                </Protected>
- 
+                    <Protected authentication>
+                        <FetchAllClass />
+                    </Protected>
+
                 )
             },
-      
-      
+
+
             {
                 path: "/student/form/:classToken",
                 element: (
-        
-                 <AddStudentsPage />
-      
- 
+
+                    <AddStudentsPage />
+
+
                 )
             },
-      
-      
+
+
             {
                 path: "/student/get/student/details/:classId",
                 element: (
-        
+
                     <Protected authentication>
-                   <StudentPage />
-                   </Protected>
- 
+                        <StudentPage />
+                    </Protected>
+
                 )
             },
             {
                 path: "/student/mark/attendance/:classId",
                 element: (
-        
+
                     <Protected authentication>
-                  <MarkAttendance />
-                   </Protected>
- 
+                        <MarkAttendance />
+                    </Protected>
+
                 )
             },
-      
 
 
-            
-             
-          
-        
-]}
+
+
+
+
+
+        ]
+    }
 ])
 
 createRoot(document.getElementById('root')).render(
