@@ -59,15 +59,14 @@ function App() {
     }
 
     return (
-      <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
-      <div className="w-full block">
+      <div className="min-h-screen w-full bg-gray-400">
+   
         <Header />
-        <main>
+       <main className="w-full py-8">
           <Outlet />
         </main>
-   
       </div>
-    </div>
+
     )
 }
 

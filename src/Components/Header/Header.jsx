@@ -6,7 +6,6 @@ import { Container, LogoutBtn, UserButton } from "../index"
  function Header(){
     const authStatus = useSelector((state) => state.auth.success);
     console.log(authStatus);
-    
 
     const navItems = [
 
@@ -38,11 +37,13 @@ import { Container, LogoutBtn, UserButton } from "../index"
 
 
 return (
-    <header className="bg-white shadow-md sticky top-0 z-50 ">
-        <Container>
+    <header className="bg-white shadow-md sticky top-0 z-50 w-full">
+
+    <Container>
+       
     <nav className="flex items-center justify-between py-4 font-bold text-black">
         <Link to="/" className="text-xl font-bold text-gray-800">
-        MyApp
+        Attendance
         </Link>
 
     <ul className="flex items-center gap-4">
@@ -67,11 +68,9 @@ return (
     
 </li>
 }
-
-
-
     </ul>
     </nav>
+ 
         </Container>
     </header>
     );
