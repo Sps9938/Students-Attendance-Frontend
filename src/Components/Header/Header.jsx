@@ -37,7 +37,7 @@ import { Container, LogoutBtn, UserButton } from "../index"
 
 
 return (
-    <header className="bg-white shadow-md sticky top-0 z-50 w-full">
+    <header className="bg-white shadow-md sticky top-0 z-50 w-full mr-80">
 
     <Container>
        

@@ -41,11 +41,17 @@ function AddStudentsForm({ classToken }) {
             const workbook = XLSX.read(bstr, { type: "binary" });
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-            const formattedStudents = jsonData.map((row) => ({
-                Name: row["Name"] || row["Student Name"] || "",
-                EnrollmentNo: row["EnrollmentNo"] || row["Enrollment No"] || ""
+            // Read raw rows as arrays, no headers
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            // Filter rows with valid roll number and name
+            const validRows = jsonData.filter(row => row[1] && row[2]);
+
+            // Format: row[1] = EnrollmentNo, row[2] = Name
+            const formattedStudents = validRows.map((row) => ({
+                EnrollmentNo: row[1].toString().trim(),
+                Name: row[2].toString().trim(),
             }));
 
             setStudents(formattedStudents);
@@ -54,6 +60,7 @@ function AddStudentsForm({ classToken }) {
 
         reader.readAsBinaryString(file);
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
