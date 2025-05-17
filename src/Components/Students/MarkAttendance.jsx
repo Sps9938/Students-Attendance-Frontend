@@ -80,9 +80,16 @@ function MarkAttendance() {
   // Submit attendance to backend
   const handleSubmit = async () => {
     const oppositeStatus = mode === "Present" ? "Absent" : "Present";
+    //here after save all status save in database one by one using map
+
+    if(Object.keys(marked).length === 0) {
+      alert("Please mark at least one student before submitting");
+      return;
+}
 
     try {
       const promises = students.map((student) => {
+     
         const status = marked[student.EnrollmentNo] || oppositeStatus;
         return axios.post(
           `${conf.API_URL}/student/mark/attendance/${student._id}`,
@@ -94,6 +101,14 @@ function MarkAttendance() {
       await Promise.all(promises);
 
       const newMarked = {};
+      /*
+      mode = "Present"
+      marked = { "101": "Present", "104": "Present" }
+      students = [ "101", "102", "103", "104", "105" ]
+
+      see how it works when mode[student.enrollmentno] = 101 -> save as Present
+      when mode[student.enrollmentno] = 102 => not found it means or as oppositeStaus -> save as Absent
+      */
       students.forEach((student) => {
         const status = marked[student.EnrollmentNo] || oppositeStatus;
         newMarked[student.EnrollmentNo] = status;
@@ -117,21 +132,19 @@ function MarkAttendance() {
         <span className="font-medium">Select Mode:</span>
         <button
           onClick={() => setMode("Present")}
-          className={`px-3 py-1 rounded ${
-            mode === "Present" ? "bg-green-600 text-white" : "bg-gray-200"
-          }`}
+          className={`px-3 py-1 rounded ${mode === "Present" ? "bg-green-600 text-white" : "bg-gray-200"
+            }`}
         >
           Present (✔️)
         </button>
         <button
           onClick={() => setMode("Absent")}
-          className={`px-3 py-1 rounded ${
-            mode === "Absent" ? "bg-red-600 text-white" : "bg-gray-200"
-          }`}
+          className={`px-3 py-1 rounded ${mode === "Absent" ? "bg-red-600 text-white" : "bg-gray-200"
+            }`}
         >
           Absent (❌)
         </button>
-        <span className="text-sm text-gray-500 ml-auto">
+        <span className="text-sm text-black ml-auto">
           Use arrow keys ← ↑ → ↓ and press Enter or click to mark/unmark
         </span>
       </div>
@@ -144,46 +157,54 @@ function MarkAttendance() {
           const isActive = idx === activeIndex;
 
           return (
-            <div
-              key={EnrollmentNo}
-              className={`relative w-16 h-16 flex items-center justify-center text-xl font-bold rounded-full cursor-pointer
-                transition duration-200
-                ${
-                  status === "Present"
-                    ? "bg-green-200"
-                    : status === "Absent"
-                    ? "bg-red-200"
-                    : "bg-gray-100 hover:bg-gray-300"
-                }
-                ${isActive ? "ring-4 ring-blue-500 bg-yellow-400" : ""}
-              `}
-              onClick={() => handleMark(EnrollmentNo)}
-            >
-      <div className="relative flex items-center justify-center w-full h-full">
+      <div
+        key={EnrollmentNo}
+        className={`relative w-16 h-16 flex items-center justify-center text-xl font-bold cursor-pointer
+        transition duration-200 border border-gray-300
+        ${status === "Present"
+        ? "bg-green-200"
+        : status === "Absent"
+          ? "bg-red-200"
+          : "bg-gray-100 hover:bg-yellow-500"
+      }
+        ${isActive ? "ring-4 ring-blue-500 bg-yellow-400" : ""}
+        `}
+            onClick={() => handleMark(EnrollmentNo)}
+          >
+            <div className="relative flex items-center justify-center w-full h-full">
+              <span className="text-xl font-bold">
+                {status === "Present" ? "✅" : status === "Absent" ? "❌" : EnrollmentNo.slice(-3)}
+              </span>
+              <span
+                className="absolute text-xs font-semibold text-gray-700"
+                style={{ bottom: "4px", right: "6px" }}
+              >
+                {EnrollmentNo.slice(-3)}
+              </span>
+            </div>
+          </div>
 
-      <span className="text-xl font-bold">
-        {status === "Present" ? "✅" : status === "Absent" ? "❌" : EnrollmentNo.slice(-3)}
-      </span>
-
-
-      <span
-        className="absolute text-xs font-semibold text-gray-700"
-        style={{ bottom: "4px", right: "6px" }}
-      >
-        {EnrollmentNo.slice(-3)}
-      </span>
-      </div>
-        </div>
           );
         })}
       </div>
+      <div className="flex justify-center mt-6">
+        <div className="md:w-1/4 w-full flex flex-row gap-3 justify-center">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full"
+          >
+            Submit Mark Attendance
+          </button>
 
-      <button
-        onClick={handleSubmit}
-        className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-      >
-        Submit & Save Attendance
-      </button>
+          <button
+            type="button"
+            onClick={() => navigate(`/student/get/student/details/${classId}`)}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded w-full"
+          >
+            Back
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
