@@ -1,8 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const GetStudentDetails = ({ students = [], onMarkAttendance }) => {
+  // console.log("students details:", students);
+  
     const navigete = useNavigate();
+ 
+    const handleSubmit = () => {
+   
+      navigete("/low/attendance", {
+        state: {students}
+      })
+    }
   return (
   <div className="flex flex-col md:flex-row p-4 gap-4">
     {/* Left Side: Mark Attendance Button */}
@@ -15,11 +25,17 @@ const GetStudentDetails = ({ students = [], onMarkAttendance }) => {
       </button>
 
       <button
+        onClick={handleSubmit}
+        className="bg-red-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded w-full]"
+      >
+        LowAttendeance
+      </button>
+      {/* <button
         onClick={()=> navigete("/getclasses")}
         className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded w-full]"
       >
         Back
-      </button>
+      </button> */}
     </div>
 
   {/* Right Side: Student Table */}
@@ -41,8 +57,12 @@ const GetStudentDetails = ({ students = [], onMarkAttendance }) => {
           <td className="px-4 py-2">{student.Name}</td>
           <td className="px-4 py-2">{student.EnrollmentNo}</td>
           <td className="px-4 py-2">
-            {student.percentage || 0}%
+            {student.percentage || 0}
           </td>
+          <button className="text-blue-600 underline"
+          onClick={() => navigete(`/get/each/student/detais/${student._id}`)}
+          >
+            Get Details</button>
         </tr>
       ))}
     </tbody>

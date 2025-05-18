@@ -6,9 +6,9 @@ import store from './Store/store.js'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { AddStudentsPage, Login, SignUp, StudentPage } from "./Pages"
+import { AddStudentsPage, Login, SignUp, SingleStudentPage, StudentPage } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
-import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance } from './Components/index.js'
+import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance, LowAttendance} from './Components/index.js'
 
 
 const router = createBrowserRouter([
@@ -127,6 +127,26 @@ const router = createBrowserRouter([
 
                     <Protected authentication>
                         <MarkAttendance />
+                    </Protected>
+
+                )
+            },
+            {
+                path: "/get/each/student/detais/:studentId",
+                element: (
+
+                    <Protected authentication>
+             <SingleStudentPage />
+                    </Protected>
+
+                )
+            },
+            {
+                path: "/low/attendance",
+                element: (
+
+                    <Protected authentication>
+                        <LowAttendance />
                     </Protected>
 
                 )

@@ -16,6 +16,8 @@ import FetchAllClass from "./Classes/GetAllClass";
 import AddStudentsForm from "./Students/AddSudentForm";
 import GetStudentDetails from "./Students/GetStudentDetails";
 import MarkAttendance from "./Students/MarkAttendance";
+import GetEachStudent from "./Students/GetEachStudent";
+import LowAttendance from "./Students/LowAttendance";
 export {
     Input,
     Button,
@@ -34,6 +36,8 @@ export {
     FetchAllClass,
     AddStudentsForm,
     GetStudentDetails,
-    MarkAttendance
+    MarkAttendance,
+    GetEachStudent,
+    LowAttendance
 
 }
