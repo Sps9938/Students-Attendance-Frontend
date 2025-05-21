@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import { AddStudentsPage, Login, SignUp, SingleStudentPage, StudentPage } from "./Pages"
 import Protected from './Components/AuthLayout.jsx'
-import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance, LowAttendance} from './Components/index.js'
+import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance, LowAttendance, SendOtp, VerifyOtp} from './Components/index.js'
 
 
 const router = createBrowserRouter([
@@ -147,6 +147,26 @@ const router = createBrowserRouter([
 
                     <Protected authentication>
                         <LowAttendance />
+                    </Protected>
+
+                )
+            },
+            {
+                path: "/request-otp",
+                element: (
+
+                    <Protected authentication={false}>
+                       <SendOtp />
+                    </Protected>
+
+                )
+            },
+            {
+                path: "/verify-otp",
+                element: (
+
+                    <Protected authentication={false}>
+                       <VerifyOtp />
                     </Protected>
 
                 )

@@ -16,12 +16,13 @@ function SignUp() {
     const {register, handleSubmit} = useForm()
 
     const create = async(data) => {
+      
         setError('')
         console.log("welcome to the sign Form",data);
         
 
         try {
-
+            // const teacherRecord = await axios(`${conf.API_URL}/user/get-user`)
             const response = await axios.post(`${conf.API_URL}/user/register`, {
                 fullname: data.fullname,
                 username: data.username,
@@ -36,51 +37,23 @@ function SignUp() {
                 withCredentials: true,
             }    
         )
-        console.log("response: ", response);
-        
-        if(response?.data?.success){
 
-            const loginResponse = await axios.patch(`${conf.API_URL}/user/login`, {
-                email: data.email,
-                password: data.password
-            }, {
-                withCredentials: true
+        if(!response?.data?.isVerified)
+        {
+            navigate("/request-otp",{
+                state: {
+                    email: data.email,
+                    password: data.password
+                }
             })
-
-
-            if(loginResponse?.data?.success){
-                const userData = await axios.get(`${conf.API_URL}/user/get-user`,{
-                    withCredentials: true
-                })
-                console.log("cureent user: ", userData);
-                
-            }
-
-            const result = loginResponse.data;
-            if(result.success){
-                const {accessToken, refreshToken, user} = result.data;
-
-                localStorage.setItem("accessToken",accessToken);
-                localStorage.setItem("refreshToken",refreshToken);
-
-
-                // Dispatch user data to Redux
-                // dispatch(authLogin(user)); // result.user must contain your user info
-
-                // Navigate to homepage
-                dispatch(authLogin(user))
-                navigate("/");
-            } else {
-                setError(result.message || "Login failed");
-            }
-        }
-        else{
-            console.log("Failed Fetched userData");
             
         }
+        else{
+        
+        navigate("/login")
             //probel for not getting userData after signUp
         
-          
+    }
 
         } catch (err) {
             console.error("Signin error", err);

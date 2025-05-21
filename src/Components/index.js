@@ -18,6 +18,9 @@ import GetStudentDetails from "./Students/GetStudentDetails";
 import MarkAttendance from "./Students/MarkAttendance";
 import GetEachStudent from "./Students/GetEachStudent";
 import LowAttendance from "./Students/LowAttendance";
+import SendOtp from "./User/SendOtp";
+import VerifyOtp from "./User/VerifyOtp";
+
 export {
     Input,
     Button,
@@ -38,6 +41,8 @@ export {
     GetStudentDetails,
     MarkAttendance,
     GetEachStudent,
-    LowAttendance
+    LowAttendance,
+    SendOtp,
+    VerifyOtp
 
 }
