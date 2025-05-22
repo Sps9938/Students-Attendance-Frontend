@@ -9,6 +9,7 @@ const navigate = useNavigate();
 
   const { Name, EnrollmentNo, attendance, percentage } = student;
 
+  
   return (
 
 

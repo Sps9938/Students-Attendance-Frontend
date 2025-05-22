@@ -128,26 +128,53 @@ function MarkAttendance() {
       <h2 className="text-2xl font-bold mb-4">Mark Attendance</h2>
 
       {/* Mode Selection */}
-      <div className="flex items-center gap-4 mb-6">
-        <span className="font-medium">Select Mode:</span>
-        <button
-          onClick={() => setMode("Present")}
-          className={`px-3 py-1 rounded ${mode === "Present" ? "bg-green-600 text-white" : "bg-gray-200"
-            }`}
-        >
-          Present (✔️)
-        </button>
-        <button
-          onClick={() => setMode("Absent")}
-          className={`px-3 py-1 rounded ${mode === "Absent" ? "bg-red-600 text-white" : "bg-gray-200"
-            }`}
-        >
-          Absent (❌)
-        </button>
-        <span className="text-sm text-black ml-auto">
-          Use arrow keys ← ↑ → ↓ and press Enter or click to mark/unmark
-        </span>
-      </div>
+    <div className="flex flex-col md:flex-row items-center justify-start gap-4 mb-6">
+      <label className="text-base font-semibold text-gray-700">Select Mode:</label>
+      
+      <select
+        value={mode}
+        onChange={(e) => {
+          const selectedMode = e.target.value;
+          setMode(selectedMode);
+
+          e.target.blur();
+          /*
+          Q.) Why use blur() in your case?
+          -> After you select a mode from the dropdown (<select>), the dropdown stays focused. This creates a problem:
+
+          -> 🔼🔽 When you press arrow keys (up/down/left/right), the dropdown still receives those keys and changes its value — not your student grid.
+
+          -> This breaks your keyboard-only navigation logic meant for student cell selection.
+
+          -> By calling e.target.blur():
+
+          -> The dropdown loses focus immediately after you select a value.
+
+          -> Now, arrow keys will be handled by your custom keyboard logic (handleKeyDown for the grid), not the dropdown.
+          */
+          if (selectedMode === "Mark All Present" || selectedMode === "Mark All Absent") {
+            const allMarked = {};
+            students.forEach((s) => {
+              allMarked[s.EnrollmentNo] =
+                selectedMode === "Mark All Present" ? "Present" : "Absent";
+            });
+            setMarked(allMarked);
+          }
+
+          if (selectedMode === "Clear All Marks") {
+            setMarked({});
+          }
+        }}
+        className="w-64 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-800"
+      >
+        <option value="">-- Select --</option>
+        <option value="Present">✅ Present(Single Cell)</option>
+        <option value="Absent">❌ Absent(Single Cell)</option>
+        <option value="Mark All Present">✔️ Mark All Present(All Cells)</option>
+        <option value="Mark All Absent">❌ Mark All Absent(All Cells)</option>
+        <option value="Clear All Marks">🧹 Clear All Marks(All Cells)</option>
+      </select>
+    </div>
 
       {/* Student Grid */}
       <div className="grid grid-cols-5 gap-4">
