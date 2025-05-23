@@ -4,89 +4,124 @@ import { useLocation, useNavigate } from "react-router-dom";
 import conf from "../../Conf/Conf";
 import { useDispatch } from "react-redux";
 import { login as authLogin } from "../../store/authSlice";
+import { useForm } from "react-hook-form";
 
 function VerifyOtp() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
+  const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState("");
+  const [dataUser, setDataUser] = useState(null);
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { reset } = useForm();
 
   useEffect(() => {
     const emailFromState = location.state?.email;
     const passwordFromState = location.state?.password;
-     
-
-    if (emailFromState && passwordFromState) {
+    const dataUserFromState = location.state?.dataUser;
+    const fullnameFromState = location.state?.fullname;
+  
+    
+    if (emailFromState) {
       setEmail(emailFromState);
       setPassword(passwordFromState);
+      setDataUser(dataUserFromState || null);
+      setFullname(fullnameFromState)
     } else {
-     
       alert("Missing record. Please request to Sign In again.");
       navigate("/signup");
     }
+
+ fetchUser();
   }, [location, navigate]);
 
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    setLoading(true);
-    
-
-    //    console.log(`emails is: ${email} and otp is: ${otp}`);
+    // console.log(`email: ${email}, password: ${password}, fullname: ${fullname} `)
+    ;
+  const fetchUser = async () => {
     try {
-      // Verify OTP
-      const response = await axios.post(
+      const response = await axios.get(`${conf.API_URL}/user/get-user`, {
+        withCredentials: true,
+      });
+
+      setUser(response.data.data);
+      reset(response.data.data);
+    } catch (error) {
+      console.error("Error fetching user: ", error);
+     
+    }
+  };
+
+
+
+  const handleVerifyOtp = async (e) => {
+  e.preventDefault();
+  setError("");
+  setSuccess("");
+  setLoading(true);
+  
+  try {
+ 
+    if (fullname) {
+      try {
+        const updateRes = await axios.patch(
+          `${conf.API_URL}/user/update-user-details`,
+          { email, fullname },
+          { withCredentials: true }
+        );
+        // console.log("Details updated", updateRes.data);
+      } catch (updateError) {
+        console.error("Update Failed", updateError);
+        alert("User verified but failed to update details.");
+      }
+    }
+
+    if (user) {
+      const verifyRes = await axios.post(
         `${conf.API_URL}/user/verify-otp`,
         { email, otp },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-
-      setSuccess(response.data?.message || "Email verified successfully");
-
-      // Login after successful OTP verification
-      const loginResponse = await axios.patch(
+  
+      setSuccess(verifyRes.data?.message || "Email verified successfully");
+      navigate("/user");
+      
+    } else {
+      const loginRes = await axios.patch(
         `${conf.API_URL}/user/login`,
         { email, password },
         { withCredentials: true }
       );
-
-      const result = loginResponse.data;
+  
+      const result = loginRes.data;
       if (result.success) {
         const { accessToken, refreshToken, user } = result.data;
-
-        // Store tokens
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-
-        // Save user to redux
         dispatch(authLogin(user));
-
-        // Navigate to home
         navigate("/");
       } else {
-        setError(result.message || "Login failed");
+        setError(result.message || "Login failed after verification.");
       }
-    } catch (error) {
-      console.error("Verify OTP Error:", error);
-      setError(
-        error.response?.data?.message || "Failed to verify OTP. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+}
+  } catch (error) {
+    console.error("Verify OTP Error:", error);
+    setError(
+      error.response?.data?.message || "Failed to verify OTP. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <form

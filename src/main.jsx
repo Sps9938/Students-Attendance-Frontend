@@ -153,23 +153,18 @@ const router = createBrowserRouter([
             },
             {
                 path: "/request-otp",
-                element: (
-
-                    <Protected authentication={false}>
-                       <SendOtp />
-                    </Protected>
-
-                )
+                element:(
+                 <SendOtp />
+            )
+                
             },
             {
                 path: "/verify-otp",
-                element: (
-
-                    <Protected authentication={false}>
-                       <VerifyOtp />
-                    </Protected>
-
-                )
+                element:(
+                 <VerifyOtp />
+              
+)
+                
             },
 
 

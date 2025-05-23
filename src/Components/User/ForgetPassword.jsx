@@ -27,7 +27,8 @@ function ForgetPassword() {
         // console.log("fetched sucessfully", res);
         
 
-  
+        
+        // navigate("/request-otp")
         try {
             const res = await axios.patch(`${conf.API_URL}/user/forget-password`, {
                 email: data.email,
