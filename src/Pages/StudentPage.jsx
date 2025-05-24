@@ -10,7 +10,7 @@ const StudentPage = () => {
 const navigate = useNavigate();
   const fetchStudents = async () => {
     const res = await axios.post(`${conf.API_URL}/student/get/student/details/${classId}`)
-    console.log("students data:", res);
+    // console.log("students data:", res);
     
     setStudents(res.data.data.students);
   };
