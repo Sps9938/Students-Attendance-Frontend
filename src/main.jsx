@@ -101,7 +101,7 @@ const router = createBrowserRouter([
 
 
             {
-                path: "/student/form/:classToken",
+                path: "/student/form/:classId",
                 element: (
 
                     <AddStudentsPage />

@@ -2,9 +2,10 @@ import { useParams } from "react-router-dom";
  import { AddStudentsForm } from "../Components";
 
 const AddStudentsPage = () => {
-  const { classToken } = useParams();
+  const { classId } = useParams();
+console.log("class id is: ", classId);
 
-  return <AddStudentsForm classToken={classToken} />;
+  return <AddStudentsForm classId={classId} />;
 };
 
 export default AddStudentsPage;

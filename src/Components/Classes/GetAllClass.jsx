@@ -73,7 +73,7 @@ const FetchAllClass = () => {
 
   const handleCopy = (cls) => {
     navigator.clipboard
-      .writeText(`http://localhost:5173/student/form/${cls.classToken}`)
+      .writeText(`http://localhost:5173/student/form/${cls._id}`)
       .then(() => {
         setCopiedId(cls._id);
         setTimeout(() => setCopiedId(null), 2000); // Hide after 2 sec
@@ -163,7 +163,7 @@ const FetchAllClass = () => {
             </p>
 
             <a
-              href={`http://localhost:5173/student/form/${cls.classToken}`}
+              href={`http://localhost:5173/student/form/${cls._id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline text-sm break-all"
@@ -196,7 +196,7 @@ const FetchAllClass = () => {
             </button>
 
             <button
-              onClick={() => navigate(`/student/form/${cls.classToken}`)}
+              onClick={() => navigate(`/student/form/${cls._id}`)}
               className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
             >
               <FiPlus /> Add Students

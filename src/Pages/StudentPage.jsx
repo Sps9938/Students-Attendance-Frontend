@@ -9,8 +9,11 @@ const StudentPage = () => {
 // console.log("classid is:", classId);
 const navigate = useNavigate();
   const fetchStudents = async () => {
-    const res = await axios.post(`${conf.API_URL}/student/get/student/details/${classId}`)
-    // console.log("students data:", res);
+   const res = await axios.get(`${conf.API_URL}/student/get/student/details/${classId}`,{
+  withCredentials: true,
+   })
+    
+  
     
     setStudents(res.data.data.students);
   };

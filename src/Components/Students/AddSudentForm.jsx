@@ -4,11 +4,14 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import conf from "../../Conf/Conf";
 
-function AddStudentsForm({ classToken }) {
+function AddStudentsForm({ classId }) {
+    // console.log("welcome student Form classId is: ",classId);
+    
     const navigate = useNavigate();
     const [numberOfStudents, setNumberOfStudents] = useState(1);
     const [students, setStudents] = useState([{ Name: "", EnrollmentNo: "" }]);
 
+    
     const handleNumberChange = (e) => {
         const value = parseInt(e.target.value);
         setNumberOfStudents(value);
@@ -66,13 +69,12 @@ function AddStudentsForm({ classToken }) {
         e.preventDefault();
 
         const payload = {
-            classToken: classToken,
-            students: students,
+            students
         };
 
         try {
             const response = await axios.post(
-                `${conf.API_URL}/student/add/students`,
+                `${conf.API_URL}/student/add/students/${classId}`,
                 payload,
                 {
                     headers: { "Content-Type": "application/json" },

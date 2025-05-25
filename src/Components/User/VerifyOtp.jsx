@@ -96,6 +96,19 @@ function VerifyOtp() {
       navigate("/user");
       
     } else {
+      const verifyRes = await axios.post(
+        `${conf.API_URL}/user/verify-otp`,
+        { email, otp },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+  
+      setSuccess(verifyRes.data?.message || "Email verified successfully");
+   
+      
+
       const loginRes = await axios.patch(
         `${conf.API_URL}/user/login`,
         { email, password },
