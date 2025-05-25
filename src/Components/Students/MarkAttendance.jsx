@@ -16,8 +16,10 @@ function MarkAttendance() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await axios.post(
-          `${conf.API_URL}/student/get/student/details/${classId}`
+        const res = await axios.get(
+          `${conf.API_URL}/student/get/student/details/${classId}`,{
+            withCredentials: true,
+          }
         );
         const sortedStudents = res.data.data.students
           .filter((s) => !isNaN(parseInt(s.EnrollmentNo)))

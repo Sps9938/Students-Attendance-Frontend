@@ -7,6 +7,7 @@ import { GetEachStudent } from "../Components";
 const SingleStudentPage = () => {
 const { studentId } = useParams();
 const [student , setStudent] = useState(null);
+const [attendanceSummary, setAttendanceSummary] = useState(null)
 const navigate = useNavigate();
 
 const fetchStudent = async () => {
@@ -15,7 +16,8 @@ const res = await axios.get(`${conf.API_URL}/student/get/each/student/details/${
 })
 console.log("student data:", res);
 
-setStudent(res.data.data);
+setStudent(res.data.data.student);
+setAttendanceSummary(res.data.data.attendanceSummary)
 };
 
 
@@ -26,7 +28,7 @@ fetchStudent();
 
 return (
     <div className="min-h-screen bg-gray-100 p-4">
-   <GetEachStudent student={student} />
+   <GetEachStudent student={student} attendanceSummary={attendanceSummary} />
     </div>
   );
 };
