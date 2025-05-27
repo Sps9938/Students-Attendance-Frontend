@@ -10,8 +10,47 @@ function AddStudentsForm({ classId }) {
     const navigate = useNavigate();
     const [numberOfStudents, setNumberOfStudents] = useState(1);
     const [students, setStudents] = useState([{ Name: "", EnrollmentNo: "" }]);
+    const [duplicateFields, setDuplicateFields ] = useState([]);
+    // const [duplicates, setDuplicates] = useState([]);
+    const checkDuplicatesBeforeSubmit = async() => {
+        try {
+        
+            const response = await axios.post(`${conf.API_URL}/student/check/duplicates/${classId}`,
+                {students},
+                {
+                    headers: { "Content-Type": "application/json"},
+                    withCredentials: true,
+                }
+            );
+     
+            
+            if(response?.data){
+                const duplicates = response.data.data || [];
 
-    
+                // console.log("duplicates: ", duplicates);
+                const duplicateIndexes = students.map((s, index) => {
+
+                    const isDuplicate = duplicates.some(d => 
+                        d.Name?.toLowerCase() === s.Name?.toLowerCase() ||
+                        d.EnrollmentNo?.toLowerCase() === s.EnrollmentNo?.toLowerCase()
+
+                );
+                return isDuplicate ? index : null;
+                }).filter(i => i != null);
+
+                setDuplicateFields(duplicateIndexes);
+                return duplicateIndexes.length === 0;
+            }
+         
+
+        } catch (error) {
+            console.error("Duplicates check failed", error);
+            return false;
+            
+        }
+    }
+
+
     const handleNumberChange = (e) => {
         const value = parseInt(e.target.value);
         setNumberOfStudents(value);
@@ -67,6 +106,12 @@ function AddStudentsForm({ classId }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const isValid = await checkDuplicatesBeforeSubmit();
+        if(!isValid) {
+            alert("Some students already exit. Fix duplicates highlighted in red.");
+            return;
+        }
 
         const payload = {
             students
@@ -130,22 +175,24 @@ return (
     <form onSubmit={handleSubmit} className="space-y-4">
         {students.map((student, index) => (
             <div key={index} className="flex flex-col md:flex-row gap-4">
-        <input
-            type="text"
-            placeholder={`Student ${index + 1} Name`}
-            value={student.Name}
-            onChange={(e) => handleStudentChange(index, "Name", e.target.value)}
-            className="border p-2 flex-1"
-            required
+         <input
+        type="text"
+        placeholder={`Student ${index + 1} Name`}
+        value={student.Name}
+        onChange={(e) => handleStudentChange(index, "Name", e.target.value)}
+        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "border-red-900" : ""}`}
+        required
         />
         <input
-            type="text"
-            placeholder={`Student ${index + 1} Enrollment No.`}
-            value={student.EnrollmentNo}
-            onChange={(e) => handleStudentChange(index, "EnrollmentNo", e.target.value)}
-            className="border p-2 flex-1"
-            required
+        type="text"
+        placeholder={`Student ${index + 1} Enrollment No.`}
+        value={student.EnrollmentNo}
+        onChange={(e) => handleStudentChange(index, "EnrollmentNo", e.target.value)}
+        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "border-red-500" : ""}`}
+        required
         />
+     
+
         <div className="flex gap-2">
             {student.Name && (
                 <button
