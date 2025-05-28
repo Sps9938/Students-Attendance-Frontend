@@ -163,9 +163,10 @@ const router = createBrowserRouter([
                 element:(
                  <VerifyOtp />
               
-)
+            )
                 
             },
+           
 
 
 

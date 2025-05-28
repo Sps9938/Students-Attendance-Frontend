@@ -21,6 +21,7 @@ import LowAttendance from "./Students/LowAttendance";
 import SendOtp from "./User/SendOtp";
 import VerifyOtp from "./User/VerifyOtp";
 
+
 export {
     Input,
     Button,
@@ -43,6 +44,7 @@ export {
     GetEachStudent,
     LowAttendance,
     SendOtp,
-    VerifyOtp
+    VerifyOtp,
+
 
 }

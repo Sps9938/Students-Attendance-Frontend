@@ -39,7 +39,7 @@ const navigate = useNavigate();
   >
     ← Back to Class List
   </button>
-      <GetStudentDetails students={students} onMarkAttendance={handleMarkAttendance} />
+      <GetStudentDetails students={students} onMarkAttendance={handleMarkAttendance} classId={classId}/>
       {/* <LowAttendance students={students} /> */}
     </div>
   );

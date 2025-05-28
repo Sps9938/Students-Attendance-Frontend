@@ -1,8 +1,12 @@
+import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import conf from "../../Conf/Conf";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
-const GetStudentDetails = ({ students = [], onMarkAttendance }) => {
+const GetStudentDetails = ({ students = [], onMarkAttendance, classId }) => {
   // console.log("students details:", students);
   
     const navigete = useNavigate();
@@ -13,6 +17,36 @@ const GetStudentDetails = ({ students = [], onMarkAttendance }) => {
         state: {students}
       })
     }
+ 
+    const deleteStudent = async(studentId) => {
+      console.log("studentId is: ", studentId);
+      
+      const confirmed = window.confirm("Are you sure want to delete this student on Your class");
+        if(!confirmed) {
+            // navigate(-1);
+            return;
+        }
+            try {
+                
+                const response = await axios.delete(`${conf.API_URL}/student/delete/student/${studentId}`,{
+                  withCredentials: true,
+                });
+
+                if(response?.data.success){
+                    alert("Student Record deleted Sucessfully");
+                    window.location.reload();
+                  
+                } 
+                else{
+                    alert("Failed to delete the student");
+                }
+            } catch (error) {
+                console.error("Student Not Fetched",error);
+                alert("Student NOt Deleted, Something went to wrong");
+                
+            }
+        }
+
   return (
   <div className="flex flex-col md:flex-row p-4 gap-4">
     {/* Left Side: Mark Attendance Button */}
@@ -59,12 +93,25 @@ const GetStudentDetails = ({ students = [], onMarkAttendance }) => {
           <td className="px-4 py-2">
             {student.percentage || 0}
           </td>
-          <button className="text-blue-600 underline"
-          onClick={() => navigete(`/get/each/student/detais/${student._id}`)}
-          >
-            Get Details</button>
+      <div className="flex items-center gap-4">
+      <button
+        className="text-blue-600 underline"
+        onClick={() => navigete(`/get/each/student/detais/${student._id}`)}
+      >
+        Get Details
+      </button>
+
+      <button
+        className="p-2 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-sm hover:shadow-md transition duration-200"
+        onClick={() => deleteStudent(student._id)}
+      >
+        🗑️
+      </button>
+    </div>
+
+       
         </tr>
-      ))}
+  ))}
     </tbody>
       </table>
     </div>
