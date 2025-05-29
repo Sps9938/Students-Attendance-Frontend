@@ -42,7 +42,7 @@ function Login() {
             }, { withCredentials: true });
 
             if (response) {
-                const userData = await axios.get(`${API}/user/get-user`, {
+                const userData = await axios.get(`${conf.API_URL}/user/get-user`, {
                     withCredentials: true
                 });
                 console.log("Current user: ", userData);

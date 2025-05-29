@@ -65,7 +65,8 @@ const FetchAllClass = () => {
       await axios.delete(`${conf.API_URL}/class/delete/class/${id}`, {
         withCredentials: true,
       });
-      getClasses();
+      // getClasses();
+      window.location.reload();
     } catch (error) {
       console.error("Failed to delete class", error);
     }
@@ -207,6 +208,12 @@ const FetchAllClass = () => {
         className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
       >
         <FiUsers /> Get Students
+      </button>
+          <button
+        onClick={() => navigate(`/class/report/${cls._id}`)}
+        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+      >
+        <FiUsers /> Class Report
       </button>
            
           <FiArrowLeft 
