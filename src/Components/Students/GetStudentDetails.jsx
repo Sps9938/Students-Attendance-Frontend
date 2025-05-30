@@ -108,8 +108,7 @@ const GetStudentDetails = ({ students = [], onMarkAttendance, classId }) => {
         🗑️
       </button>
     </div>
-
-       
+        
         </tr>
   ))}
     </tbody>

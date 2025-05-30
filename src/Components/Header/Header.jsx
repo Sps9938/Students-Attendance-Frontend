@@ -32,6 +32,11 @@ import { Container, LogoutBtn, UserButton } from "../index"
     slug: "/user",
     active: authStatus,
  },
+ {
+    name: "DashBoard",
+    slug: "/deleted/classes",
+    active: authStatus,
+ },
 
     ]
 

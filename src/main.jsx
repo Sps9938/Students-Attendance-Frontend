@@ -6,11 +6,12 @@ import store from './Store/store.js'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { AddStudentsPage, Login, Report, SignUp, SingleStudentPage, StudentPage } from "./Pages"
+import { AddStudentsPage, GetDeletdClasses, Login, Report, SignUp, SingleStudentPage, StudentPage } from "./Pages"
 
 import Protected from './Components/AuthLayout.jsx'
 
 import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance, LowAttendance, SendOtp, VerifyOtp} from './Components/index.js'
+
 
 
 const router = createBrowserRouter([
@@ -175,6 +176,16 @@ const router = createBrowserRouter([
 
                     <Protected authentication>
                         <Report />
+                    </Protected>
+
+                )
+            },
+            {
+                path: "/deleted/classes",
+                element: (
+
+                    <Protected authentication>
+                   <GetDeletdClasses />
                     </Protected>
 
                 )
