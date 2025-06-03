@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import conf from "../../Conf/Conf";
+import { useParams } from "react-router-dom";
 
 function GetDeletdClasses(){
     const [deletedClasses, setDeletedClasses] = useState();
-
+  // const {classId} = useParams();
+// console.log("classId is: ", classId);
 
     useEffect(()=> {
         const fetchDeleted = async () => {
@@ -25,6 +27,38 @@ function GetDeletdClasses(){
         fetchDeleted();
     },[])
 // console.log("delete classes", deletedClasses);
+
+
+const makeDownloadableCloudinaryURL = (url) => {
+  return url.replace("/upload", "upload/f1_attachment:ClassReport/");
+}
+
+const handleDownload = async (url, fileName = "ClassReport.pdf") => {
+  try {
+    const response = await fetch(url, { mode: 'cors' });
+
+    if (!response.ok) {
+      throw new Error("Network response was not OK");
+    }
+
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    // Clean up memory
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    console.error("❌ Download failed:", error);
+    alert("Failed to download file.");
+  }
+};
+
 
 return (
     <div className="p-6 max-w-5xl mx-auto">
@@ -56,14 +90,14 @@ return (
                 {new Date(cls.deletedAt).toLocaleDateString("en-GB")}
                 </td>
                 <td className="border px-4 py-2">
-                <a
-                    href={cls.pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline"
-                >
-                    View PDF
-                </a>
+
+             <button
+              className="btn btn-sm btn-outline-primary underline text-blue-600"
+              onClick={() => handleDownload(cls.pdfUrl, `${cls.className}_Report.pdf`)}
+            >
+              Download Report
+            </button>
+
                 </td>
             </tr>
             ))}

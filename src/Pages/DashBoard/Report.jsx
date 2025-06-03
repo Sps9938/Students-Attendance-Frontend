@@ -1,10 +1,13 @@
+// @ts-ignore
+import html2pdf from "html2pdf.js";
+
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import conf from "../../Conf/Conf";
 import axios from "axios";
 import { ClassReport } from "../../Components";
 import { set } from "react-hook-form";
-import  html2pdf  from "html2pdf.js";
+
 
 function Report(){
 // console.log("welcome to report page");
@@ -78,78 +81,80 @@ useEffect(() => {
 // console.log("students length is: ",students.length);;
 // console.log("classs is: ", cls);
 // console.log("attendancRecord : ", attendanceRecords);
- const handleDeleteWithBackup = async () => {
-    // console.log("Welcome to handle delted page");
-    
-    const element = contentRef.current;
-     if (!element) {
-        console.error("❌ contentRef is null");
-        return;
-    }
+const handleDownloadAndSendPDF = () => {
+  const element = contentRef.current;
+  if (!element) {
+    console.error("❌ contentRef is null");
+    return;
+  }
 
-    const hiddenElements = element.querySelectorAll(".no-pdf");
+  const hiddenElements = element.querySelectorAll(".no-pdf");
+  hiddenElements.forEach(el => el.style.display = "none");
 
-    hiddenElements.forEach(el => el.style.display = "none");
+  const fileName = `${cls.className?.replace(/\s+/g, "_") || "Student"}_Profile.pdf`;
 
-    const opt = {
-      margin: 0.5,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
-    };
+  const opt = {
+    margin: 0.5,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+  };
 
-    html2pdf().set(opt).from(element).outputPdf("blob").then(async (pdfBlob) => {
+  html2pdf()
+    .set(opt)
+    .from(element)
+    .outputPdf("blob")
+    .then(async (pdfBlob) => {
+
       hiddenElements.forEach(el => el.style.display = "");
 
-    console.log("✅ PDF blob created", pdfBlob);
-
-    const pdfFile = new File(
-      [pdfBlob],
-      `${cls?.className?.replace(/\s+/g, "_")}_report.pdf`,
-      { type: "application/pdf" }
-    );
-      const formData = new FormData();
-      formData.append("file",pdfFile);
-
-      formData.append("upload_preset", "class_reports");  formData.append("folder", "deleted-classes");
-
-      formData.append("folder", "deleted-classes");
-
-      const cloudRes = await fetch("https://api.cloudinary.com/v1_1/dev80yysh/raw/upload", {
-        method: "POST",
-        body: formData
-      });
-
-      const data = await cloudRes.json();
-
-    console.log("🌐 Cloudinary response:", data);
-
-    if (!data.secure_url) {
-      alert("❌ Cloudinary upload failed.");
-      return;
-    }
-     const pdfUrl = data.secure_url;
-
-      await axios.post(`${conf.API_URL}/class/delete-with-archive/${cls._id}`, {
-        pdfUrl
-      }, { withCredentials: true });
+     
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(pdfBlob);
+      link.download = fileName;
+      link.click();
 
      
-    alert("✅ Class deleted and PDF archived.");
-    window.location.reload();
-    }).catch(err => {
-    console.error("❌ PDF generation or upload failed", err);
-  });
+      const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
+
+     
+      const formData = new FormData();
+      formData.append("pdf", pdfFile);
+      formData.append("className", cls.className);
+
+      try {
+        const res = await axios.post(
+          `${conf.API_URL}/class/delete-with-archive/${cls._id}`,
+          formData,
+          { withCredentials: true }
+        );
+
+        console.log("✅ Server response:", res.data);
+        alert("✅ PDF sent to backend successfully.");
+        navigate("/deleted/classes")
+      } catch (err) {
+        console.error("❌ Failed to send PDF to backend", err);
+        alert("❌ Upload failed.");
+      }
+    })
+    .catch(err => {
+      // Restore hidden elements on error as well
+      hiddenElements.forEach(el => el.style.display = "");
+      console.error("❌ PDF generation failed", err);
+      alert("❌ PDF generation failed.");
+    });
+
+
 
   };
   return (
    <div> 
       <h2 className="text-xl font-bold mb-4">Class Report Overview</h2>     
       <button
-        onClick={handleDeleteWithBackup}
+        onClick={handleDownloadAndSendPDF}
         className="mb-6 inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg shadow hover:bg-red-700 transition"
       >
-        Delete Class With Backup
+        Delete Class With Backup(DownLoad Report)
       </button>
 
     <div ref={contentRef}>

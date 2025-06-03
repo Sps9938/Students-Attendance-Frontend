@@ -5,7 +5,8 @@ import { Container, LogoutBtn, UserButton } from "../index"
 
  function Header(){
     const authStatus = useSelector((state) => state.auth.success);
-    console.log(authStatus);
+    // console.log(authStatus);
+    // const classId = useSelector((state) => state.someReducer.classId); 
 
     const navItems = [
 
@@ -34,7 +35,7 @@ import { Container, LogoutBtn, UserButton } from "../index"
  },
  {
     name: "DashBoard",
-    slug: "/deleted/classes",
+    slug: `/deleted/classes`,
     active: authStatus,
  },
 
