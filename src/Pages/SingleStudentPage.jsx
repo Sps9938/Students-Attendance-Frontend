@@ -14,7 +14,7 @@ const fetchStudent = async () => {
 const res = await axios.get(`${conf.API_URL}/student/get/each/student/details/${studentId}`,{
   withCredentials:true,
 })
-console.log("student data:", res);
+// console.log("student data:", res);
 
 setStudent(res.data.data.student);
 setAttendanceSummary(res.data.data.attendanceSummary)

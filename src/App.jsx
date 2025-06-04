@@ -33,7 +33,7 @@ function App() {
     .then((userData) => {
       if(userData)
       {
-        console.log("user session exists", userData);
+        // console.log("user session exists", userData);
         dispatch(login(userData))
         
       }

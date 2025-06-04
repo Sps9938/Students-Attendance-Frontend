@@ -8,7 +8,7 @@ export default function Protected({children, authentication=true}) {
     const navigate = useNavigate()
     const [loader, setLoader] = useState(true)
     const authStatus = useSelector(state => state.auth.success)
-    console.log("authstaus in authlayout: ", authStatus);
+    // console.log("authstaus in authlayout: ", authStatus);
     
     useEffect(() => {
 

@@ -6,9 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import conf from "../../Conf/Conf";
 import axios from "axios";
 import { ClassReport } from "../../Components";
-import { set } from "react-hook-form";
-
-
 function Report(){
 // console.log("welcome to report page");
 const navigate = useNavigate();
@@ -82,6 +79,9 @@ useEffect(() => {
 // console.log("classs is: ", cls);
 // console.log("attendancRecord : ", attendanceRecords);
 const handleDownloadAndSendPDF = () => {
+   const confirmDelete = window.confirm("Are you sure to delete this class ???");
+      if (!confirmDelete) return;
+
   const element = contentRef.current;
   if (!element) {
     console.error("❌ contentRef is null");
@@ -121,17 +121,44 @@ const handleDownloadAndSendPDF = () => {
       const formData = new FormData();
       formData.append("pdf", pdfFile);
       formData.append("className", cls.className);
-
+      // console.log("students are: ", students);
+      
       try {
-        const res = await axios.post(
-          `${conf.API_URL}/class/delete-with-archive/${cls._id}`,
-          formData,
-          { withCredentials: true }
-        );
+      //before delete the make sure that unnecessary student are not in databse -> before delete the class must be delete all students on that class
+    await Promise.all(
+   students.map(async (student) => {
+    try {
+      // console.log("Deleting:", student._id);
+      await axios.delete(`${conf.API_URL}/student/delete/student/${student._id}`,{
+        withCredentials: true,
+      });
 
-        console.log("✅ Server response:", res.data);
-        alert("✅ PDF sent to backend successfully.");
-        navigate("/deleted/classes")
+      
+    } catch (err) {
+      console.error("Failed to delete student:", student._id, err.response?.data || err.message);
+    }
+  }
+
+  
+)
+
+);
+
+        // if(success){
+        //   console.log("Delete all students successfully");
+          
+        // }
+        //now delete the class 
+          const res = await axios.post(
+            `${conf.API_URL}/class/delete-with-archive/${cls._id}`,
+            formData,
+            { withCredentials: true }
+          );
+  
+          // console.log("✅ Server response:", res.data);
+          alert("✅ PDF sent to backend successfully.");
+          navigate("/deleted/classes")
+
       } catch (err) {
         console.error("❌ Failed to send PDF to backend", err);
         alert("❌ Upload failed.");
@@ -149,13 +176,21 @@ const handleDownloadAndSendPDF = () => {
   };
   return (
    <div> 
-      <h2 className="text-xl font-bold mb-4">Class Report Overview</h2>     
+      <h2 className="text-xl font-bold mb-4">Class Report Overview</h2>  
+<div className="flex justify-center gap-3">
+          <button
+        onClick={() => navigate("/getclasses")}
+        className="mb-6 inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 transition"
+      >
+    ← Back to Class List
+  </button>   
       <button
         onClick={handleDownloadAndSendPDF}
         className="mb-6 inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg shadow hover:bg-red-700 transition"
       >
         Delete Class With Backup(DownLoad Report)
       </button>
+</div>
 
     <div ref={contentRef}>
         {students && cls && attendanceRecords && (

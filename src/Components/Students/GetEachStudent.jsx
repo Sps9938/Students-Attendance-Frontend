@@ -71,8 +71,8 @@ function GetEachStudent({ student, attendanceSummary }) {
     return <p className="text-center text-gray-500">Loading student details...</p>;
   }
 
-  console.log("class details: ", cls);
-  console.log("teacher details: ", tech);
+  // console.log("class details: ", cls);
+  // console.log("teacher details: ", tech);
   
   
   return (

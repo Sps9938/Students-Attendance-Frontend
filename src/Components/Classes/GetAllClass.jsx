@@ -4,7 +4,7 @@ import conf from "../../Conf/Conf";
 import { useNavigate } from "react-router-dom";
 import { FiEdit, FiTrash2, FiCopy, FiPlus, FiArrowLeft, FiUsers } from "react-icons/fi"; // icons
 import { AiOutlineLoading3Quarters } from "react-icons/ai"; // loading spinner
-
+import  html2pdf  from "html2pdf.js";
 const FetchAllClass = () => {
   const navigate = useNavigate();
   const [classes, setClasses] = useState([]);
@@ -57,21 +57,7 @@ const FetchAllClass = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      const confirmDelete = window.confirm("Are you surre to delete this class ???");
-      if (!confirmDelete) return;
-
-      await axios.delete(`${conf.API_URL}/class/delete/class/${id}`, {
-        withCredentials: true,
-      });
-      // getClasses();
-      window.location.reload();
-    } catch (error) {
-      console.error("Failed to delete class", error);
-    }
-  };
-
+  
   const handleCopy = (cls) => {
     navigator.clipboard
       .writeText(`http://localhost:5173/student/form/${cls._id}`)
@@ -188,14 +174,6 @@ const FetchAllClass = () => {
               <FiCopy />
               {copiedId === cls._id ? "Copied!" : "Copy Link"}
             </button>
-
-            <button
-              onClick={() => handleDelete(cls._id)}
-              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-            >
-              <FiTrash2 /> Delete
-            </button>
-
             <button
               onClick={() => navigate(`/student/form/${cls._id}`)}
               className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
