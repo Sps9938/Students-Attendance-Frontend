@@ -3,63 +3,54 @@ import axios from "axios";
 import conf from "../../Conf/Conf";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function SendOtp() {
-  console.log("welcome to Request OTP Page");
-  
-  const [email, setEmail] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [dataUser, setDataUser] = useState(null);
-  const navigate = useNavigate();
-  const location = useLocation();
 
+function SendOtp() {
+  // console.log("welcome to Request OTP Page");
+  
+const location = useLocation();
+const navigate = useNavigate();
+const [email, setEmail] = useState("");
+const [error, setError] = useState();
+const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const emailFromState = location.state?.email;
-    const passwordFromState = location.state?.password;
-    const dataUserFromState = location.state?.dataUser;
-    const fullnameFromState = location.state?.fullname;
-    if (emailFromState) setEmail(emailFromState);
-    if (passwordFromState) setPassword(passwordFromState);
-    if(dataUserFromState) setDataUser(dataUserFromState)
-    if(fullnameFromState) setFullname(fullnameFromState)
+  const emailFromState = location?.state?.email;
+  if(emailFromState) setEmail(emailFromState);
+
   }, [location.state]);
 
   // console.log(`email: ${email}, password: ${password}, fullname: ${fullname} `);
+// console.log("email is: ", email);
+  
+ const RequestOtp = async () => {
+      setError("");
+      // console.log("welcome sendotp function");
+      
+      try {
 
-  const RequestOtp = async () => {
-    setError("");
-    try {
-        
-      const response = await axios.post(
-        `${conf.API_URL}/user/request-otp`,
-        { email },
-        {
-          headers: { "Content-Type": "application/json" },
+      const response = await axios.post(`${conf.API_URL}/user/request-otp`,
+        {email},{
           withCredentials: true,
         }
-      );
-
-
+      )
+      console.log(response);
       
-      if (response?.data?.success) {
-        alert("OTP sent successfully");
-        navigate("/verify-otp", {
-          state: { email,password,fullname },
-        });
-      } else {
+      if(response?.data.success){
+        alert("OTP Sent Successfully");
+        navigate("/verify-otp",{
+          state: {email}
+        })
+      } else{
         setError("Failed to send OTP");
       }
-    } catch (error) {
-      console.error("OTP Error:", error);
-      setError(
-        error?.response?.data?.message ||
-          "Error sending OTP, please try again"
-      );
-    } finally {
-      setLoading(false);
-    }
+      } catch (error) {
+     console.error("Failed to send OTP", error);
+     setError(
+      error?.response?.data?.message || "Error sending OTP, Please Try Again"
+     )
+     
+} finally {
+  setLoading(false);
+}
   };
 
   const handleSubmit = async (e) => {
@@ -81,7 +72,7 @@ function SendOtp() {
         required
       />
 
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-900 font-bold">{error}</p>}
 
       <button
         type="submit"

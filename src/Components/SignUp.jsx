@@ -16,49 +16,25 @@ function SignUp() {
     const {register, handleSubmit} = useForm()
 
     const create = async(data) => {
-      
         setError('')
-        console.log("welcome to the sign Form",data);
-        
 
-        try {
-            // const teacherRecord = await axios(`${conf.API_URL}/user/get-user`)
-            const response = await axios.post(`${conf.API_URL}/user/register`, {
-                fullname: data.fullname,
-                username: data.username,
-                email: data.email,
-                password: data.password,
-                role: data.role
-            },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                withCredentials: true,
-            }    
-        )
-
-        if(!response?.data?.isVerified)
-        {
-            navigate("/request-otp",{
-                state: {
-                    email: data.email,
-                    password: data.password
-                }
-            })
-            
-        }
-        else{
-        
-        navigate("/login")
-            //probel for not getting userData after signUp
-        
+    const {fullname, username, email, password, renewPassword, role} = data;
+    if(!fullname || !username || !email || !password || !renewPassword || !role ){
+    setError("All fields are required.");
+    console.error("Validation Error: Missing required fields");
+    return;
     }
-
-        } catch (err) {
-            console.error("Signin error", err);
-            setError(err.response?.data?.message || "Something went wrong");
-        }
+      if(password != renewPassword){
+        setError("Password do not Match")
+        console.error("Validation Error: Password do not match");
+        return;
+       }
+       sessionStorage.setItem("registerData", JSON.stringify(data));
+     
+       navigate("/request-otp",{
+        state:{email}
+       })
+       
     }
 
     return (
@@ -121,6 +97,14 @@ function SignUp() {
                type="password"
                placeholder="Enter your password"
                {...register("password", {
+                required: true,
+               })}
+               />
+               <Input
+               label= "renewPassword: "
+               type="password"
+               placeholder="Enter your renewPassword"
+               {...register("renewPassword", {
                 required: true,
                })}
                />

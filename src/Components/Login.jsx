@@ -45,10 +45,6 @@ function Login() {
                 const userData = await axios.get(`${conf.API_URL}/user/get-user`, {
                     withCredentials: true
                 });
-                console.log("Current user: ", userData);
-            } else {
-                console.log("Failed to fetch user data");
-            }
 
             const result = response.data;
             if (result.success) {
@@ -60,11 +56,19 @@ function Login() {
             } else {
                 setError(result.message || "Login failed");
             }
+                console.log("Current user: ", userData);
+           
+            
+          } else {
+                console.log("Failed to fetch user data");
+            }
+
+          
         } catch (err) {
             console.error("Login error", err);
-            setError(err.response?.data?.message || "Something went wrong");
+            setError(err.response?.data?.message);
         }
-    };
+    };  
 
 return (
     <div className="flex items-center justify-center w-full">
