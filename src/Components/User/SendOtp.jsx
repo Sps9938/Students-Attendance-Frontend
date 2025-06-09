@@ -10,43 +10,81 @@ function SendOtp() {
 const location = useLocation();
 const navigate = useNavigate();
 const [email, setEmail] = useState("");
+const [fullname, setFullname] = useState("");
 const [error, setError] = useState();
 const [loading, setLoading] = useState(false);
+const [user, setUser] = useState(null);
   useEffect(() => {
   const emailFromState = location?.state?.email;
   if(emailFromState) setEmail(emailFromState);
-
+  const fullnameFromState = location?.state?.fullname
+  if(fullnameFromState) setFullname(fullnameFromState);
   }, [location.state]);
 
   // console.log(`email: ${email}, password: ${password}, fullname: ${fullname} `);
 // console.log("email is: ", email);
   
+useEffect(() => {
+  const fetchUser = async() => {
+    try {
+      const response = await axios.get(`${conf.API_URL}/user/get-user`,{
+        withCredentials: true,
+      });
+      if(response?.data?.data){
+        setUser(response.data.data);
+      }
+    } catch (error) {
+      console.error("User Not Fetched", error);
+      
+    }
+  }
+  fetchUser();
+},[])
+
  const RequestOtp = async () => {
       setError("");
       // console.log("welcome sendotp function");
       
       try {
 
-      const response = await axios.post(`${conf.API_URL}/user/request-otp`,
-        {email},{
+   if (user?.email !== email) {
+       const response = await axios.post(`${conf.API_URL}/user/request-otp`,
+         {email},{
+           withCredentials: true,
+         }
+       )
+      //  console.log(response);
+       
+       if(response?.data.success){
+         alert("OTP Sent Successfully");
+         navigate("/verify-otp",{
+           state: {email, fullname}
+         })
+       } else{
+         setError("Failed to send OTP");
+       }
+   } else{
+    try {
+      
+      const response = await axios.patch(`${conf.API_URL}/user/update-user-details`,
+        {fullname, email},{
           withCredentials: true,
         }
       )
-      console.log(response);
-      
-      if(response?.data.success){
-        alert("OTP Sent Successfully");
-        navigate("/verify-otp",{
-          state: {email}
-        })
-      } else{
-        setError("Failed to send OTP");
-      }
+      alert("User Fullaname Updated");
+      navigate("/user");
+    } catch (error) {
+      console.error("Failed to Update FullName");
+    }
+
+   }
       } catch (error) {
      console.error("Failed to send OTP", error);
      setError(
       error?.response?.data?.message || "Error sending OTP, Please Try Again"
      )
+
+
      
 } finally {
   setLoading(false);

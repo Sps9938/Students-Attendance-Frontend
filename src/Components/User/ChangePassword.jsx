@@ -11,24 +11,27 @@ import { useForm } from "react-hook-form";
 function ChangeUserPassword() {
 
     const { register, handleSubmit, reset } = useForm();
-
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const onChangePassword = async (data) => {
         if(data.newPassword != data.renewPassword)
         {
-            alert("Password not Matched Please try Again");
+            setError("Password not Matched Please try Again");
+            return;
         }
         try {
             const res = await axios.patch(`${conf.API_URL}/user/change-password`, data, {
                 withCredentials: true,
             });
-            console.log("Password Has been changed", res);
+            // console.log("Password Has been changed", res);
 
             alert("Password Changed!!!");
             navigate('/user')
             reset();
         } catch (error) {
-            alert("Password change Failed");
+       setError("Password not Changed");
+        console.error("Password not Changed",error);
+                
         }
     };
 
@@ -56,6 +59,7 @@ function ChangeUserPassword() {
                     
                     {...register("renewPassword", { required: true })}
                 />
+                {error && <p className="text-red-900 text-sm font-bold">{error}</p>}
                 <Button type="submit">Update Password</Button>
             </form>
 

@@ -31,7 +31,6 @@ function UpdateUserDetails() {
 
   const onUpdate = async (data) => {
 
-
     if (!user) {
       console.log("User not found.");
       return;
@@ -44,7 +43,24 @@ function UpdateUserDetails() {
       // User not verified, go to OTP flow
     //   console.log(`user isVerified is: ${user.isVerified}`);
       
-      navigate("/request-otp", { state: {fullname: data.fullname, email: data.email} });
+      if(user.email !== data.email){
+        navigate("/request-otp", { state: {fullname: data.fullname, email: data.email} });
+      }
+      else{
+         try {
+                  
+          const response = await axios.patch(`${conf.API_URL}/user/update-user-details`,
+            {fullname: data.fullname, email: data.email},{
+              withCredentials: true,
+            }
+          )
+
+        alert("User details Updated");
+        navigate("/user");
+        } catch (error) {
+          console.error("Failed to Update UserDetails");
+        }
+      }
     
   };
 

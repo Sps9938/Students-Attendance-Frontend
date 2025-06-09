@@ -56,7 +56,7 @@ function Login() {
             } else {
                 setError(result.message || "Login failed");
             }
-                console.log("Current user: ", userData);
+                // console.log("Current user: ", userData);
            
             
           } else {

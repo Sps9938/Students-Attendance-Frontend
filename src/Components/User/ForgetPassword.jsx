@@ -27,26 +27,12 @@ function ForgetPassword() {
         // console.log("fetched sucessfully", res);
         
 
-        
-        // navigate("/request-otp")
-        try {
-            const res = await axios.patch(`${conf.API_URL}/user/forget-password`, {
-                email: data.email,
-                newPassword: data.newPassword,
-                renewPassword: data.renewPassword
-            }, {
-                withCredentials: true,
-            });
+        sessionStorage.setItem("forgetUserData", JSON.stringify(data));
+        navigate("/request-otp", {
+            state: {email: data.email}
+        })
 
-            console.log("Password reset successfully", res);
-            alert("Password reset successfully!");
-            navigate("/login")
-            reset();
-            // or wherever you want to redirect after success
-        } catch (error) {
-            console.error("Error resetting password", error);
-            alert(error.message);
-        }
+        
     };
 
     return (

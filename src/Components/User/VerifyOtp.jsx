@@ -4,16 +4,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import conf from "../../Conf/Conf";
 import { useDispatch } from "react-redux";
 import { login as authLogin } from "../../store/authSlice";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 
 function VerifyOtp() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
-  
+  const [fullname, setFullname] = useState("");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
  
 
 
@@ -23,7 +24,37 @@ function VerifyOtp() {
 
 
     // console.log(`email: ${email}, password: ${password}, fullname: ${fullname} `)
+  useEffect(() => {
+  const emailFromState = location?.state?.email;
+  if(emailFromState) setEmail(emailFromState);
+  
+  const fullnameFromState = location?.state?.fullname;
+  if(fullnameFromState) setFullname(fullnameFromState);
 
+  }, [location.state]);
+
+  useEffect(() => {
+    // console.log("Hello");
+    
+    const fetchUser = async() => {
+      try {
+        const response = await axios.get(`${conf.API_URL}/user/get-user`,{
+          withCredentials: true,
+        });
+        if(response?.data?.data){
+          setUser(response.data.data);
+        }
+
+        // console.log("response is:", response.data.data);
+        
+      } catch (error) {
+        console.error("User Not Fetched", error);
+        
+      }
+    }
+    // console.log("user Data are:", user);
+    fetchUser();
+  },[])
 
 const registration = async () => {
   try {
@@ -71,12 +102,39 @@ const registration = async () => {
     setError("An error occurred during registration.");
   }
 };
+const forget = async () => {
+  try {
+    const forgetUserData = JSON.parse(sessionStorage.getItem("forgetUserData"));
 
-  useEffect(() => {
-  const emailFromState = location?.state?.email;
-  if(emailFromState) setEmail(emailFromState);
+    if (!forgetUserData) {
+      console.error("No Data  found in sessionStorage.");
+      setError("Something went wrong. Please try again.");
+      return;
+    }
 
-  }, [location.state]);
+    // const { newPassword, renewPassword, email } = forgetUserData;
+      const res = await axios.patch(`${conf.API_URL}/user/forget-password`, 
+        forgetUserData,
+        {
+          withCredentials: true,
+      });
+
+      // console.log("Password reset successfully", res);
+      alert("Password reset successfully!");
+
+      sessionStorage.removeItem("forgetUserData");
+      
+      navigate("/login")
+      reset();
+  
+
+  } catch (err) {
+    console.error("Failed to Reset Password", err);
+    setError("An error occurred during Foret.");
+  }
+};
+
+  // console.log("user Data are: ", user);
 
   const handleVerifyOtp = async (e) => {
   e.preventDefault();
@@ -95,8 +153,34 @@ const registration = async () => {
       );
       setSuccess(verifyRes.data?.message || "Email verified successfully");
       //after verifed do register
-      registration();
   
+      //here if user not exist -> it means new user try to rgister then call registeration();
+      //if user extst-> it means user alread exsti and try to update their details 
+
+      if(!user) {
+        const registerData = JSON.parse(sessionStorage.getItem("registerData"))
+        const forgetUserData = JSON.parse(sessionStorage.getItem("forgetUserData"))
+        // console.log("registerData: ", registerData);
+        
+        if(registerData) registration();
+        if(forgetUserData) forget();
+      }
+      else{
+        try {
+          
+          const response = await axios.patch(`${conf.API_URL}/user/update-user-details`,
+            {fullname, email},{
+              withCredentials: true,
+            }
+          )
+
+        alert("User details Updated");
+        navigate("/user");
+        } catch (error) {
+          console.error("Failed to Update UserDetails");
+        }
+        
+      }
   
       // navigate("/user");
       
