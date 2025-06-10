@@ -177,7 +177,17 @@ const forget = async () => {
         alert("User details Updated");
         navigate("/user");
         } catch (error) {
-          console.error("Failed to Update UserDetails");
+           const html = error.response?.data || "";
+        // console.log("html", html);
+        
+        const match = html.match(/Error:\s(.+?)<br>/);
+        // console.log("match: ", match);
+        
+       
+        const errMsg = match ? match[1] : "Something went wrong";
+
+        setError(errMsg);
+        console.error("Failed to Update UserDetails");
         }
         
       }
@@ -188,16 +198,44 @@ const forget = async () => {
 }
    catch (error) {
     console.error("Verify OTP Error:", error);
-    setError(
-      error.response?.data?.message || "Failed to verify OTP. Please try again."
-    );
+    const html = error.response?.data || "";
+        // console.log("html", html);
+        
+        const match = html.match(/Error:\s(.+?)<br>/);
+        // console.log("match: ", match);
+        
+       
+        const errMsg = match ? match[1] : "Something went wrong";
+
+        setError(errMsg);
   } finally {
     setLoading(false);
   }
 };
 
 
+const handleOtp = async()=>{
+ try {
+   const response = await axios.post(`${conf.API_URL}/user/request-otp`,
+         {email},{
+           withCredentials: true,
+         }
+    )
+    alert("OTP sent")
+ } catch (error) {
+  const html = error.response?.data || "";
+        // console.log("html", html);
+        
+        const match = html.match(/Error:\s(.+?)<br>/);
+        // console.log("match: ", match);
+        
+       
+        const errMsg = match ? match[1] : "Something went wrong";
 
+        setError(errMsg);
+ }
+
+}
   return (
     <form
       onSubmit={handleVerifyOtp}
@@ -219,15 +257,28 @@ const forget = async () => {
       />
       {error && <p className="text-red-900 text-sm font-bold">{error}</p>}
       {success && <p className="text-green-500 text-sm">{success}</p>}
-      <button
-        type="submit"
-        disabled={loading}
-        className={`bg-green-500 text-white py-2 rounded ${
-          loading ? "opacity-50 cursor-not-allowed" : "hover:bg-green-600"
-        }`}
-      >
-        {loading ? "Verifying..." : "Verify OTP"}
-      </button>
+   <div className="flex justify-center gap-4 mt-4">
+  {/* Verify OTP Button */}
+  <button
+    type="submit"
+    disabled={loading}
+    className={`bg-green-500 text-white px-6 py-2 rounded-lg transition duration-200 ${
+      loading ? "opacity-50 cursor-not-allowed" : "hover:bg-green-600"
+    }`}
+  >
+    {loading ? "Verifying..." : "Verify OTP"}
+  </button>
+
+  {/* Send Again Button */}
+  <button
+    type="button"
+    onClick={handleOtp}
+    className="text-blue-600 underline hover:text-blue-800 font-medium transition duration-200"
+  >
+    Send Again
+  </button>
+</div>
+
     </form>
   );
 }

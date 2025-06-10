@@ -14,11 +14,11 @@ function ChangeUserPassword() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const onChangePassword = async (data) => {
-        if(data.newPassword != data.renewPassword)
-        {
-            setError("Password not Matched Please try Again");
-            return;
-        }
+        // if(data.newPassword != data.renewPassword)
+        // {
+        //     setError("Password not Matched Please try Again");
+        //     return;
+        // }
         try {
             const res = await axios.patch(`${conf.API_URL}/user/change-password`, data, {
                 withCredentials: true,
@@ -29,7 +29,16 @@ function ChangeUserPassword() {
             navigate('/user')
             reset();
         } catch (error) {
-       setError("Password not Changed");
+        const html = error.response?.data || "";
+        // console.log("html", html);
+        
+        const match = html.match(/Error:\s(.+?)<br>/);
+        // console.log("match: ", match);
+        
+       
+        const errMsg = match ? match[1] : "Something went wrong";
+
+        setError(errMsg);
         console.error("Password not Changed",error);
                 
         }

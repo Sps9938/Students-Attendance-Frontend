@@ -19,7 +19,7 @@ const GetStudentDetails = ({ students = [], onMarkAttendance, classId }) => {
     }
  
     const deleteStudent = async(studentId) => {
-      console.log("studentId is: ", studentId);
+      // console.log("studentId is: ", studentId);
       
       const confirmed = window.confirm("Are you sure want to delete this student on Your class");
         if(!confirmed) {

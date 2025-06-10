@@ -17,10 +17,7 @@ function ForgetPassword() {
         // console.log("newPassword: ", newPassword);
         // console.log("renewPassword: ", renewPassword);
         
-        if (data.newPassword !== data.renewPassword) {
-            alert("Passwords do not match.");
-            return;
-        }
+    
         // const res = await axios.patch(
         //     `${conf.API_URL}/user/forget-password`,
         //     { email, newPassword, renewPassword },
@@ -43,6 +40,10 @@ function ForgetPassword() {
             //   console.log("response is: ", response);
               
               if(response?.data?.success){
+                    if (data.newPassword !== data.renewPassword) {
+                    setError("newPassword do not match with renewPassword.");
+                    return;
+                }
   
               sessionStorage.setItem("forgetUserData", JSON.stringify(data));
               navigate("/request-otp", {
@@ -53,6 +54,16 @@ function ForgetPassword() {
                   setError(response.data.data || "Email Not Registered")
               }
           } catch (error) {
+            const html = error.response?.data || "";
+
+            const match = html.match(/Error:\s(.+?)<br>/); 
+
+            const errMsg = match ? match[1] : "Something went wrong";
+
+            setError(errMsg);
+            // console.log(errMsg);
+            
+
             console.error("Email Not Fetched");
             
           }

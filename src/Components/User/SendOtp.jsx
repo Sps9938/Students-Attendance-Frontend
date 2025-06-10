@@ -74,15 +74,32 @@ useEffect(() => {
       alert("User Fullaname Updated");
       navigate("/user");
     } catch (error) {
+       const html = error.response?.data || "";
+        // console.log("html", html);
+        
+        const match = html.match(/Error:\s(.+?)<br>/);
+        // console.log("match: ", match);
+        
+       
+        const errMsg = match ? match[1] : "Something went wrong";
+
+        setError(errMsg);
       console.error("Failed to Update FullName");
     }
 
    }
       } catch (error) {
      console.error("Failed to send OTP", error);
-     setError(
-      error?.response?.data?.message || "Error sending OTP, Please Try Again"
-     )
+     const html = error.response?.data || "";
+        // console.log("html", html);
+        
+        const match = html.match(/Error:\s(.+?)<br>/);
+        // console.log("match: ", match);
+        
+       
+        const errMsg = match ? match[1] : "Something went wrong";
+
+        setError(errMsg);
 
 
      

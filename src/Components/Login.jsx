@@ -64,9 +64,17 @@ function Login() {
             }
 
           
-        } catch (err) {
+        } catch (error) {
+            const html = error.response?.data || "";
+
+            const match = html.match(/Error:\s(.+?)<br>/); 
+
+            const errMsg = match ? match[1] : "Something went wrong";
+
+            setError(errMsg);
+
             console.error("Login error", err);
-            setError(err.response?.data?.message);
+            
         }
     };  
 
@@ -87,7 +95,7 @@ return (
             </Link>
         </p>
 
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+        {error && <p className="text-red-900 mt-8 text-center">{error}</p>}
 
     <form onSubmit={handleSubmit(login)} className="mt-8">
     <div className="space-y-5">
