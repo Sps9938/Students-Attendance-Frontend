@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Button, Input } from "../index";
@@ -8,8 +8,10 @@ import { useNavigate } from "react-router-dom";
 function ForgetPassword() {
     const { register, handleSubmit, reset } = useForm();
     const navigate = useNavigate();
+    const [error, setError] = useState("");
 
     const onForgotPassword = async (data) => {
+        setError("");
         // const { email, newPassword, renewPassword } = data;
         // console.log("email: ", email);
         // console.log("newPassword: ", newPassword);
@@ -27,11 +29,33 @@ function ForgetPassword() {
         // console.log("fetched sucessfully", res);
         
 
-        sessionStorage.setItem("forgetUserData", JSON.stringify(data));
-        navigate("/request-otp", {
-            state: {email: data.email}
-        })
-
+        //check email exist in db or not
+        // const email = data.email;
+        // console.log(email);
+        
+          try {
+              const response = await axios.post(`${conf.API_URL}/user/email-verify`,
+                  {email: data.email},
+                  {
+                  withCredentials: true,
+              })
+  
+            //   console.log("response is: ", response);
+              
+              if(response?.data?.success){
+  
+              sessionStorage.setItem("forgetUserData", JSON.stringify(data));
+              navigate("/request-otp", {
+              state: {email: data.email}
+  
+              })
+              } else{
+                  setError(response.data.data || "Email Not Registered")
+              }
+          } catch (error) {
+            console.error("Email Not Fetched");
+            
+          }
         
     };
 
@@ -56,6 +80,8 @@ function ForgetPassword() {
                      className="bg-zinc-400"
                     {...register("renewPassword", { required: true })}
                 />
+                {error && <p className="text-red-900 text-sm font-bold">{error}</p>}
+
                 <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white">
                     Reset Password
                 </Button>

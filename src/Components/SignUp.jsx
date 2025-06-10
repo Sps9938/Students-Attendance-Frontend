@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 function SignUp() {
-    console.log("welcome to the signUp function");
+    // console.log("welcome to the signUp function");
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
