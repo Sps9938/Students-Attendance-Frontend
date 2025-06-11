@@ -67,41 +67,84 @@ function AddStudentsForm({ classId }) {
         setStudents(updatedStudents);
     };
 
-    const handleRemoveField = (index, field) => {
-        const updatedStudents = [...students];
-        updatedStudents[index][field] = "";
-        setStudents(updatedStudents);
+const handleExcelUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+        const bstr = evt.target.result;
+        const workbook = XLSX.read(bstr, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+
+        // Step 1: Get raw data for header detection
+        const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        if (!rawData || rawData.length === 0) {
+            alert("Excel file is empty.");
+            return;
+        }
+
+        const firstRow = rawData[0].map(cell => cell?.toString().toLowerCase().trim());
+
+        const hasHeaders =
+            firstRow.includes("enrollment no") ||
+            firstRow.includes("enrollmentno") ||
+            firstRow.includes("student name") ||
+            firstRow.includes("name");
+
+        let formattedStudents = [];
+
+        if (hasHeaders) {
+            // Step 2: Parse using headers
+            const data = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+            formattedStudents = data.map((row) => {
+                const name = row["Name"] || row["Student Name"] || row["name"] || row["student name"];
+                const enrollment = row["EnrollmentNo"] || row["Enrollment No"] || row["enrollment no"] || row["enrollmentno"];
+                if (name && enrollment) {
+                    return {
+                        Name: name.toString().trim(),
+                        EnrollmentNo: enrollment.toString().trim()
+                    };
+                }
+                return null;
+            }).filter(Boolean);
+        } else {
+            // Step 3: Handle no-header case
+            rawData.forEach((row) => {
+                if (!row || row.length < 2) return;
+
+                if (row.length === 2) {
+                    // Format: [Name, EnrollmentNo]
+                    const [name, enrollment] = row;
+                    if (name && enrollment) {
+                        formattedStudents.push({
+                            Name: name.toString().trim(),
+                            EnrollmentNo: enrollment.toString().trim()
+                        });
+                    }
+                } else if (row.length >= 3) {
+                    // Format: [Sl No, EnrollmentNo, Name]
+                    const [_, enrollment, name] = row;
+                    if (name && enrollment) {
+                        formattedStudents.push({
+                            Name: name.toString().trim(),
+                            EnrollmentNo: enrollment.toString().trim()
+                        });
+                    }
+                }
+            });
+        }
+
+        setStudents(formattedStudents);
+        setNumberOfStudents(formattedStudents.length);
     };
 
-    const handleExcelUpload = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+    reader.readAsBinaryString(file);
+};
 
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-            const bstr = evt.target.result;
-            const workbook = XLSX.read(bstr, { type: "binary" });
-            const sheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[sheetName];
 
-            // Read raw rows as arrays, no headers
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-            // Filter rows with valid roll number and name
-            const validRows = jsonData.filter(row => row[1] && row[2]);
-
-            // Format: row[1] = EnrollmentNo, row[2] = Name
-            const formattedStudents = validRows.map((row) => ({
-                EnrollmentNo: row[1].toString().trim(),
-                Name: row[2].toString().trim(),
-            }));
-
-            setStudents(formattedStudents);
-            setNumberOfStudents(formattedStudents.length);
-        };
-
-        reader.readAsBinaryString(file);
-    };
 
 
     const handleSubmit = async (e) => {
