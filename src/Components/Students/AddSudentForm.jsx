@@ -67,6 +67,16 @@ function AddStudentsForm({ classId }) {
         setStudents(updatedStudents);
     };
 
+    const handleRemoveField = (index) => {
+    const updatedStudents = [...students];
+    updatedStudents.splice(index, 1); 
+    setStudents(updatedStudents); 
+
+    const  value = numberOfStudents;
+    setNumberOfStudents(value-1);
+    }
+
+
 const handleExcelUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -223,7 +233,7 @@ return (
         placeholder={`Student ${index + 1} Name`}
         value={student.Name}
         onChange={(e) => handleStudentChange(index, "Name", e.target.value)}
-        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "border-red-900" : ""}`}
+        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "text-red-500 font-bold" : ""}`}
         required
         />
         <input
@@ -231,30 +241,22 @@ return (
         placeholder={`Student ${index + 1} Enrollment No.`}
         value={student.EnrollmentNo}
         onChange={(e) => handleStudentChange(index, "EnrollmentNo", e.target.value)}
-        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "border-red-500" : ""}`}
+        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "text-red-500 font-bold" : ""}`}
         required
         />
      
 
         <div className="flex gap-2">
-            {student.Name && (
+            {(student.Name || student.EnrollmentNo) && (
                 <button
                     type="button"
-                    onClick={() => handleRemoveField(index, "Name")}
+                    onClick={() => handleRemoveField(index)}
                     className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700"
                 >
-                    Remove Name
+                    Remove Row
                 </button>
             )}
-            {student.EnrollmentNo && (
-                <button
-                    type="button"
-                    onClick={() => handleRemoveField(index, "EnrollmentNo")}
-                    className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700"
-                >
-                    Remove Enrollment No.
-                </button>
-            )}
+         
         </div>
             </div>
     ))}

@@ -21,7 +21,7 @@ const transformAttendanceData = (students)=> {
     const dateMap = {};
     students.forEach((student) => {
         student.attendance.forEach(({date, status}) => {
-            const formattedDate = new Date(date).toLocaleDateString();
+              const formattedDate = new Date(date).toISOString().split("T")[0]; 
             if(!dateMap[formattedDate]){
                 dateMap[formattedDate] = [];
             }
