@@ -12,9 +12,6 @@ const navigate = useNavigate();
    const res = await axios.get(`${conf.API_URL}/student/get/student/details/${classId}`,{
   withCredentials: true,
    })
-    
-  
-    
     setStudents(res.data.data.students);
   };
 

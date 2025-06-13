@@ -99,10 +99,10 @@ const handleExcelUpload = (e) => {
         const firstRow = rawData[0].map(cell => cell?.toString().toLowerCase().trim());
 
         const hasHeaders =
-            firstRow.includes("enrollment no") ||
-            firstRow.includes("enrollmentno") ||
-            firstRow.includes("student name") ||
-            firstRow.includes("name");
+            firstRow.includes("Enrollment No") ||
+            firstRow.includes("EnrollmentNo") ||
+            firstRow.includes("Student Name") ||
+            firstRow.includes("Name");
 
         let formattedStudents = [];
 
@@ -110,12 +110,12 @@ const handleExcelUpload = (e) => {
             // Step 2: Parse using headers
             const data = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
             formattedStudents = data.map((row) => {
-                const name = row["Name"] || row["Student Name"] || row["name"] || row["student name"];
-                const enrollment = row["EnrollmentNo"] || row["Enrollment No"] || row["enrollment no"] || row["enrollmentno"];
-                if (name && enrollment) {
+                const Name = row["Name"] || row["Student Name"] || row["Name"] || row["Student Name"];
+                const Enrollment = row["EnrollmentNo"] || row["Enrollment No"] || row["Enrollment No"] || row["EnrollmentNo"];
+                if (Name && Enrollment) {
                     return {
-                        Name: name.toString().trim(),
-                        EnrollmentNo: enrollment.toString().trim()
+                        Name: Name.toString().trim(),
+                        EnrollmentNo: Enrollment.toString().trim()
                     };
                 }
                 return null;
@@ -127,26 +127,26 @@ const handleExcelUpload = (e) => {
 
                 if (row.length === 2) {
                     // Format: [Name, EnrollmentNo]
-                    const [name, enrollment] = row;
-                    if (name && enrollment) {
+                    const [Name, Enrollment] = row;
+                    if (Name && Enrollment) {
                         formattedStudents.push({
-                            Name: name.toString().trim(),
-                            EnrollmentNo: enrollment.toString().trim()
+                            Name: Name.toString().trim(),
+                            EnrollmentNo: Enrollment.toString().trim()
                         });
                     }
                 } else if (row.length >= 3) {
                     // Format: [Sl No, EnrollmentNo, Name]
-                    const [_, enrollment, name] = row;
-                    if (name && enrollment) {
+                    const [_, Enrollment, Name] = row;
+                    if (Name && Enrollment) {
                         formattedStudents.push({
-                            Name: name.toString().trim(),
-                            EnrollmentNo: enrollment.toString().trim()
+                            Name: Name.toString().trim(),
+                            EnrollmentNo: Enrollment.toString().trim()
                         });
                     }
                 }
             });
         }
-
+        
         setStudents(formattedStudents);
         setNumberOfStudents(formattedStudents.length);
     };
