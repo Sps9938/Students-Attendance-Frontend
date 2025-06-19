@@ -29,35 +29,19 @@ function GetDeletdClasses(){
 // console.log("delete classes", deletedClasses);
 
 
-const makeDownloadableCloudinaryURL = (url) => {
-  return url.replace("/upload", "upload/f1_attachment:ClassReport/");
-}
+// const makeDownloadableCloudinaryURL = (url) => {
+//   return url.replace("/upload", "upload/f1_attachment:ClassReport/");
+// }
 
-const handleDownload = async (url, fileName = "ClassReport.pdf") => {
+const handleReport = (url) => {
   try {
-    const response = await fetch(url, { mode: 'cors' });
-
-    if (!response.ok) {
-      throw new Error("Network response was not OK");
-    }
-
-    const blob = await response.blob();
-    const blobUrl = window.URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.setAttribute("download", fileName);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    // Clean up memory
-    window.URL.revokeObjectURL(blobUrl);
+    window.open(url, "_blank");
   } catch (error) {
-    console.error("❌ Download failed:", error);
-    alert("Failed to download file.");
+    console.error("❌ Failed to open PDF:", error);
+    alert("Failed to open file.");
   }
 };
+
 
 
 return (
@@ -93,9 +77,9 @@ return (
 
              <button
               className="btn btn-sm btn-outline-primary underline text-blue-600"
-              onClick={() => handleDownload(cls.pdfUrl, `${cls.className}_Report.pdf`)}
+              onClick={() => handleReport(cls.pdfUrl)}
             >
-              Download Report
+              Get Report
             </button>
 
                 </td>

@@ -1,11 +1,11 @@
 // @ts-ignore
 import html2pdf from "html2pdf.js";
-
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import conf from "../../Conf/Conf";
 import axios from "axios";
 import { ClassReport } from "../../Components";
+
 function Report(){
 // console.log("welcome to report page");
 const navigate = useNavigate();
@@ -78,6 +78,7 @@ useEffect(() => {
 // console.log("students length is: ",students.length);;
 // console.log("classs is: ", cls);
 // console.log("attendancRecord : ", attendanceRecords);
+
 const handleDownloadAndSendPDF = () => {
    const confirmDelete = window.confirm("Are you sure to delete this class ???");
       if (!confirmDelete) return;
@@ -117,63 +118,82 @@ const handleDownloadAndSendPDF = () => {
      
       const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
 
+      const cloudName = "dev80yysh"
+      const uploadPreset = "class_reports"
+
+      const url = `https://api.cloudinary.com/v1_1/${cloudName}/raw/upload`;
      
       const formData = new FormData();
-      formData.append("pdf", pdfFile);
-      formData.append("className", cls.className);
+      formData.append("file", pdfFile);
+      formData.append("upload_preset", uploadPreset);
       // console.log("students are: ", students);
       
       try {
-      //before delete the make sure that unnecessary student are not in databse -> before delete the class must be delete all students on that class
-    await Promise.all(
-   students.map(async (student) => {
-    try {
-      // console.log("Deleting:", student._id);
-      await axios.delete(`${conf.API_URL}/student/delete/student/${student._id}`,{
-        withCredentials: true,
-      });
+//upload on cloudinary 
+        const res = await fetch(url, {
+          method: "POST", 
+          body: formData,
+        });
 
-      
-    } catch (err) {
-      console.error("Failed to delete student:", student._id, err.response?.data || err.message);
-    }
-  }
+        const data = await res.json();
+        
+        //before delete the make sure that unnecessary student are not in DB -> before delete the class must be delete all students on that class
 
-  
-)
+        if(data.secure_url){
 
-);
+            await Promise.all(
+            students.map(async (student) => {
+              try {
+                // console.log("Deleting:", student._id);
+                await axios.delete(`${conf.API_URL}/student/delete/student/${student._id}`,{
+                  withCredentials: true,
+                });
+
+                
+              } catch (err) {
+                console.error("Failed to delete student:", student._id, err.response?.data || err.message);
+              }
+            }
+
+            
+          )
+
+          );
+        }
 
         // if(success){
         //   console.log("Delete all students successfully");
           
         // }
         //now delete the class 
-          const res = await axios.post(
-            `${conf.API_URL}/class/delete-with-archive/${cls._id}`,
-            formData,
-            { withCredentials: true }
-          );
-  
-          // console.log("✅ Server response:", res.data);
+
+        // console.log("pdfUrl is: ", data.secure_url);
+        
+         if (data.secure_url) {
+           const response = await axios.post(
+             `${conf.API_URL}/class/delete-with-archive/${cls._id}`,
+             {pdfUrl: data.secure_url},
+             { withCredentials: true }
+           );
+
+           // console.log("✅ Server response:", res.data);
           alert("✅ PDF sent to backend successfully.");
           navigate("/deleted/classes")
+         } else{
+           console.error("❌ Failed to send PDF to backend", err);
+         }
 
       } catch (err) {
         console.error("❌ Failed to send PDF to backend", err);
         alert("❌ Upload failed.");
       }
     })
-    .catch(err => {
-      // Restore hidden elements on error as well
-      hiddenElements.forEach(el => el.style.display = "");
+    .catch(err => {      
       console.error("❌ PDF generation failed", err);
       alert("❌ PDF generation failed.");
     });
+};
 
-
-
-  };
   return (
    <div> 
       <h2 className="text-xl font-bold mb-4">Class Report Overview</h2>  
