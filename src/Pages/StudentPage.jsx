@@ -17,7 +17,7 @@ const navigate = useNavigate();
 
   const handleMarkAttendance = () => {
     // Navigate to or show attendance marking UI
-    console.log("Navigate to mark attendance page");
+    // console.log("Navigate to mark attendance page");
     navigate(`/student/mark/attendance/${classId}`)
     
   };

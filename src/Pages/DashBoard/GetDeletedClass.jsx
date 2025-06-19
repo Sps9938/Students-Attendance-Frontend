@@ -4,6 +4,7 @@ import conf from "../../Conf/Conf";
 import { useParams } from "react-router-dom";
 
 function GetDeletdClasses(){
+
     const [deletedClasses, setDeletedClasses] = useState();
   // const {classId} = useParams();
 // console.log("classId is: ", classId);
@@ -42,6 +43,31 @@ const handleReport = (url) => {
   }
 };
 
+const handleDelete = async(classId) => {
+   const confirmed = window.confirm("Are you sure want to delete this class");
+        if(!confirmed) {
+            // navigate(-1);
+            return;
+     }
+
+
+     try {
+
+    const res = await axios.delete(`${conf.API_URL}/class/makedeleteAllDeletedClasses/${classId}`,{
+      withCredentials: true,
+    })
+
+    // if(res?.data?.success){
+    //   console.log("class deleted successfully");
+      
+    // }
+    window.location.reload();
+      
+     } catch (error) {
+        console.error("class not deleted", error);
+     }
+
+}
 
 
 return (
@@ -75,12 +101,20 @@ return (
                 </td>
                 <td className="border px-4 py-2">
 
-             <button
+        <div className="flex justify-center gap-4">
+               <button
               className="btn btn-sm btn-outline-primary underline text-blue-600"
               onClick={() => handleReport(cls.pdfUrl)}
             >
               Get Report
             </button>
+              <button
+              className="p-2 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-sm hover:shadow-md transition duration-200"
+              onClick={() => handleDelete(cls._id)}
+            >
+        🗑️
+      </button>
+        </div>
 
                 </td>
             </tr>
