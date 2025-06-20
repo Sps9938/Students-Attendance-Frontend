@@ -164,12 +164,12 @@ const handleDownloadAndSendPDF = () => {
    <div> 
       <h2 className="text-xl font-bold mb-4">Class Report Overview</h2>  
 <div className="flex justify-center gap-3">
-          <button
+          {/* <button
         onClick={() => navigate("/getclasses")}
         className="mb-6 inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 transition"
       >
     ← Back to Class List
-  </button>   
+  </button>    */}
       <button
         onClick={handleDownloadAndSendPDF}
         className="mb-6 inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg shadow hover:bg-red-700 transition"
