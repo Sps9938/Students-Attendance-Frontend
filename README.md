@@ -3,11 +3,11 @@
 
 2. [Features](#-features)
 
-3. [Tech Stack](#-tech-stack)
+3. [Tech Stack](#tech-stack)
 
 4. [Project Structure](#-project-structure)
 
-5. [Getting Started](#-getting-started)
+5. [Getting Started](#getting-started)
 
 6. [Environment Variables](#-environment-variables)
 
