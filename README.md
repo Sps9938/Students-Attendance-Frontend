@@ -1,6 +1,6 @@
 # 📘 Student Attendance Management System
 
-A full-featured web application to manage student attendance with internet-based syncing, flexible attendance modes, secure OTP-based authentication, and rich analytics — built using the **MERN stack** and modern frontend tooling.
+A full-featured web application to manage student attendance with internet-based , flexible attendance modes, secure OTP-based authentication, and rich analytics — built using the **MERN stack** and modern frontend tooling.
 
 ---
 
@@ -16,12 +16,11 @@ A full-featured web application to manage student attendance with internet-based
 
 - 🧑‍🎓 **Student Management**
   - Add students manually or via Excel upload
-  - Real-time duplicate detection (name, roll no., etc.)
+  - Real-time duplicate detection (name, roll no.)
 
 - ✅ **Attendance Marking**
   - Intuitive grid UI (mouse or keyboard)
   - Present/Absent mode selection
-  - Works offline and syncs on reconnect
 
 - 📊 **Reports & Analytics**
   - Attendance stats & low-attendance warnings
