@@ -1,3 +1,24 @@
+# 📑 Table of Contents
+1. [Student Attendance Management System](#-student-attendance-management-system)
+
+2. [Features](#-features)
+
+3. [Tech Stack](#-tech-stack)
+
+4. [Project Structure](#-project-structure)
+
+5. [Getting Started](#-getting-started)
+
+6. [Environment Variables](#-environment-variables)
+
+7. [Running the App](#-running-the-app)
+
+8. [Documentation](#-documentation)
+
+9. [Mobile App (Future Plan)](#-mobile-app-future-plan)
+
+    ---
+
 # 📘 Student Attendance Management System
 
 A full-featured web application to manage student attendance with internet-based syncing, flexible attendance modes, secure OTP-based authentication, and rich analytics — built using the **MERN stack** and modern frontend tooling.
