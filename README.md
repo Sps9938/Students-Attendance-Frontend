@@ -1,133 +1,107 @@
 # 📘 Student Attendance Management System
 
-A full-featured web application to manage student attendance with internet support, multiple attendance modes, secure OTP-based authentication, and rich analytics — built using the MERN stack and modern frontend tooling.
-
-
-
-```
-
-# Navigate to root
-
-cd ../
-
-# Create frontend project using Vite
-npm create vite@latest Frontend -- --template react
-
-cd Frontend
-
-# Install required dependencies
-npm install
-npm install axios react-router-dom redux react-redux @reduxjs/toolkit tailwindcss postcss autoprefixer
-
-# Tailwind setup
-npx tailwindcss init -p
-
-```
+A full-featured web application to manage student attendance with internet-based syncing, flexible attendance modes, secure OTP-based authentication, and rich analytics — built using the **MERN stack** and modern frontend tooling.
 
 ---
 
 ## 🚀 Features
 
 - 👥 **User Authentication**
-  - Signup/Login with OTP verification
-  - Password change and recovery
+  - OTP-based Login & Signup
+  - Password Reset & Change
 
 - 🏫 **Class Management**
-  - Create and manage classes based on year batch
-  - Assign subjects/courses to each class
+  - Create/manage classes by academic batch
+  - Assign subjects/courses per class
 
 - 🧑‍🎓 **Student Management**
-  - Add students manually or via Excel file upload
-  - Detect and highlight duplicate entries
+  - Add students manually or via Excel upload
+  - Real-time duplicate detection (name, roll no., etc.)
 
 - ✅ **Attendance Marking**
-  - Grid-based UI: Mark attendance by clicking or using the keyboard
-  - Select mode: Present or Absent
+  - Intuitive grid UI (mouse or keyboard)
+  - Present/Absent mode selection
+  - Works offline and syncs on reconnect
 
-- 📊 **Attendance Reports**
-  - View overall attendance records
-  - Export reports as **PDF** and **Excel**
-  - Low attendance alerts
+- 📊 **Reports & Analytics**
+  - Attendance stats & low-attendance warnings
+  - Export reports as PDF and Excel
+  - Cloudinary-based PDF uploads
 
 - 👤 **User Profile**
-  - View/update user details
+  - View & update personal details
   - Change or reset password
 
-- ☁️ **Cloud Integration**
-  - Uploads PDF reports to **Cloudinary**
-
-- 📱 **Future Goals**
-  - Convert to a **React Native mobile app**
-  - Publish on Google Play Store
+- 📱 **Mobile App (Planned)**
+  - React Native version
+  - Offline-first support with background sync
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend (Vite + React + Tailwind CSS)
-- `React` (Functional components + Hooks)
-- `Redux Toolkit` (State management)
-- `React Router DOM` (Routing)
-- `Tailwind CSS` (UI Styling)
-- `Vite` (Blazing fast development)
-- `html2pdf.js`, `xlsx`, `jspdf` (Export PDF/Excel)
-- `Cloudinary` (PDF upload)
-
+### Frontend (React + Vite + Tailwind CSS)
+- ⚛️ React (with Hooks & Functional Components)
+- 🧠 Redux Toolkit (state management)
+- 🧭 React Router DOM (routing)
+- 🎨 Tailwind CSS (modern styling)
+- ⚡ Vite (lightning-fast dev server)
+- 📄 html2pdf.js, xlsx, jsPDF (report exports)
+- ☁️ Cloudinary (file upload integration)
 
 ### Backend (Node.js + Express + MongoDB)
-- `Express.js` (REST API)
-- `MongoDB` + `Mongoose` (Database)
-- `bcryptjs` + `jsonwebtoken` (Auth and security)
-- `nodemailer` (OTP email sending)
-- `multer` (File handling)
-- `cloudinary` SDK (Upload PDFs)
-- `cors`, `dotenv`, `helmet`, `morgan` (Middleware)
+- 🚀 Express.js (RESTful APIs)
+- 🗃 MongoDB + Mongoose (NoSQL database)
+- 🔒 JWT + bcrypt (authentication)
+- 📧 Nodemailer (OTP email verification)
+- 📂 Multer (file handling)
+- 🛡 Middleware: CORS, Helmet, Morgan, dotenv
 
 ---
 
 ## 📁 Project Structure
 
-### Frontend (`/client`)
+### Frontend (`/Frontend`)
 ```
 📁 src
-├── app/                # Redux store setup
-├── assets/             # Images, styles
-├── components/         # Common reusable components (modals, layout, buttons)
+├── app/            # Redux store
+├── assets/         # Images & styles
+├── components/     # Shared UI components (modals, layout, buttons)
 ├── features/
-│   ├── auth/           # Login, signup, OTP, change/forget password
-│   ├── Header/         # Heading
-│   ├── Home/           # Home Page
-│   ├── classes/        # Class CRUD
-│   ├── students/       # Add/import students
-│   ├── user/           # update/delete/forget
-│   ├── attendance/     # Attendance UI, reports
-├── pages/              # Page-level components
-└── main.jsx            # Entry point
+│   ├── auth/       # Login, signup, OTP, password management
+│   ├── Header/     # App bar and navigation
+│   ├── Home/       # Dashboard / landing
+│   ├── classes/    # Class management
+│   ├── students/   # Student CRUD and Excel import
+│   ├── user/       # Profile update & security
+│   ├── attendance/ # Marking attendance, reports
+├── pages/          # Top-level pages
+└── main.jsx        # Entry point
 ```
 
-### Backend (`/server`)
+### Backend (`/Backend`)
 ```
-📁 server
-├── controllers/        # Route logic
-├── middlewares/        # Auth, multer, error handling
-├── models/             # Mongoose schemas (User, Class, Student, Attendance)
-├── routes/             # API endpoints
-├── utils/              # Cloudinary, PDF helpers, OTP email
-├── config/             # DB & cloud configs
-└── server.js           # Entry point
+📁 Backend
+├── controllers/    # Request handling logic
+├── middlewares/    # Auth, error handling, multer, etc.
+├── models/         # Mongoose schemas (User, Class, Student, Attendance)
+├── routes/         # API route definitions
+├── utils/          # OTP email, Cloudinary, PDF helpers
+├── config/         # DB & cloud configurations
+└── server.js       # App entry point
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Getting Started
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/sps9938/Students-Attendance-Frontend
 cd Students-Attendance-Frontend
 ```
 
-### 2. Install Dependencies
+### 2️⃣ Initial Setup
 
 #### Backend
 ```bash
@@ -137,25 +111,44 @@ npm install
 
 #### Frontend
 ```bash
-cd Frontend
+cd ../Frontend
 npm install
+npm install axios react-router-dom redux react-redux @reduxjs/toolkit tailwindcss postcss autoprefixer
+npx tailwindcss init -p
 ```
 
-### 3. Environment Variables
+### 3️⃣ Tailwind Setup
+In `tailwind.config.js`:
+```js
+content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+theme: { extend: {} },
+plugins: [],
+```
 
-#### Backend (`/server/.env`)
+In `src/index.css`:
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
+
+## 🔐 Environment Variables
+
+### Backend (`/Backend/.env`)
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret
-EMAIL_USER=your_email
+JWT_SECRET=your_jwt_secret
+EMAIL_USER=your_email_address
 EMAIL_PASS=your_email_password
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-#### Frontend (`/client/.env`)
+### Frontend (`/Frontend/.env`)
 ```env
 VITE_API_URL=http://localhost:5000/api
 VITE_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
@@ -164,26 +157,27 @@ VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
 
 ---
 
-## 🧪 Run the App
+## 🧪 Running the App
 
-> Requires internet connection for syncing data with backend & Frontend
+> Make sure MongoDB and environment variables are correctly configured.
 
-### Backend
+### Start Backend
 ```bash
 cd Backend
 npm run dev
 ```
 
-### Frontend
+### Start Frontend
 ```bash
-cd Frontend
+cd ../Frontend
 npm run dev
 ```
 
+> App will be available at `http://localhost:5173` (Vite)
+
 ---
 
-
-### 📚 Documentation
+## 📚 Documentation
 
 - [React Docs](https://react.dev)
 - [Redux Toolkit](https://redux-toolkit.js.org)
@@ -191,20 +185,19 @@ npm run dev
 - [Vite](https://vitejs.dev/guide/)
 - [React Router](https://reactrouter.com/en/main)
 
+---
 
 ## 📱 Mobile App (Future Plan)
 
-- Offline-first data input
-- Background sync when internet is available
-- Native notifications for sync failure/success
+- Build using React Native
+- Offline attendance marking
+- Sync attendance data when reconnected
+- Push notifications for status updates
 
 ---
 
-## 📌 Credits
+## 👨‍💻 Author
 
-Developed by **Satya**  
-🔗 [GitHub](https://github.com/Sps9938)
-
----
-
+Developed with ❤️ by **Satya**  
+🔗 GitHub: [https://github.com/Sps9938](https://github.com/Sps9938)
 
