@@ -4,9 +4,10 @@ A full-featured web application to manage student attendance with internet suppo
 
 
 
----
+```
 
 # Navigate to root
+
 cd ../
 
 # Create frontend project using Vite
@@ -21,7 +22,7 @@ npm install axios react-router-dom redux react-redux @reduxjs/toolkit tailwindcs
 # Tailwind setup
 npx tailwindcss init -p
 
----
+```
 
 ---
 
