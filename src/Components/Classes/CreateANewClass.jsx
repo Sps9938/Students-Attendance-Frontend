@@ -74,7 +74,11 @@ return (
 
       {createdClass && (
         <div className="mt-4 p-2 bg-green-100 rounded border border-green-400">
+<<<<<<< HEAD
           <p>Students Add Page: Link:</p>
+=======
+          <p>Add Student Page: Link:</p>
+>>>>>>> 52e5ebba3961c7b2e38086eabc39a54a92389153
           <a
             href={`http://localhost:5173/student/form/${createdClass.classToken}`}
             target="_blank"
