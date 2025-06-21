@@ -83,7 +83,6 @@ return (
             <tr>
             <th className="border px-4 py-2 text-left">Class Name</th>
             <th className="border px-4 py-2 text-left">Course</th>
-            <th className="border px-4 py-2 text-left">Teacher</th>
             <th className="border px-4 py-2 text-left">Batch Year</th>
             <th className="border px-4 py-2 text-left">Deleted At</th>
             <th className="border px-4 py-2 text-left">Report (PDF)</th>
@@ -94,7 +93,6 @@ return (
             <tr key={index} className="hover:bg-gray-50">
                 <td className="border px-4 py-2">{cls.className}</td>
                 <td className="border px-4 py-2">{cls.courseName}</td>
-                <td className="border px-4 py-2">{cls.teacherName}</td>
                 <td className="border px-4 py-2">{cls.yearBatch}</td>
                 <td className="border px-4 py-2">
                 {new Date(cls.deletedAt).toLocaleDateString("en-GB")}
