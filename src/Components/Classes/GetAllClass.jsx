@@ -149,14 +149,14 @@ const FetchAllClass = () => {
               🎓 <strong>Batch:</strong> {cls.yearBatch}
             </p>
 
-            <a
+            {/* <a
               href={`http://localhost:5173/student/form/${cls._id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline text-sm break-all"
             >
               🔗 Click to Open Student Form Link
-            </a>
+            </a> */}
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -172,7 +172,7 @@ const FetchAllClass = () => {
               className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
             >
               <FiCopy />
-              {copiedId === cls._id ? "Copied!" : "Copy Link"}
+              {copiedId === cls._id ? "Copied!" : "Students Add Page(Link)"}
             </button>
             <button
               onClick={() => navigate(`/student/form/${cls._id}`)}
