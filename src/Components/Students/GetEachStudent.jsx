@@ -126,6 +126,7 @@ function GetEachStudent({ student, attendanceSummary }) {
       <p><strong className="text-blue-800">👨‍🏫 Faculty:</strong> <span className="text-gray-700">{tech?.fullname}</span></p>
       <p><strong className="text-blue-800">🏫 Class:</strong> <span className="text-gray-700">{cls?.className}</span></p>
       <p><strong className="text-blue-800">📘 Course:</strong> <span className="text-gray-700">{cls?.courseName}</span></p>
+      <p><strong className="text-blue-800">📘 Section Name:</strong> <span className="text-gray-700">{cls?.Section}</span></p>
       <p><strong className="text-blue-800">📅 Batch:</strong> <span className="text-gray-700">{cls?.yearBatch}</span></p>
     </div>
   </div>

@@ -145,6 +145,9 @@ const FetchAllClass = () => {
             <h3 className="text-2xl font-semibold mb-1">
               {cls.className} - {cls.courseName}
             </h3>
+            <h3 className="text-1xl font-semibold mb-1">
+              Section - {cls.Section}
+            </h3>
             <p className="text-gray-600 mb-4">
               🎓 <strong>Batch:</strong> {cls.yearBatch}
             </p>
@@ -172,11 +175,7 @@ const FetchAllClass = () => {
               className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
             >
               <FiCopy />
-<<<<<<< HEAD
-              {copiedId === cls._id ? "Copied!" : "Students Add Page(Link)"}
-=======
               {copiedId === cls._id ? "Copied!" : "Copy Link(Student Page)"}
->>>>>>> 52e5ebba3961c7b2e38086eabc39a54a92389153
             </button>
             <button
               onClick={() => navigate(`/student/form/${cls._id}`)}
