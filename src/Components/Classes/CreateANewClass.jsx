@@ -57,7 +57,7 @@ return (
         />
         <Input
           label="Section Name"
-          placeholder="Enter Section(Optional)"
+          placeholder="Enter Section"
           {...register("Section",{required: true})}
         />
         <Input

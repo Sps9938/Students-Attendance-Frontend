@@ -92,13 +92,19 @@ const handleDownloadAndSendPDF = () => {
   const hiddenElements = element.querySelectorAll(".no-pdf");
   hiddenElements.forEach(el => el.style.display = "none");
 
-  const fileName = `${cls.className?.replace(/\s+/g, "_") || "Student"}_Profile.pdf`;
+  const breakElements = element.querySelectorAll(".pdf-page-break");
+  breakElements.forEach((el) => {
+    el.style.pageBreakBefore = "always";
+    el.style.breakBefore = "page";
+  });
+
+  const fileName = `${cls.className?.replace(/\s+/g, "_") || "Student"}_Attendance_Summary.pdf`;
 
   const opt = {
     margin: 0.5,
     image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 1 },
-    jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "in", format: "letter", orientation: "landscape" }
   };
 
   html2pdf()
@@ -107,20 +113,21 @@ const handleDownloadAndSendPDF = () => {
     .outputPdf("blob")
     .then(async (pdfBlob) => {
       hiddenElements.forEach(el => el.style.display = "");
+      breakElements.forEach((el) => {
+        el.style.pageBreakBefore = "";
+        el.style.breakBefore = "";
+      });
 
-      // Optional local download
       const link = document.createElement("a");
       link.href = URL.createObjectURL(pdfBlob);
       link.download = fileName;
       link.click();
 
-      // Prepare FormData to send to backend
       const formData = new FormData();
       formData.append("pdf", new File([pdfBlob], fileName, { type: "application/pdf" }));
-      formData.append("classId", cls._id); // Optional: send class ID
+      formData.append("classId", cls._id);
 
       try {
-        // Delete all students in this class
         await Promise.all(
           students.map(async (student) => {
             try {
@@ -133,13 +140,11 @@ const handleDownloadAndSendPDF = () => {
           })
         );
 
-        // Send PDF Blob + classId to backend
         const res = await axios.post(
           `${conf.API_URL}/class/delete-with-archive/${cls._id}`,
           formData,
           {
             withCredentials: true,
-            
           }
         );
 
@@ -153,23 +158,19 @@ const handleDownloadAndSendPDF = () => {
     })
     .catch((err) => {
       hiddenElements.forEach(el => el.style.display = "");
+      breakElements.forEach((el) => {
+        el.style.pageBreakBefore = "";
+        el.style.breakBefore = "";
+      });
       console.error("❌ PDF generation failed", err);
       alert("❌ PDF generation failed.");
     });
 };
 
-
-
   return (
    <div> 
       <h2 className="text-xl font-bold mb-4">Class Report Overview</h2>  
 <div className="flex justify-center gap-3">
-          {/* <button
-        onClick={() => navigate("/getclasses")}
-        className="mb-6 inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 transition"
-      >
-    ← Back to Class List
-  </button>    */}
       <button
         onClick={handleDownloadAndSendPDF}
         className="mb-6 inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg shadow hover:bg-red-700 transition"

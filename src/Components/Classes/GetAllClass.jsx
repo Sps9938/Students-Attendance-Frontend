@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import conf from "../../Conf/Conf";
 import { useNavigate } from "react-router-dom";
-import { FiEdit, FiTrash2, FiCopy, FiPlus, FiArrowLeft, FiUsers } from "react-icons/fi"; // icons
+import { FiEdit, FiTrash2, FiCopy, FiPlus, FiArrowLeft, FiUsers, FiFileText } from "react-icons/fi"; // icons
 import { AiOutlineLoading3Quarters } from "react-icons/ai"; // loading spinner
 import  html2pdf  from "html2pdf.js";
+import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
+
 const FetchAllClass = () => {
   const navigate = useNavigate();
   const [classes, setClasses] = useState([]);
@@ -40,6 +42,7 @@ const FetchAllClass = () => {
     setEditData({
       className: cls.className,
       courseName: cls.courseName,
+      Section: cls.Section,
       yearBatch: cls.yearBatch,
     });
   };
@@ -117,6 +120,15 @@ const FetchAllClass = () => {
           />
           <input
             type="text"
+            value={editData.Section}
+            onChange={(e) =>
+              setEditData({ ...editData, Section: e.target.value })
+            }
+            className="border px-3 py-2 rounded"
+            placeholder="Course Name"
+          />
+          <input
+            type="text"
             value={editData.yearBatch}
             onChange={(e) =>
               setEditData({ ...editData, yearBatch: e.target.value })
@@ -163,12 +175,13 @@ const FetchAllClass = () => {
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              onClick={() => handleEdit(cls)}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-            >
-              <FiEdit /> Edit
-            </button>
+          <button
+          onClick={() => handleEdit(cls)}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-indigo-700 text-white font-semibold text-sm rounded-lg shadow-md hover:from-indigo-600 hover:to-indigo-800 hover:scale-105 active:scale-95 transition-all duration-200"
+        >
+          <FiEdit className="w-4 h-4" />
+          Edit
+        </button>
 
             <button
               onClick={() => handleCopy(cls)}
@@ -177,25 +190,29 @@ const FetchAllClass = () => {
               <FiCopy />
               {copiedId === cls._id ? "Copied!" : "Copy Link(Student Page)"}
             </button>
-            <button
-              onClick={() => navigate(`/student/form/${cls._id}`)}
-              className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-            >
-              <FiPlus /> Add Students
-            </button>
+                <button
+        onClick={() => navigate(`/student/form/${cls._id}`)}
+        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-700 text-white font-semibold text-sm rounded-lg shadow-md hover:from-purple-600 hover:to-purple-800 hover:scale-105 active:scale-95 transition-all duration-200"
+      >
+        <FiPlus className="w-4 h-4" />
+        Add Students
+      </button>
 
-          <button
+      <button
         onClick={() => navigate(`/student/get/student/details/${cls._id}`)}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
+        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-sm font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-800 hover:scale-105 active:scale-95 transition-all duration-200"
       >
-        <FiUsers /> Get Students
-      </button>
+        <FiUsers className="w-4 h-4" />
+        Get Students
+    </button>
+ 
           <button
-        onClick={() => navigate(`/class/report/${cls._id}`)}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full flex items-center gap-1"
-      >
-        <FiUsers /> Class Report
-      </button>
+          onClick={() => navigate(`/class/report/${cls._id}`)}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-semibold rounded-lg shadow-md hover:from-blue-700 hover:to-blue-900 transition duration-200"
+          >
+          <FiFileText className="w-4 h-4" />
+          Class Report
+          </button>
            
           <FiArrowLeft 
           onClick={()=> navigate("/")}
