@@ -10,6 +10,20 @@ import { login, logout } from './store/authSlice'
 import { Header } from './Components'
 import axios from 'axios'
 function App() {
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    axios.get(`${conf.API_URL}/health/ping`,{
+      withCredentials: true,
+    })
+      .then(res => console.log("Pinged server:", res.data))
+      .catch(err => console.log("Ping error:", err));
+  }, 1000 * 60 * 14); // every 14 minutes, before Render timeout
+
+  return () => clearInterval(interval);
+}, []);
+
+
   const fetchUser = async () => {
    
     const response =  await axios.get(`${conf.API_URL}/user/get-user`, {

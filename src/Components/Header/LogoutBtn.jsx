@@ -17,6 +17,9 @@ function LogoutBtn() {
                 console.log("No resposne in LogoutBtn");
             }
             dispatch(logout());
+
+            localStorage.clear();
+            
             navigate("/addstudents");
             navigate("/login");
         } catch (error) {
