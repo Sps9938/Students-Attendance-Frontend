@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import conf from "../../Conf/Conf";
 import { useDispatch } from "react-redux";
-import { login as authLogin } from "../../store/authSlice";
+import { login as authLogin } from "../../Store/AuthSlice";
 import { useForm, useFormState } from "react-hook-form";
 
 function VerifyOtp() {
