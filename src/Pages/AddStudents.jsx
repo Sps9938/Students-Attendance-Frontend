@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 const AddStudentsPage = () => {
   const { classId } = useParams();
-console.log("class id is: ", classId);
+// console.log("class id is: ", classId);
 
   return <AddStudentsForm classId={classId} />;
 };

@@ -162,7 +162,7 @@ const handleExcelUpload = (e) => {
 
         const isValid = await checkDuplicatesBeforeSubmit();
         if(!isValid) {
-            alert("Some students already exit. Fix duplicates highlighted in red.");
+           alert("Student Data exist in the Current List. Enter New Student Details, Fix duplicates highlighted in red.");
             return;
         }
 
