@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 import conf from './Conf/Conf'
 
 
-import { login, logout } from './store/authSlice'
+import { login, logout } from './Store/AuthSlice'
 import { Header } from './Components'
 import axios from 'axios'
 function App() {
