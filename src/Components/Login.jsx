@@ -65,15 +65,11 @@ function Login() {
 
           
         } catch (error) {
-            const html = error.response?.data || "";
-
-            const match = html.match(/Error:\s(.+?)<br>/); 
-
-            const errMsg = match ? match[1] : "Something went wrong";
+            const errMsg = error.response?.data?.message || "Something went wrong";
 
             setError(errMsg);
 
-            console.error("Login error", err);
+            console.error("Login error", error);
             
         }
     };  

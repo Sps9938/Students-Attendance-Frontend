@@ -90,18 +90,8 @@ useEffect(() => {
    }
       } catch (error) {
      console.error("Failed to send OTP", error);
-     const html = error.response?.data || "";
-        // console.log("html", html);
-        
-        const match = html.match(/Error:\s(.+?)<br>/);
-        // console.log("match: ", match);
-        
-       
-        const errMsg = match ? match[1] : "Something went wrong";
-
-        setError(errMsg);
-
-
+     const errMsg = error.response?.data?.message || "Something went wrong";
+      setError(errMsg);
      
 } finally {
   setLoading(false);

@@ -29,14 +29,9 @@ function ChangeUserPassword() {
             navigate('/user')
             reset();
         } catch (error) {
-        const html = error.response?.data || "";
-        // console.log("html", html);
-        
-        const match = html.match(/Error:\s(.+?)<br>/);
-        // console.log("match: ", match);
-        
-       
-        const errMsg = match ? match[1] : "Something went wrong";
+         const errMsg = error.response?.data?.message || "Something went wrong";
+
+            setError(errMsg);
 
         setError(errMsg);
         console.error("Password not Changed",error);

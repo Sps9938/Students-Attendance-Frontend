@@ -198,16 +198,9 @@ const forget = async () => {
 }
    catch (error) {
     console.error("Verify OTP Error:", error);
-    const html = error.response?.data || "";
-        // console.log("html", html);
-        
-        const match = html.match(/Error:\s(.+?)<br>/);
-        // console.log("match: ", match);
-        
-       
-        const errMsg = match ? match[1] : "Something went wrong";
+     const errMsg = error.response?.data?.message || "Something went wrong";
+      setError(errMsg);
 
-        setError(errMsg);
   } finally {
     setLoading(false);
   }
@@ -223,16 +216,9 @@ const handleOtp = async()=>{
     )
     alert("OTP sent")
  } catch (error) {
-  const html = error.response?.data || "";
-        // console.log("html", html);
-        
-        const match = html.match(/Error:\s(.+?)<br>/);
-        // console.log("match: ", match);
-        
-       
-        const errMsg = match ? match[1] : "Something went wrong";
+   const errMsg = error.response?.data?.message || "Something went wrong";
 
-        setError(errMsg);
+    setError(errMsg);
  }
 
 }

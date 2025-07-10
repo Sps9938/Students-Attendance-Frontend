@@ -54,13 +54,10 @@ function ForgetPassword() {
                   setError(response.data.data || "Email Not Registered")
               }
           } catch (error) {
-            const html = error.response?.data || "";
-
-            const match = html.match(/Error:\s(.+?)<br>/); 
-
-            const errMsg = match ? match[1] : "Something went wrong";
+             const errMsg = error.response?.data?.message || "Something went wrong";
 
             setError(errMsg);
+
             // console.log(errMsg);
             
 
