@@ -66,9 +66,13 @@ function App() {
 
     if(loading){
       return (
-        <div className="w-full h-screen flex items-center justify-center">
-          <p className="text-lg text-white">Loading...</p>
-        </div>
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-400">
+
+        <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+        <p className="mt-6 text-xl font-semibold text-gray-700 animate-pulse">Loading, please wait...</p>
+
+      </div>
+
       );
     }
 
