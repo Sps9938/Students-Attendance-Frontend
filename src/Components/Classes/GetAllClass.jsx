@@ -63,7 +63,7 @@ const FetchAllClass = () => {
   
   const handleCopy = (cls) => {
     navigator.clipboard
-      .writeText(`http://localhost:5173/student/form/${cls._id}`)
+      .writeText(`https://smartattendance-dashboard.vercel.app/student/form/${cls._id}`)
       .then(() => {
         setCopiedId(cls._id);
         setTimeout(() => setCopiedId(null), 2000); // Hide after 2 sec
