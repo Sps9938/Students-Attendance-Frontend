@@ -1,4 +1,4 @@
-# 📑 Table of Contents
+# Table of Contents
 1. [Student Attendance Management System](#-student-attendance-management-system)
 
 2. [Features](#-features)
@@ -25,61 +25,61 @@ A full-featured web application to manage student attendance with internet-based
 
 ---
 
-## 🚀 Features
+## Features
 
 - 👥 **User Authentication**
   - OTP-based Login & Signup
   - Password Reset & Change
 
-- 🏫 **Class Management**
+- **Class Management**
   - Create/manage classes by academic batch
   - Assign subjects/courses per class
 
-- 🧑‍🎓 **Student Management**
+- **Student Management**
   - Add students manually or via Excel upload
   - Real-time duplicate detection (name, roll no.)
 
-- ✅ **Attendance Marking**
+- **Attendance Marking**
   - Intuitive grid UI (mouse or keyboard)
   - Present/Absent mode selection
 
-- 📊 **Reports & Analytics**
+- **Reports & Analytics**
   - Attendance stats & low-attendance warnings
   - Export reports as PDF and Excel
   - Cloudinary-based PDF uploads
 
-- 👤 **User Profile**
+- **User Profile**
   - View & update personal details
   - Change or reset password
 
-- 📱 **Mobile App (Planned)**
+- **Mobile App (Planned)**
   - React Native version
   - Offline-first support with background sync
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend (React + Vite + Tailwind CSS)
-- ⚛️ React (with Hooks & Functional Components)
-- 🧠 Redux Toolkit (state management)
-- 🧭 React Router DOM (routing)
-- 🎨 Tailwind CSS (modern styling)
-- ⚡ Vite (lightning-fast dev server)
-- 📄 html2pdf.js, xlsx, jsPDF (report exports)
-- ☁️ Cloudinary (file upload integration)
+- React (with Hooks & Functional Components)
+- Redux Toolkit (state management)
+- React Router DOM (routing)
+- Tailwind CSS (modern styling)
+- Vite (lightning-fast dev server)
+- html2pdf.js, xlsx, jsPDF (report exports)
+- Cloudinary (file upload integration)
 
 ### Backend (Node.js + Express + MongoDB)
-- 🚀 Express.js (RESTful APIs)
-- 🗃 MongoDB + Mongoose (NoSQL database)
-- 🔒 JWT + bcrypt (authentication)
-- 📧 Nodemailer (OTP email verification)
-- 📂 Multer (file handling)
-- 🛡 Middleware: CORS, Helmet, Morgan, dotenv
+- Express.js (RESTful APIs)
+- MongoDB + Mongoose (NoSQL database)
+- JWT + bcrypt (authentication)
+- Nodemailer (OTP email verification)
+- Multer (file handling)
+- Middleware: CORS, Helmet, Morgan, dotenv
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ### Frontend (`/Frontend`)
 ```
@@ -113,7 +113,7 @@ A full-featured web application to manage student attendance with internet-based
 
 ---
 
-## ⚙ Getting Started
+## Getting Started
 
 ### 1️⃣ Clone the Repository
 ```bash
@@ -154,7 +154,7 @@ In `src/index.css`:
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 ### Backend (`/Backend/.env`)
 ```env
@@ -177,7 +177,7 @@ VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
 
 ---
 
-## 🧪 Running the App
+## Running the App
 
 > Make sure MongoDB and environment variables are correctly configured.
 
@@ -197,7 +197,7 @@ npm run dev
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - [React Docs](https://react.dev)
 - [Redux Toolkit](https://redux-toolkit.js.org)
@@ -207,7 +207,7 @@ npm run dev
 
 ---
 
-## 📱 Mobile App (Future Plan)
+## Mobile App (Future Plan)
 
 - Build using React Native
 - Offline attendance marking
@@ -216,7 +216,7 @@ npm run dev
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 Developed with ❤️ by **Satya**  
 🔗 GitHub: [https://github.com/Sps9938](https://github.com/Sps9938)
