@@ -101,9 +101,9 @@ function SignUp() {
                })}
                />
                <Input
-               label= "renewPassword: "
+               label= "reEnterPassword: "
                type="password"
-               placeholder="Enter your renewPassword"
+               placeholder="Enter your reEnterPassword"
                {...register("renewPassword", {
                 required: true,
                })}

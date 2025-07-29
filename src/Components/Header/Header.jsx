@@ -48,9 +48,9 @@ return (
     <Container>
        
     <nav className="flex items-center justify-between py-4 font-bold text-black">
-        <Link to="/" className="text-xl font-bold text-gray-800">
+        {/* <Link to="/" className="text-xl font-bold text-gray-800"> */}
         Attendance
-        </Link>
+        {/* </Link> */}
 
     <ul className="flex items-center gap-4">
     {navItems.map(
