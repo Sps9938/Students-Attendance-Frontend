@@ -109,14 +109,17 @@ function SignUp() {
                })}
                />
 
-               <Input
-               label= "role: "
-               type="text"
-               placeholder="Enter your Role like Admin or Teacher"
-               {...register("role", {
-                required: true,
-               })}
-               />
+            <Input
+                label="Role"
+                type="select"
+                {...register("role", { required: true })}
+                options={[
+                    // { value: "Admin", label: "Admin" },
+                    { value: "Teacher", label: "Teacher" },
+                    // { value: "Student", label: "Student" },
+                ]}
+            />
+
            <Button
         //    onClick={handleSubmit}
       
