@@ -17,7 +17,6 @@ function SignUp() {
 
     const create = async(data) => {
         setError('')
-
     const {fullname, username, email, password, renewPassword, role} = data;
     if(!fullname || !username || !email || !password || !renewPassword || !role ){
     setError("All fields are required.");
@@ -115,14 +114,12 @@ function SignUp() {
                 {...register("role", { required: true })}
                 options={[
                     // { value: "Admin", label: "Admin" },
-                    { value: "Teacher", label: "Teacher" },
+                    { value: "Teacher", label: "Teacher" }
                     // { value: "Student", label: "Student" },
                 ]}
             />
 
            <Button
-        //    onClick={handleSubmit}
-      
            type="submit" className="w-full">
                Create Account
            </Button>
