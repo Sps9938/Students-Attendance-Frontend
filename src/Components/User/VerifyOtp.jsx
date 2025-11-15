@@ -231,18 +231,25 @@ const handleOtp = async()=>{
         type="email"
         value={email}
         readOnly
-        className="border p-2 rounded bg-gray-100 text-gray-600 cursor-not-allowed"
+        className="border dark:border-gray-600 p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed"
       />
       <input
         type="text"
         placeholder="Enter OTP"
         value={otp}
         onChange={(e) => setOtp(e.target.value)}
-        className="border p-2 rounded"
+        className="border dark:border-gray-600 p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
         required
       />
-      {error && <p className="text-red-900 text-sm font-bold">{error}</p>}
-      {success && <p className="text-green-500 text-sm">{success}</p>}
+      {error && (
+        <p
+          role="alert"
+          className="mt-2 text-sm font-medium text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-md px-4 py-2"
+        >
+          {error}
+        </p>
+      )}
+      {success && <p className="text-green-500 dark:text-green-400 text-sm">{success}</p>}
    <div className="flex justify-center gap-4 mt-4">
   {/* Verify OTP Button */}
   <button
@@ -259,7 +266,7 @@ const handleOtp = async()=>{
   <button
     type="button"
     onClick={handleOtp}
-    className="text-blue-600 underline hover:text-blue-800 font-medium transition duration-200"
+    className="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 font-medium transition duration-200"
   >
     Send Again
   </button>

@@ -190,17 +190,17 @@ const handleExcelUpload = (e) => {
 };
 
 return (
-<div className="p-4 max-w-3xl mx-auto">
-    <h1 className="text-2xl font-bold mb-4">Add Students</h1>
+<div className="max-w-3xl mx-auto p-4 bg-white dark:bg-gray-800 min-h-screen">
+    <h1 className="text-2xl font-bold mb-4 text-black dark:text-white">Add Students</h1>
 
     {/* Excel Upload */}
     <div className="mb-4">
-        <label className="block mb-2 font-medium">Upload Excel File:</label>
+        <label className="block mb-2 font-medium text-black dark:text-white">Upload Excel File:</label>
         <input
             type="file"
             accept=".xlsx, .xls"
             onChange={handleExcelUpload}
-            className="border p-2"
+            className="border dark:border-gray-600 p-2 bg-white dark:bg-gray-700 text-black dark:text-white"
         />
         {/* <a
             href="/mnt/data/sample_students_template.xlsx"
@@ -213,14 +213,14 @@ return (
 
     {/* Number of Students */}
     <div className="mb-4">
-        <label className="block mb-2">Number of Students:</label>
+        <label className="block mb-2 text-black dark:text-white">Number of Students:</label>
         <input
             type="number"
             min="1"
             max="100"
             value={numberOfStudents}
             onChange={handleNumberChange}
-            className="border p-2 w-20"
+            className="border dark:border-gray-600 p-2 w-20 bg-white dark:bg-gray-700 text-black dark:text-white"
         />
     </div>
 
@@ -233,7 +233,7 @@ return (
         placeholder={`Student ${index + 1} Name`}
         value={student.Name}
         onChange={(e) => handleStudentChange(index, "Name", e.target.value)}
-        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "text-red-500 font-bold" : ""}`}
+        className={`border dark:border-gray-600 p-2 flex-1 bg-white dark:bg-gray-700 text-black dark:text-white ${duplicateFields.includes(index) ? "text-red-500 dark:text-red-400 font-bold" : ""}`}
         required
         />
         <input
@@ -241,7 +241,7 @@ return (
         placeholder={`Student ${index + 1} Enrollment No.`}
         value={student.EnrollmentNo}
         onChange={(e) => handleStudentChange(index, "EnrollmentNo", e.target.value)}
-        className={`border p-2 flex-1 ${duplicateFields.includes(index) ? "text-red-500 font-bold" : ""}`}
+        className={`border dark:border-gray-600 p-2 flex-1 bg-white dark:bg-gray-700 text-black dark:text-white ${duplicateFields.includes(index) ? "text-red-500 dark:text-red-400 font-bold" : ""}`}
         required
         />
      

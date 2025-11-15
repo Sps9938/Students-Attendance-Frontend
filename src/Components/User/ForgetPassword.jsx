@@ -68,7 +68,7 @@ function ForgetPassword() {
     };
 
     return (
-        <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-lg mt-10 space-y-6">
+        <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg mt-10 space-y-6">
             <form onSubmit={handleSubmit(onForgotPassword)} className="space-y-4">
                 <Input
                     label="Email"
@@ -88,7 +88,14 @@ function ForgetPassword() {
                      className="bg-zinc-400"
                     {...register("renewPassword", { required: true })}
                 />
-                {error && <p className="text-red-900 text-sm font-bold">{error}</p>}
+                                {error && (
+                                    <p
+                                        role="alert"
+                                        className="mt-2 text-sm font-medium text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-md px-4 py-2"
+                                    >
+                                        {error}
+                                    </p>
+                                )}
 
                 <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white">
                     Reset Password

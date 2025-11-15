@@ -77,7 +77,7 @@ function GetEachStudent({ student, attendanceSummary }) {
   
   return (
 <div
-  className="max-w-4xl mx-auto mt-10 p-10 bg-gradient-to-br from-blue-50 to-white shadow-2xl rounded-3xl border border-gray-200"
+  className="max-w-4xl mx-auto mt-10 p-10 bg-gradient-to-br from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 shadow-2xl rounded-3xl border border-gray-200 dark:border-gray-700"
   ref={contentRef}
 >
   {/* Top Buttons */}
@@ -97,24 +97,24 @@ function GetEachStudent({ student, attendanceSummary }) {
   </div>
 
   {/* Title */}
-  <h2 className="text-4xl font-bold text-blue-700 mb-8 text-center flex items-center justify-center gap-2">
+  <h2 className="text-4xl font-bold text-blue-700 dark:text-blue-300 mb-8 text-center flex items-center justify-center gap-2">
     🎓 Student Profile
   </h2>
 
   {/* Profile Info Grid */}
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
     {/* Student Stats */}
-    <div className="bg-white border rounded-xl p-5 shadow-md space-y-3">
-      <p><strong className="text-blue-800">🧑 Student:</strong> <span className="text-gray-700">{Name}</span></p>
-      <p><strong className="text-blue-800">🆔 Enroll No:</strong> <span className="text-gray-700">{EnrollmentNo}</span></p>
-      <p><strong className="text-blue-800">📚 Total Classes:</strong> <span className="text-gray-700">{totalClasses}</span></p>
-      <p><strong className="text-green-700">✔️ Present:</strong> <span className="text-gray-700">{TotalPrsent}</span></p>
-      <p><strong className="text-red-600">❌ Absent:</strong> <span className="text-gray-700">{TotalAbsent}</span></p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-5 shadow-md space-y-3">
+      <p><strong className="text-blue-800 dark:text-blue-300">🧑 Student:</strong> <span className="text-gray-700 dark:text-gray-300">{Name}</span></p>
+      <p><strong className="text-blue-800 dark:text-blue-300">🆔 Enroll No:</strong> <span className="text-gray-700 dark:text-gray-300">{EnrollmentNo}</span></p>
+      <p><strong className="text-blue-800 dark:text-blue-300">📚 Total Classes:</strong> <span className="text-gray-700 dark:text-gray-300">{totalClasses}</span></p>
+      <p><strong className="text-green-700 dark:text-green-400">✔️ Present:</strong> <span className="text-gray-700 dark:text-gray-300">{TotalPrsent}</span></p>
+      <p><strong className="text-red-600 dark:text-red-400">❌ Absent:</strong> <span className="text-gray-700 dark:text-gray-300">{TotalAbsent}</span></p>
       <p>
-        <strong className="text-blue-800">📊 Percentage:</strong>{" "}
+        <strong className="text-blue-800 dark:text-blue-300">📊 Percentage:</strong>{" "}
         <span
           className={`ml-2 px-3 py-1 rounded-full text-sm font-semibold ${
-            percentage >= 75 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+            percentage >= 75 ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
           }`}
         >
           {percentage}%
@@ -122,23 +122,23 @@ function GetEachStudent({ student, attendanceSummary }) {
       </p>
     </div>
      {/* Faculty and Class Info */}
-    <div className="bg-white border rounded-xl p-5 shadow-md space-y-3">
-      <p><strong className="text-blue-800">👨‍🏫 Faculty:</strong> <span className="text-gray-700">{tech?.fullname}</span></p>
-      <p><strong className="text-blue-800">🏫 Class:</strong> <span className="text-gray-700">{cls?.className}</span></p>
-      <p><strong className="text-blue-800">📘 Course:</strong> <span className="text-gray-700">{cls?.courseName}</span></p>
-      <p><strong className="text-blue-800">📘 Section Name:</strong> <span className="text-gray-700">{cls?.Section}</span></p>
-      <p><strong className="text-blue-800">📅 Batch:</strong> <span className="text-gray-700">{cls?.yearBatch}</span></p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-5 shadow-md space-y-3">
+      <p><strong className="text-blue-800 dark:text-blue-300">👨‍🏫 Faculty:</strong> <span className="text-gray-700 dark:text-gray-300">{tech?.fullname}</span></p>
+      <p><strong className="text-blue-800 dark:text-blue-300">🏫 Class:</strong> <span className="text-gray-700 dark:text-gray-300">{cls?.className}</span></p>
+      <p><strong className="text-blue-800 dark:text-blue-300">📘 Course:</strong> <span className="text-gray-700 dark:text-gray-300">{cls?.courseName}</span></p>
+      <p><strong className="text-blue-800 dark:text-blue-300">📘 Section Name:</strong> <span className="text-gray-700 dark:text-gray-300">{cls?.Section}</span></p>
+      <p><strong className="text-blue-800 dark:text-blue-300">📅 Batch:</strong> <span className="text-gray-700 dark:text-gray-300">{cls?.yearBatch}</span></p>
     </div>
   </div>
 
   {/* Attendance Table */}
-  <h3 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+  <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
     📆 Attendance Records
   </h3>
 
-  <div className="overflow-hidden rounded-xl border border-gray-300 shadow-md">
+  <div className="overflow-hidden rounded-xl border border-gray-300 dark:border-gray-600 shadow-md">
     <table className="w-full text-left table-auto">
-      <thead className="bg-blue-100 text-blue-900 uppercase text-sm">
+      <thead className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 uppercase text-sm">
         <tr>
           <th className="px-5 py-3">Date</th>
           <th className="px-5 py-3">Status</th>
@@ -148,17 +148,17 @@ function GetEachStudent({ student, attendanceSummary }) {
         {attendance.map((record) => (
           <tr
             key={record._id}
-            className="even:bg-white odd:bg-gray-50 hover:bg-blue-50 transition"
+            className="even:bg-white odd:bg-gray-50 dark:even:bg-gray-800 dark:odd:bg-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900 transition"
           >
-            <td className="px-5 py-3 text-gray-700">
+            <td className="px-5 py-3 text-gray-700 dark:text-gray-300">
               {new Date(record.date).toLocaleDateString()}
             </td>
             <td>
               <span
                 className={`inline-block px-3 py-1 text-sm rounded-full font-medium ${
                   record.status === "Present"
-                    ? "bg-blue-100 text-blue-700"
-                    : "bg-red-100 text-red-700"
+                    ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                    : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
                 }`}
               >
                 {record.status}

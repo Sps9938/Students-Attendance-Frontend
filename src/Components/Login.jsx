@@ -76,22 +76,29 @@ function Login() {
 
 return (
     <div className="flex items-center justify-center w-full">
-        <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10">
+        <div className="mx-auto w-full max-w-lg bg-gray-100 dark:bg-gray-800 rounded-xl p-10 border border-black/10 dark:border-white/10">
             <div className="mb-2 flex justify-center">
                 <span className="inline-block w-full max-w-[100px]">
                     {/* <Logo width="100%" /> */}
                 </span>
             </div>
 
-        <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
-        <p className="mt-2 text-center text-base text-black/60">
+        <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">Sign in to your account</h2>
+        <p className="mt-2 text-center text-base text-black/60 dark:text-white/60">
             Don&apos;t have an account?&nbsp;
-            <Link to="/signup" className="text-blue-900 font-bold  text-primary transition-all duration-200 underline">
+            <Link to="/signup" className="text-blue-900 dark:text-blue-300 font-bold text-primary transition-all duration-200 underline inline-flex items-center gap-1">
             <FiUserPlus size={18} /> Sign up
             </Link>
         </p>
 
-        {error && <p className="text-red-900 mt-8 text-center">{error}</p>}
+                {error && (
+                    <p
+                        role="alert"
+                        className="mt-6 text-sm font-medium text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-md px-4 py-2 text-center"
+                    >
+                        {error}
+                    </p>
+                )}
 
     <form onSubmit={handleSubmit(login)} className="mt-8">
     <div className="space-y-5">
@@ -116,13 +123,13 @@ return (
         />
 
         <div className="flex justify-between items-center gap-4 mt-4">
-            <Button type="submit" className="flex-1">
+            <Button type="submit" className="flex-1 flex items-center justify-center gap-2">
                 <FiLogIn size={18}/> Sign in
             </Button>
             
             <button
         type="button"
-        className="text-blue-600 hover:underline"
+        className="text-blue-600 dark:text-blue-400 hover:underline"
         onClick={() => navigate("/forget-password")}
     >
         Forgot Password?

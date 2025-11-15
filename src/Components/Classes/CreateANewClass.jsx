@@ -41,8 +41,8 @@ const createNewClass = async(data) => {
     
 
 return (
-    <div className="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
-      <h2 className="text-2xl font-semibold mb-4">Create a New Class</h2>
+    <div className="max-w-md mx-auto mt-8 bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <h2 className="text-2xl font-semibold mb-4 text-black dark:text-white">Create a New Class</h2>
 
       <form onSubmit={handleSubmit(createNewClass)} className="space-y-4">
         <Input
@@ -78,13 +78,13 @@ return (
       
 
       {createdClass && (
-        <div className="mt-4 p-2 bg-green-100 rounded border border-green-400">
-          <p>Add Student Page: Link:</p>
+        <div className="mt-4 p-2 bg-green-100 dark:bg-green-900 rounded border border-green-400 dark:border-green-600">
+          <p className="text-black dark:text-white">Add Student Page: Link:</p>
           <a
             href={`http://localhost:5173/student/form/${createdClass._id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 underline break-all"
+            className="text-blue-600 dark:text-blue-400 underline break-all"
           >
             {`http://localhost:5173/student/form/${createdClass._id}`}
           </a>

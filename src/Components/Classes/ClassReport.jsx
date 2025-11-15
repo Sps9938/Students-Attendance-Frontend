@@ -118,8 +118,8 @@ const handleDownloadPDF = () => {
   const chunkedDates = chunkArray(attendanceDates, 5); // chunks of 10 dates
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen" ref={contentRef}>
-      <div className="max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-lg relative">
+    <div className="p-6 bg-gray-100 dark:bg-gray-800 min-h-screen" ref={contentRef}>
+      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg relative">
         {/* Top bar */}
         <div className="flex justify-between items-center mb-6 no-pdf">
           <button
@@ -137,31 +137,31 @@ const handleDownloadPDF = () => {
         </div>
 
         {/* Title */}
-        <h2 className="text-3xl font-bold text-center mb-4 text-blue-800">
+        <h2 className="text-3xl font-bold text-center mb-4 text-blue-800 dark:text-blue-300">
           📄 Attendance Summary Report
         </h2>
 
         {/* Class Info */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <p>
+            <p className="text-black dark:text-white">
               <b>📚 Course:</b> {cls?.courseName}
             </p>
-            <p>
+            <p className="text-black dark:text-white">
               <b>🏫 Subject:</b> {cls?.className}
             </p>
-            <p>
+            <p className="text-black dark:text-white">
               <b>👨‍🏫 Professor:</b> {teach?.fullname}
             </p>
           </div>
           <div>
-            <p>
+            <p className="text-black dark:text-white">
               <b>📅 Batch Year:</b> {cls?.yearBatch}
             </p>
-            <p>
+            <p className="text-black dark:text-white">
               <b>👥 Total Students:</b> {students.length}
             </p>
-            <p>
+            <p className="text-black dark:text-white">
               <b>👥 Total Classes:</b> {attendanceRecords?.length}
             </p>
           </div>
@@ -174,31 +174,31 @@ const handleDownloadPDF = () => {
             placeholder="🔍 Search by Name"
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-1/2"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-black dark:text-white w-full md:w-1/2"
           />
           <input
             type="text"
             placeholder="🔍 Search by Enrollment No"
             value={searchEnrollment}
             onChange={(e) => setSearchEnrollment(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-1/2"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-black dark:text-white w-full md:w-1/2"
           />
         </div>
 
         {/* Attendance Table – Paginated by 10 dates */}
         {chunkedDates.map((dateChunk, pageIndex) => (
           <div key={pageIndex} className={`mb-8 ${pageIndex > 0 ? "pdf-page-break" : ""}`}>
-            <h3 className="text-lg font-semibold mb-2 text-blue-700">
+            <h3 className="text-lg font-semibold mb-2 text-blue-700 dark:text-blue-300">
               📄 Page {pageIndex + 1}
             </h3>
             <div className="overflow-x-auto">
               <table className="table-auto border-collapse w-full text-center text-sm">
                 <thead>
-                  <tr className="bg-blue-100">
-                    <th className="border px-4 py-2">Name</th>
-                    <th className="border px-4 py-2">Enrollment</th>
+                  <tr className="bg-blue-100 dark:bg-blue-900">
+                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-black dark:text-white">Name</th>
+                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-black dark:text-white">Enrollment</th>
                     {dateChunk.map((date) => (
-                      <th key={date} className="border px-4 py-2">
+                      <th key={date} className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-black dark:text-white">
                         {date}
                       </th>
                     ))}
@@ -209,13 +209,13 @@ const handleDownloadPDF = () => {
                     <tr
                       key={idx}
                       className={`${
-                        highlightedId === id ? "bg-yellow-200 font-semibold" : ""
+                        highlightedId === id ? "bg-yellow-200 dark:bg-yellow-800 font-semibold" : "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
                       }`}
                     >
-                      <td className="border px-4 py-2">{student.Name}</td>
-                      <td className="border px-4 py-2">{student.EnrollmentNo}</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-black dark:text-white">{student.Name}</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-black dark:text-white">{student.EnrollmentNo}</td>
                       {dateChunk.map((date, i) => (
-                        <td key={i} className="border px-4 py-2">
+                        <td key={i} className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center text-black dark:text-white">
                           {student.attendance[date] || ""}
                         </td>
                       ))}

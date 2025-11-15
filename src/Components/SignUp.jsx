@@ -38,23 +38,30 @@ function SignUp() {
 
     return (
         <div className="flex items-center justify-center">
-         <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+         <div className={`mx-auto w-full max-w-lg bg-gray-100 dark:bg-gray-800 rounded-xl p-10 border border-black/10 dark:border-white/10`}>
          <div className="mb-2 flex justify-center">
             <span className="inline-block w-full max-w-[100px]">
                 {/* <Logo width="100%" /> */}
             </span>
          </div>
-         <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
-         <p className="mt-2 text-center text-base text-black/60">
+         <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">Sign up to create account</h2>
+         <p className="mt-2 text-center text-base text-black/60 dark:text-white/60">
             Already have an account?&nbsp;
         <Link
             to="/login"
-            className="font-bold text-primary transition-all duration-200 text-blue-900 underline"
+            className="font-bold text-primary transition-all duration-200 text-blue-900 dark:text-blue-300 underline"
         >
             Sign In
         </Link>
                 </p>
-            {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+                        {error && (
+                            <p
+                                role="alert"
+                                className="mt-6 text-sm font-medium text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-md px-4 py-2 text-center"
+                            >
+                                {error}
+                            </p>
+                        )}
 
         <form 
       

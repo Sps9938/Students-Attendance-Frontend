@@ -72,36 +72,36 @@ const handleDelete = async(classId) => {
 
 return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Archived (Deleted) Classes</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Archived (Deleted) Classes</h2>
 
       {deletedClasses?.length === 0 ? (
-        <p className="text-gray-600">No deleted class records available.</p>
+        <p className="text-gray-600 dark:text-gray-400">No deleted class records available.</p>
       ) : (
-        <div className="overflow-x-auto">
-        <table className="min-w-full table-auto border-collapse border border-gray-300">
-        <thead className="bg-gray-100">
+        <div className="overflow-x-auto bg-white dark:bg-[#151b23] rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+        <table className="min-w-full table-auto">
+        <thead className="bg-gray-100 dark:bg-gray-700">
             <tr>
-            <th className="border px-4 py-2 text-left">Class Name</th>
-            <th className="border px-4 py-2 text-left">Course</th>
-            <th className="border px-4 py-2 text-left">Batch Year</th>
-            <th className="border px-4 py-2 text-left">Deleted At</th>
-            <th className="border px-4 py-2 text-left">Report (PDF)</th>
+            <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Class Name</th>
+            <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Course</th>
+            <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Batch Year</th>
+            <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Deleted At</th>
+            <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {deletedClasses?.map((cls, index) => (
-            <tr key={index} className="hover:bg-gray-50">
-                <td className="border px-4 py-2">{cls.className}</td>
-                <td className="border px-4 py-2">{cls.courseName}</td>
-                <td className="border px-4 py-2">{cls.yearBatch}</td>
-                <td className="border px-4 py-2">
+            <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                <td className="px-4 py-3 whitespace-nowrap text-gray-800 dark:text-gray-200">{cls.className}</td>
+                <td className="px-4 py-3 whitespace-nowrap text-gray-800 dark:text-gray-200">{cls.courseName}</td>
+                <td className="px-4 py-3 whitespace-nowrap text-gray-800 dark:text-gray-200">{cls.yearBatch}</td>
+                <td className="px-4 py-3 whitespace-nowrap text-gray-800 dark:text-gray-200">
                 {new Date(cls.deletedAt).toLocaleDateString("en-GB")}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="px-4 py-3 whitespace-nowrap">
 
-        <div className="flex justify-center gap-4">
+        <div className="flex items-center gap-4">
                <button
-              className="btn btn-sm btn-outline-primary underline text-blue-600"
+              className="text-blue-600 dark:text-blue-400 hover:underline"
               onClick={() => handleReport(cls.pdfUrl)}
             >
               Get Report

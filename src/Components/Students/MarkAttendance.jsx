@@ -126,12 +126,12 @@ function MarkAttendance() {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Mark Attendance</h2>
+    <div className="p-4 bg-white dark:bg-gray-800 min-h-screen">
+      <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">Mark Attendance</h2>
 
       {/* Mode Selection */}
     <div className="flex flex-col md:flex-row items-center justify-start gap-4 mb-6">
-      <label className="text-base font-semibold text-gray-700">Select Mode:</label>
+      <label className="text-base font-semibold text-gray-700 dark:text-gray-300">Select Mode:</label>
       
       <select
         value={mode}
@@ -167,7 +167,7 @@ function MarkAttendance() {
             setMarked({});
           }
         }}
-        className="w-64 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-800"
+        className="w-64 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
       >
         <option value="">-- Select --</option>
         <option value="Present">✅ Present(Single Cell)</option>
@@ -189,23 +189,23 @@ function MarkAttendance() {
       <div
         key={EnrollmentNo}
         className={`relative w-16 h-16 flex items-center justify-center text-xl font-bold cursor-pointer
-        transition duration-200 border border-gray-300
+        transition duration-200 border border-gray-300 dark:border-gray-600
         ${status === "Present"
-        ? "bg-green-200"
+        ? "bg-green-200 dark:bg-green-800"
         : status === "Absent"
-          ? "bg-red-200"
-          : "bg-gray-100 hover:bg-yellow-500"
+          ? "bg-red-200 dark:bg-red-800"
+          : "bg-gray-100 dark:bg-gray-700 hover:bg-yellow-500 dark:hover:bg-yellow-600"
       }
-        ${isActive ? "ring-4 ring-blue-500 bg-yellow-400" : ""}
+        ${isActive ? "ring-4 ring-blue-500 bg-yellow-400 dark:bg-yellow-600" : ""}
         `}
             onClick={() => handleMark(EnrollmentNo)}
           >
             <div className="relative flex items-center justify-center w-full h-full">
-              <span className="text-xl font-bold">
+              <span className="text-xl font-bold text-gray-900 dark:text-white">
                 {status === "Present" ? "✅" : status === "Absent" ? "❌" : EnrollmentNo.slice(-3)}
               </span>
               <span
-                className="absolute text-xs font-semibold text-gray-700"
+                className="absolute text-xs font-semibold text-gray-700 dark:text-gray-300"
                 style={{ bottom: "4px", right: "6px" }}
               >
                 {EnrollmentNo.slice(-3)}

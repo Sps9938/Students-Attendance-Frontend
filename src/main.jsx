@@ -12,6 +12,8 @@ import Protected from './Components/AuthLayout.jsx'
 
 import { ChangeUserPassword, CreateClass, ForgetPassword, Home, UpdateUserDetails, UserButton, FetchAllClass, MarkAttendance, LowAttendance, SendOtp, VerifyOtp} from './Components/index.js'
 
+import { ThemeProvider } from './Components/ThemeContext.jsx'
+
 
 
 const router = createBrowserRouter([
@@ -204,6 +206,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
     <Provider store={store}>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+            <RouterProvider router={router} />
+        </ThemeProvider>
     </Provider>
 )

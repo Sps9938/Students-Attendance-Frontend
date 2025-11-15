@@ -74,8 +74,8 @@ const FetchAllClass = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-400">
-      <h2 className="text-3xl font-bold mb-8 text-center">🎓 Your Classes</h2>
+    <div className="p-6 min-h-screen bg-gray-400 dark:bg-gray-700">
+      <h2 className="text-3xl font-bold mb-8 text-center text-black dark:text-white">🎓 Your Classes</h2>
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
@@ -83,7 +83,7 @@ const FetchAllClass = () => {
         </div>
       ) : classes.length === 0 ? (
         <div className="text-center mt-12">
-          <p className="text-gray-500 mb-4">No classes found!</p>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">No classes found!</p>
           <button
             onClick={() => navigate("/createclass")}
             className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full shadow"
@@ -96,7 +96,7 @@ const FetchAllClass = () => {
     {classes.map((cls) => (
       <div
         key={cls._id}
-        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between"
+        className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between"
       >
         {editingId === cls._id ? (
           <div className="flex flex-col gap-2">
@@ -106,7 +106,7 @@ const FetchAllClass = () => {
               onChange={(e) =>
                 setEditData({ ...editData, className: e.target.value })
               }
-              className="border px-3 py-2 rounded"
+              className="border dark:border-gray-600 px-3 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
               placeholder="Class Name"
             />
           <input
@@ -115,7 +115,7 @@ const FetchAllClass = () => {
             onChange={(e) =>
               setEditData({ ...editData, courseName: e.target.value })
             }
-            className="border px-3 py-2 rounded"
+            className="border dark:border-gray-600 px-3 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
             placeholder="Course Name"
           />
           <input
@@ -124,7 +124,7 @@ const FetchAllClass = () => {
             onChange={(e) =>
               setEditData({ ...editData, Section: e.target.value })
             }
-            className="border px-3 py-2 rounded"
+            className="border dark:border-gray-600 px-3 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
             placeholder="Course Name"
           />
           <input
@@ -133,7 +133,7 @@ const FetchAllClass = () => {
             onChange={(e) =>
               setEditData({ ...editData, yearBatch: e.target.value })
             }
-            className="border px-3 py-2 rounded"
+            className="border dark:border-gray-600 px-3 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
             placeholder="Year Batch"
           />
           <div className="flex justify-between mt-4">
@@ -154,13 +154,13 @@ const FetchAllClass = () => {
         ) : (
         <>
           <div>
-            <h3 className="text-2xl font-semibold mb-1">
+            <h3 className="text-2xl font-semibold mb-1 text-black dark:text-white">
               {cls.className} - {cls.courseName}
             </h3>
-            <h3 className="text-1xl font-semibold mb-1">
+            <h3 className="text-1xl font-semibold mb-1 text-black dark:text-white">
               Section - {cls.Section}
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               🎓 <strong>Batch:</strong> {cls.yearBatch}
             </p>
 

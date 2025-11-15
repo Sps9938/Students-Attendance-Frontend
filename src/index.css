@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide native password reveal buttons (Edge/IE) to avoid double eye icons */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+	display: none;
+}
+
+/* Safari/Chrome autofill icons are not exposed via pseudo-elements; no-op here. */

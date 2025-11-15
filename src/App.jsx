@@ -66,10 +66,10 @@ function App() {
 
     if(loading){
       return (
-    <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-400">
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-[#050816]">
 
         <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-        <p className="mt-6 text-xl font-semibold text-gray-700 animate-pulse">Loading, please wait...</p>
+        <p className="mt-6 text-xl font-semibold text-gray-700 dark:text-gray-300 animate-pulse">Loading, please wait...</p>
 
       </div>
 
@@ -77,10 +77,10 @@ function App() {
     }
 
     return (
-      <div className="min-h-screen w-full bg-gray-400">
+      <div className="min-h-screen w-full bg-gray-100 dark:bg-[#050816]">
    
         <Header />
-       <main className="w-full py-8">
+       <main className="w-full min-h-[calc(100vh-64px)] py-8">
           <Outlet />
         </main>
       </div>

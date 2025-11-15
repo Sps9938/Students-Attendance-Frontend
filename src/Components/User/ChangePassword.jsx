@@ -40,8 +40,8 @@ function ChangeUserPassword() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-semibold mb-4">Change Password</h2>
+        <div className="max-w-md mx-auto mt-8 bg-white dark:bg-gray-800 p-6 rounded shadow">
+        <h2 className="text-2xl font-semibold mb-4 text-black dark:text-white">Change Password</h2>
   
       
             <form onSubmit={handleSubmit(onChangePassword)} className="space-y-4">
@@ -63,7 +63,14 @@ function ChangeUserPassword() {
                     
                     {...register("renewPassword", { required: true })}
                 />
-                {error && <p className="text-red-900 text-sm font-bold">{error}</p>}
+                                {error && (
+                                    <p
+                                        role="alert"
+                                        className="mt-2 text-sm font-medium text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-md px-4 py-2"
+                                    >
+                                        {error}
+                                    </p>
+                                )}
                 <Button type="submit">Update Password</Button>
             </form>
 

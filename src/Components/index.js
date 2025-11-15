@@ -21,6 +21,8 @@ import LowAttendance from "./Students/LowAttendance";
 import SendOtp from "./User/SendOtp";
 import VerifyOtp from "./User/VerifyOtp";
 import ClassReport from "./Classes/ClassReport";
+import ThemeToggle from "./ThemeToggle";
+import { ThemeProvider } from "./ThemeContext";
 
 export {
     Input,
@@ -46,6 +48,8 @@ export {
     SendOtp,
     VerifyOtp,
     ClassReport,
+    ThemeToggle,
+    ThemeProvider,
 
 
 }

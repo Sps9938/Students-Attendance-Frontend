@@ -111,13 +111,20 @@ useEffect(() => {
     >
       <input
         type="email"
-        className="border p-2 rounded"
+        className="border dark:border-gray-600 p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
         value={email}
         readOnly
         required
       />
 
-      {error && <p className="text-red-900 font-bold">{error}</p>}
+      {error && (
+        <p
+          role="alert"
+          className="mt-2 text-sm font-medium text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-md px-4 py-2"
+        >
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
