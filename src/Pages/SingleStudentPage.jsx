@@ -27,9 +27,9 @@ fetchStudent();
 }, [studentId]);
 
 return (
-    <div className="min-h-screen bg-gray-100 p-4">
-   <GetEachStudent student={student} attendanceSummary={attendanceSummary} />
-    </div>
-  );
+  <div className="min-h-screen px-4 py-6">
+    <GetEachStudent student={student} attendanceSummary={attendanceSummary} />
+  </div>
+);
 };
 export default SingleStudentPage;

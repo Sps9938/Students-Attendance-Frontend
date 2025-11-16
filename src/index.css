@@ -9,3 +9,11 @@ input[type="password"]::-ms-clear {
 }
 
 /* Safari/Chrome autofill icons are not exposed via pseudo-elements; no-op here. */
+
+/* Ensure body has no default margin so backgrounds are full-bleed */
+html, body, #root {
+	height: 100%;
+}
+body {
+	margin: 0;
+}

@@ -142,27 +142,33 @@ const handleDownloadPDF = () => {
         </h2>
 
         {/* Class Info */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div>
-            <p className="text-black dark:text-white">
-              <b>📚 Course:</b> {cls?.courseName}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div className="space-y-1">
+            <p className="text-gray-900 dark:text-gray-100">
+              <span className="font-semibold text-blue-800 dark:text-blue-300">📚 Course:</span>
+              <span className="ml-2 text-gray-700 dark:text-gray-300">{cls?.courseName}</span>
             </p>
-            <p className="text-black dark:text-white">
-              <b>🏫 Subject:</b> {cls?.className}
+            <p className="text-gray-900 dark:text-gray-100">
+              <span className="font-semibold text-blue-800 dark:text-blue-300">🏫 Subject:</span>
+              <span className="ml-2 text-gray-700 dark:text-gray-300">{cls?.className}</span>
             </p>
-            <p className="text-black dark:text-white">
-              <b>👨‍🏫 Professor:</b> {teach?.fullname}
+            <p className="text-gray-900 dark:text-gray-100">
+              <span className="font-semibold text-blue-800 dark:text-blue-300">👨‍🏫 Professor:</span>
+              <span className="ml-2 text-gray-700 dark:text-gray-300">{teach?.fullname}</span>
             </p>
           </div>
-          <div>
-            <p className="text-black dark:text-white">
-              <b>📅 Batch Year:</b> {cls?.yearBatch}
+          <div className="space-y-1">
+            <p className="text-gray-900 dark:text-gray-100">
+              <span className="font-semibold text-blue-800 dark:text-blue-300">📅 Batch Year:</span>
+              <span className="ml-2 text-gray-700 dark:text-gray-300">{cls?.yearBatch}</span>
             </p>
-            <p className="text-black dark:text-white">
-              <b>👥 Total Students:</b> {students.length}
+            <p className="text-gray-900 dark:text-gray-100">
+              <span className="font-semibold text-blue-800 dark:text-blue-300">👥 Total Students:</span>
+              <span className="ml-2 text-gray-700 dark:text-gray-300">{students.length}</span>
             </p>
-            <p className="text-black dark:text-white">
-              <b>👥 Total Classes:</b> {attendanceRecords?.length}
+            <p className="text-gray-900 dark:text-gray-100">
+              <span className="font-semibold text-blue-800 dark:text-blue-300">👥 Total Classes:</span>
+              <span className="ml-2 text-gray-700 dark:text-gray-300">{attendanceRecords?.length}</span>
             </p>
           </div>
         </div>

@@ -169,7 +169,7 @@ const handleDownloadAndSendPDF = () => {
 
   return (
    <div> 
-      <h2 className="text-xl font-bold mb-4">Class Report Overview</h2>  
+      <h2 className="text-xl font-bold mb-4 text-red-500">Class Report Overview</h2>  
 <div className="flex justify-center gap-3">
       <button
         onClick={handleDownloadAndSendPDF}
