@@ -89,6 +89,14 @@ const handleDownloadAndSendPDF = () => {
     return;
   }
 
+  // Check if dark mode is enabled
+  const isDarkMode = document.documentElement.classList.contains("dark");
+
+  // Temporarily remove dark mode for PDF generation
+  if (isDarkMode) {
+    document.documentElement.classList.remove("dark");
+  }
+
   const hiddenElements = element.querySelectorAll(".no-pdf");
   hiddenElements.forEach(el => el.style.display = "none");
 
@@ -117,6 +125,11 @@ const handleDownloadAndSendPDF = () => {
         el.style.pageBreakBefore = "";
         el.style.breakBefore = "";
       });
+
+      // Restore dark mode if it was enabled
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+      }
 
       const link = document.createElement("a");
       link.href = URL.createObjectURL(pdfBlob);
@@ -162,6 +175,12 @@ const handleDownloadAndSendPDF = () => {
         el.style.pageBreakBefore = "";
         el.style.breakBefore = "";
       });
+
+      // Restore dark mode if it was enabled
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+      }
+
       console.error("❌ PDF generation failed", err);
       alert("❌ PDF generation failed.");
     });

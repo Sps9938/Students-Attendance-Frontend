@@ -37,6 +37,14 @@ const ClassReport = ({ students = [], cls, attendanceRecords = [] }) => {
 const handleDownloadPDF = () => {
   const element = contentRef.current;
 
+  // Check if dark mode is enabled
+  const isDarkMode = document.documentElement.classList.contains("dark");
+
+  // Temporarily remove dark mode for PDF generation
+  if (isDarkMode) {
+    document.documentElement.classList.remove("dark");
+  }
+
   // Hide elements with class 'no-pdf' during PDF generation
   const hiddenElements = element.querySelectorAll(".no-pdf");
   hiddenElements.forEach((el) => (el.style.display = "none"));
@@ -67,6 +75,23 @@ const handleDownloadPDF = () => {
         el.style.pageBreakBefore = "";
         el.style.breakBefore = "";
       });
+      // Restore dark mode if it was enabled
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+      }
+    })
+    .catch((err) => {
+      console.error("PDF generation failed", err);
+      // Restore original styles in case of error
+      hiddenElements.forEach((el) => (el.style.display = ""));
+      breakElements.forEach((el) => {
+        el.style.pageBreakBefore = "";
+        el.style.breakBefore = "";
+      });
+      // Restore dark mode if it was enabled
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+      }
     });
 };
 

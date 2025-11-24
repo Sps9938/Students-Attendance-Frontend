@@ -51,6 +51,14 @@ function GetEachStudent({ student, attendanceSummary }) {
   const handleDownloadPDF = () => {
     const element = contentRef.current;
 
+    // Check if dark mode is enabled
+    const isDarkMode = document.documentElement.classList.contains("dark");
+
+    // Temporarily remove dark mode for PDF generation
+    if (isDarkMode) {
+      document.documentElement.classList.remove("dark");
+    }
+
     const hiddenElements = element.querySelectorAll(".no-pdf");
     hiddenElements.forEach(el => el.style.display = "none");
 
@@ -64,6 +72,17 @@ function GetEachStudent({ student, attendanceSummary }) {
 
     html2pdf().set(opt).from(element).save().then(() => {
       hiddenElements.forEach(el => el.style.display = "");
+      // Restore dark mode if it was enabled
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+      }
+    }).catch((err) => {
+      console.error("PDF generation failed", err);
+      hiddenElements.forEach(el => el.style.display = "");
+      // Restore dark mode if it was enabled
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+      }
     });
   };
 
