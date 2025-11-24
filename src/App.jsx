@@ -45,10 +45,10 @@ function App() {
   useEffect(() => {
     fetchUser()
     .then((userData) => {
-      if(userData)
+      if(userData && userData.data)
       {
         // console.log("user session exists", userData);
-        dispatch(login(userData))
+        dispatch(login(userData.data))
         
       }
       else{
