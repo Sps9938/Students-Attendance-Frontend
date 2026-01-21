@@ -25,6 +25,15 @@ A full-featured web application to manage student attendance with internet-based
 
 ---
 
+## Test Automation (UI)
+
+### Selenium UI Testing
+Automated UI tests are implemented using **Selenium** in Python. See `selenium/README.md` for setup and usage instructions.
+
+Sample test included: `selenium/test_login.py`.
+
+---
+
 ## Features
 
 - 👥 **User Authentication**
